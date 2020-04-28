@@ -7,6 +7,8 @@ import {
   axisRight,
   scaleLinear } from 'd3';
 
+import AnimatedBarGraph from './components/AnimatedBarGraph/AnimatedBarGraph'
+
 import './App.css';
 
 function App() {
@@ -59,19 +61,23 @@ function App() {
   }, [data])
 
   return (
-    <React.Fragment>
-      <svg ref={svgRef}>
-        <g className="x-axis" />
-        <g className="y-axis" />
-      </svg>
+    <section className="graphs">
+      <article className="graph lineGraph">
+        <svg ref={svgRef}>
+          <g className="x-axis" />
+          <g className="y-axis" />
+        </svg>
+        <br />
+        <button onClick={() => setData(data.map(value => value + 5))}>
+          Update Data
+        </button>
+        <button onClick={() => setData(data.filter(value => value < 35))}>
+          Filter Data
+        </button>
+      </article>
       <br />
-      <button onClick={() => setData(data.map(value => value + 5))}>
-        Update Data
-      </button>
-      <button onClick={() => setData(data.filter(value => value < 35))}>
-        Filter Data
-      </button>
-    </React.Fragment>
+      <AnimatedBarGraph />
+    </section>
   );
 }
 
