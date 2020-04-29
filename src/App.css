@@ -1,24 +1,30 @@
-.graphs {
+svg {
+  background: #eee;
+  overflow: visible;
+  display: block;
+  width: 100%;
+}
+
+#root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
+  padding: 0 50px;
 }
 
-/* Line Graph */
-
-.lineGraph {
+.graphButtons {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-}
-
-svg {
-  margin-left: 10px;
-  overflow: visible;
+  margin-top: 10px;
 }
 
 button {
-  margin-top: 20px;
+  width: 100px;
+  margin-top: 5px;
+  border: 1px solid black;
+  outline: none;
 }

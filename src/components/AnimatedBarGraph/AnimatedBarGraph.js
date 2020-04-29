@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, { useRef, useEffect } from 'react';
 import { 
     select, 
     axisBottom, 
@@ -6,67 +6,98 @@ import {
     scaleLinear, 
     scaleBand } from 'd3';
 
-const AnimatedBarGraph = () => {
-    const [data, setData] = useState([20, 30, 45, 60, 20, 65, 75])
+import { useResizeObserver } from '../../hooks/useResizeObserver'
+
+
+const AnimatedBarGraph = ({ barGraphData, setBarGraphData }) => {
+    
     const barGraphRef = useRef()
+    const wrapperRef = useRef()
+    const dimensions = useResizeObserver(wrapperRef)
 
-    // will be called initially and then every time the data array changes
+    // will be called initially and then every time the barGraphData array changes
     useEffect(() => {
-    const svg = select(barGraphRef.current)
-    const xScale = scaleBand()
-        .domain(data.map((value, index) => index))
-        .range([0, 300])
-        .padding(0.5)
+        const svg = select(barGraphRef.current)
+        console.log(dimensions)
 
-    const yScale = scaleLinear()
-        .domain([0, 150])
-        .range([150, 0])
+        if (!dimensions) return
 
-    const colorScale = scaleLinear()
-        .domain([75, 100, 150])
-        .range(["green", "orange", "red"])
-        .clamp(true)
+        const xScale = scaleBand()
+            .domain(barGraphData.map((value, index) => index))
+            .range([0, dimensions.width])
+            .padding(0.5)
 
-    const xAxis = axisBottom(xScale).ticks(data.length)
-    svg
-        .select(".x-axis")
-        .style("transform", "translateY(150px)")
-        .call(xAxis)
+        const yScale = scaleLinear()
+            .domain([0, 150])
+            .range([dimensions.height, 0])
 
-    const yAxis = axisRight(yScale)
-    svg
-        .select(".y-axis")
-        .style("transform", "translateX(300px)")
-        .call(yAxis)
+        const colorScale = scaleLinear()
+            .domain([75, 100, 150])
+            .range(["green", "orange", "red"])
+            .clamp(true)
 
-    svg
-        .selectAll(".bar")
-        .data(data)
-        .join("rect")
-        .attr("class", "bar")
-        .style("transform", "scale(1, -1)")
-        .attr("x", (value, index) => xScale(index))
-        .attr("y", -150)
-        .attr("width", xScale.bandwidth())
-        .transition()
-        .attr("fill", colorScale)
-        .attr("height", value => 150 - yScale(value))
+        const xAxis = axisBottom(xScale).ticks(barGraphData.length)
+        svg
+            .select(".x-axis")
+            .style("transform", `translateY(${dimensions.height}px)`)
+            .call(xAxis)
 
-    }, [data])
+        const yAxis = axisRight(yScale)
+        svg
+            .select(".y-axis")
+            .style("transform", `translateX(${dimensions.width}px)`)
+            .call(yAxis)
+
+        svg
+            .selectAll(".bar")
+            .data(barGraphData)
+            .join("rect")
+            .attr("class", "bar")
+            .style("transform", "scale(1, -1)")
+            .attr("x", (value, index) => xScale(index))
+            .attr("y", -dimensions.height)
+            .attr("width", xScale.bandwidth())
+            .on("mouseenter", (value, index) => {
+                svg
+                    .selectAll(".tooltip")
+                    .data([value])
+                    .join(enter => enter.append("text").attr("y", yScale(value) - 4))
+                    .attr("class", "tooltip")
+                    .text(value)
+                    .attr("x", xScale(index) + xScale.bandwidth() / 2)
+                    .attr("text-anchor", "middle")
+                    .transition()
+                    .attr("y", yScale(value) - 8)
+                    .attr("opacity", 1)
+
+            })
+            .on("mouseleave", () => svg.select(".tooltip").remove())
+            .transition()
+            .attr("fill", colorScale)
+            .attr("height", value => dimensions.height - yScale(value))
+
+    }, [barGraphData, dimensions])
 
     return (
         <article className="graph barGraph">
-        <svg ref={barGraphRef}>
-            <g className="x-axis" />
-            <g className="y-axis" />
-        </svg>
-        <br />
-        <button onClick={() => setData(data.map(value => value + 5))}>
-            Update Data
-        </button>
-        <button onClick={() => setData(data.filter(value => value < 35))}>
-            Filter Data
-        </button>
+            <div ref={wrapperRef}>
+                <svg ref={barGraphRef}>
+                    <g className="x-axis" />
+                    <g className="y-axis" />
+                </svg>
+            </div>
+            <br />
+            <div className="graphButtons">
+                <button onClick={() => setBarGraphData(barGraphData.map(value => value < 150 && value + 5))}>
+                    Update Data
+                </button>
+                <button onClick={() => setBarGraphData(barGraphData.filter(value => value < 35))}>
+                    Filter Data
+                </button>
+                <button onClick={() => setBarGraphData([...barGraphData, Math.round(Math.random(0, 1) * 150)])}>
+                    Add Data
+                </button>
+            </div>
         </article>
     );
 }
