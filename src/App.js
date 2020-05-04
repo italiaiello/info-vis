@@ -12,6 +12,7 @@ function App() {
 
   // Line graph data
   const [lineGraphData, setLineGraphData] = useState([20, 30, 45, 60, 20, 65, 75])
+  console.log("chicken")
 
   // Bar graph data
   const [barGraphData, setBarGraphData] = useState([20, 30, 45, 60, 20, 65, 75])
