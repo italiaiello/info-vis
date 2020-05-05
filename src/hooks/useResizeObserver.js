@@ -10,7 +10,7 @@ export const useResizeObserver = ref => {
         })
         resizedObserver.observe(observerTarget)
         return () => {
-            resizedObserver.unobserver(observerTarget)
+            resizedObserver.unobserve(observerTarget)
         }
     }, [ref])
     return dimensions

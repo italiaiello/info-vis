@@ -30,8 +30,6 @@ const GeoChart = ({ data, property, setProperty }) => {
         // Transforms that into the d attribute of a path element
         const pathGenerator = geoPath().projection(projection)
 
-        console.log(data.features)
-
         // Render each country
         svg
             .selectAll(".country")

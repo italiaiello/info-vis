@@ -18,7 +18,6 @@ const AnimatedBarGraph = ({ barGraphData, setBarGraphData }) => {
     // will be called initially and then every time the barGraphData array changes
     useEffect(() => {
         const svg = select(barGraphRef.current)
-        console.log(dimensions)
 
         if (!dimensions) return
 
