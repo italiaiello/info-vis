@@ -27,5 +27,7 @@ export const filterCasualtyData = (data) => {
         }
     ))
 
+    console.log(finalData)
+
     return finalData
 }
