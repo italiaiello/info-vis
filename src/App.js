@@ -51,7 +51,7 @@ function App() {
       </select>
       <br />
       <br />
-      <PieChart x={200} y={100} outerRadius={150} innerRadius={0}
+      <PieChart x={250} y={250} outerRadius={150} innerRadius={0}
           data={pieChartData} />
       <br />
       <LineGraph lineGraphData={lineGraphData} setLineGraphData={setLineGraphData} />

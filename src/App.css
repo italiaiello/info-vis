@@ -45,3 +45,10 @@ button {
 .geoChart svg {
   height: 100%
 }
+
+/* Pie Chart */
+
+.pieChartSVG {
+  width: 500px;
+  height: 500px;
+}
