@@ -35,6 +35,11 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
 
 
         // Creating the pie chart
+
+        // Gave each slice a class of value + the number of victims
+        // E.g. value157
+        // This will help us target specific slices
+
         svg
             .selectAll(".slice")
             .data(instructions)
@@ -49,9 +54,15 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
             .attr("d", instruction => arcGenerator(instruction))
             .on("mouseenter", (data) => {
 
+                // We need to grab the label that corresponds to the numerical value
+                // Just made some variables to make it easier to access the 
+                // labels and values arrays
                 let labelIndex = -1
                 const labels = pieChartData.labels
                 const values = pieChartData.values
+
+                // Loop through values array until we find a matching value,
+                // then assign the index of that element to labelIndex
                 for (let i = 0; i < values.length; i++) {
                     if (values[i] === data.data) {
                         labelIndex = i
@@ -77,8 +88,9 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
                     .attr("y", dimensions.height / 2)
                     .text(`${labels[labelIndex]}: ${values[labelIndex]} Victims`)
                 
+                // Select the slice we are currently hovering over and change the color
                 svg
-                    .selectAll(`.value${data.value}`)
+                    .select(`.value${data.value}`)
                     .attr("fill", "#3d3d3d")
                 
             })
