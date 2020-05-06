@@ -5,10 +5,13 @@ import LineGraph from './components/LineGraph/LineGraph'
 import AnimatedBarGraph from './components/AnimatedBarGraph/AnimatedBarGraph'
 import GeoChart from './components/GeoChart/GeoChart'
 import data from './json/worldMap.geo.json'
+import StackedBarGraph from './components/StackedBarGraph/StackedBarGraph'
 
 import { csv } from 'd3'
-import csvData from './data/causeForHighFatalities.csv'
-import { filterCasualtyData } from './functions/filterCasualtyData'
+import massShootingCauses from './data/causeForHighFatalities.csv'
+import culpritDemographics from './data/culpritDemographics.csv'
+
+import { filterCasualtyData, filterCulpritDemographicData } from './functions/dataWrangling'
 
 
 import './App.css';
@@ -27,12 +30,20 @@ function App() {
   // PieChart Data
   const [pieChartData, setPieChartData] = useState({})
 
+  // Stacked Bar Graph Data
+  const [stackedBarGraphData, setStackedBarGraphData] = useState({})
+
   useEffect(() => {
     // Filtering the data and preparing it for the pie chart
-    csv(csvData).then(data => {
+    csv(massShootingCauses).then(data => {
       // Created a method (see functions folder) that extracts the data required
       const dataReceived = filterCasualtyData(data)
       setPieChartData(dataReceived)
+    })
+
+    csv(culpritDemographics).then(data => {
+      const dataReceived = filterCulpritDemographicData(data)
+      setStackedBarGraphData(dataReceived)
     })
   }, [])
 
@@ -52,6 +63,8 @@ function App() {
       <br />
       <br />
       <PieChart pieChartData={pieChartData} innerRadius={0} outerRadius={150} />
+      <br />
+      <StackedBarGraph />
       <br />
       <LineGraph lineGraphData={lineGraphData} setLineGraphData={setLineGraphData} />
       <br />
