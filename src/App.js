@@ -25,14 +25,14 @@ function App() {
   const [property, setProperty] = useState("pop_est")
 
   // PieChart Data
-  const [pieChartData, setPieChartData] = useState([])
+  const [pieChartData, setPieChartData] = useState({})
 
   useEffect(() => {
     // Filtering the data and preparing it for the pie chart
     csv(csvData).then(data => {
       // Created a method (see functions folder) that extracts the data required
-      const dataArray = filterCasualtyData(data)
-      setPieChartData(dataArray)
+      const dataReceived = filterCasualtyData(data)
+      setPieChartData(dataReceived)
     })
   }, [])
 
@@ -51,7 +51,7 @@ function App() {
       </select>
       <br />
       <br />
-      <PieChart pieChartData={pieChartData} />
+      <PieChart pieChartData={pieChartData} innerRadius={0} outerRadius={150} />
       <br />
       <LineGraph lineGraphData={lineGraphData} setLineGraphData={setLineGraphData} />
       <br />

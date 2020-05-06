@@ -48,7 +48,10 @@ button {
 
 /* Pie Chart */
 
-.pieChartSVG {
-  width: 500px;
-  height: 500px;
+.pieChart svg {
+  height: 350px;
+}
+
+.slice:hover {
+  background-color: white;
 }

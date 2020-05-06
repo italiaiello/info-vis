@@ -13,7 +13,15 @@ export const filterCasualtyData = (data) => {
         }
     }
 
+    const keys = Object.keys(causesFreq)
+    const totalValues = Object.values(causesFreq)
+
+    const finalData = {
+        labels: keys,
+        values: totalValues
+    }
+
     // Returns only the total number of victims for each category
     // So we will just have an array of numbers
-    return Object.values(causesFreq)
+    return finalData
 }
