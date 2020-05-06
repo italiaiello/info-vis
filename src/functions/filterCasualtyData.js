@@ -13,19 +13,7 @@ export const filterCasualtyData = (data) => {
         }
     }
 
-    // Now that we have the data filtered, we need to separate the keys and values
-    // This is because the pie chart needs the label and value separated
-    const keys = Object.keys(causesFreq)
-    const values = Object.values(causesFreq)
-
-    // Since both of the above arrays are the same length, just loop over one 
-    // (values array in this case) and use the same index to grab values from the other array
-    const finalData = values.map((value, i) => (
-        {
-            label: keys[i],
-            value: value
-        }
-    ))
-
-    return finalData
+    // Returns only the total number of victims for each category
+    // So we will just have an array of numbers
+    return Object.values(causesFreq)
 }

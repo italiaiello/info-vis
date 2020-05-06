@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+
+import PieChart from './components/PieChart/PieChart'
 import LineGraph from './components/LineGraph/LineGraph'
 import AnimatedBarGraph from './components/AnimatedBarGraph/AnimatedBarGraph'
 import GeoChart from './components/GeoChart/GeoChart'
@@ -47,6 +49,9 @@ function App() {
           <option value="name_len">Name length</option>
           <option value="gdp_md_est">GDP</option>
       </select>
+      <br />
+      <br />
+      <PieChart pieChartData={pieChartData} />
       <br />
       <LineGraph lineGraphData={lineGraphData} setLineGraphData={setLineGraphData} />
       <br />
