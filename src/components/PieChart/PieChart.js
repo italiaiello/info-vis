@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { select, arc, pie, scaleLinear } from 'd3';
+import { select, arc, pie } from 'd3';
 
 import { useResizeObserver } from '../../hooks/useResizeObserver'
 
@@ -48,22 +48,42 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
             )
             .attr("d", instruction => arcGenerator(instruction))
             .on("mouseenter", (data) => {
-                console.log(data)
+
+                let labelIndex = -1
+                const labels = pieChartData.labels
+                const values = pieChartData.values
+                for (let i = 0; i < values.length; i++) {
+                    if (values[i] === data.data) {
+                        labelIndex = i
+                        break;
+                    }
+                }
+
+                if (labelIndex < 0) return
+
+                // Capitalise first letter of label and attach it to the rest of the word
+                const upperCaseLetter = labels[labelIndex].charAt(0).toUpperCase()
+                const restOfWord = labels[labelIndex].substring(1)
+                
+                labels[labelIndex] = `${upperCaseLetter}${restOfWord}`
+
                 // Create tooltip
                 svg
                     .selectAll(".tooltip")
                     .data([data])
                     .join(enter => enter.append("text"))
                     .attr("class", "tooltip")
-                    .text(data.data)
+                    .attr("x", dimensions.width - (dimensions.width / 3))
+                    .attr("y", dimensions.height / 2)
+                    .text(`${labels[labelIndex]}: ${values[labelIndex]} Victims`)
                 
                 svg
                     .selectAll(`.value${data.value}`)
-                    .attr("fill", "blue")
+                    .attr("fill", "#3d3d3d")
                 
             })
             .on("mouseleave", () => {
-                // Delete tooltip
+                // Remove tooltip
                 svg.select(".tooltip").remove()
                 // Revert color back to grey
                 svg.selectAll(`.slice`).attr("fill", "lightgray")
