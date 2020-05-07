@@ -55,21 +55,33 @@ export const filterCulpritDemographicData = (data) => {
         // Adding all the yearly shootings into one place
         // Made a function (down below) that counts the demographics
         yearlyDemographics.push(countDemographicFrequency(shootingsOnThisYear))
-
+        // Updating year property within the object so we can use it for the
+        // x-axis of stacked bar graph
+        if (currentYear < 65 && currentYear >= 0) {
+            yearlyDemographics[yearlyDemographics.length - 1].year = 2000 + currentYear
+        } else {
+            yearlyDemographics[yearlyDemographics.length - 1].year = 1900 + currentYear
+        }
+        
+        // Move to the next year
         currentYear -= 1
 
+        // If we are done with 2000s, start with the 1900s
         if (currentYear < 0) {
             currentYear = 99
         }
 
     }
 
+    return yearlyDemographics
+
 }
 
-const countDemographicFrequency = (shootingsForYear) => {
+const countDemographicFrequency = (shootingsForYear, currentYear) => {
 
     // Object that keeps track of demographic frequency for the current year
     let demographics = {
+        year: 0,
         kidsAndTeenagers: 0,
         youngAdults: 0,
         adults: 0,
@@ -90,7 +102,6 @@ const countDemographicFrequency = (shootingsForYear) => {
         } else {
             demographics["middleAged"] += 1
         }
-
         return shooting
         
     })

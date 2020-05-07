@@ -64,7 +64,7 @@ function App() {
       <br />
       <PieChart pieChartData={pieChartData} innerRadius={0} outerRadius={150} />
       <br />
-      <StackedBarGraph />
+      <StackedBarGraph stackedBarGraphData={stackedBarGraphData} />
       <br />
       <LineGraph lineGraphData={lineGraphData} setLineGraphData={setLineGraphData} />
       <br />
