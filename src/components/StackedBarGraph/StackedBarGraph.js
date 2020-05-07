@@ -21,7 +21,7 @@ const StackedBarGraph = ({ stackedBarGraphData }) => {
             dimensions || wrapperRef.current.getBoundingClientRect()
 
         // If no dimensions or data is provided, the function will exit
-
+        
 
         if (!dimensions) return
 
