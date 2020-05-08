@@ -20,8 +20,11 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
 
         // If no dimensions or data is provided, the function will exit
         if (!dimensions) return
-        if(pieChartData === undefined || !pieChartData.values || !pieChartData.labels) return
+        if(pieChartData === undefined) return
         if (innerRadius === undefined || outerRadius === undefined) return
+
+        const pieChartKeys = Object.keys(pieChartData)
+        const pieChartValues = Object.values(pieChartData)
         
         // Helps us to create the individual arcs for each data point
         const arcGenerator = arc()
@@ -30,16 +33,12 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
 
         const pieGenerator = pie()
         // Holds the information needed for the pieGenerator to work its magic
-        const instructions = pieGenerator(pieChartData.values)
-        console.log(instructions)
-
-
+        const instructions = pieGenerator(pieChartValues)
+        
         // Creating the pie chart
-
         // Gave each slice a class of value + the number of victims
         // E.g. value157
         // This will help us target specific slices
-
         svg
             .selectAll(".slice")
             .data(instructions)
@@ -58,13 +57,11 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
                 // Just made some variables to make it easier to access the 
                 // labels and values arrays
                 let labelIndex = -1
-                const labels = pieChartData.labels
-                const values = pieChartData.values
 
                 // Loop through values array until we find a matching value,
                 // then assign the index of that element to labelIndex
-                for (let i = 0; i < values.length; i++) {
-                    if (values[i] === data.data) {
+                for (let i = 0; i < pieChartValues.length; i++) {
+                    if (pieChartValues[i] === data.data) {
                         labelIndex = i
                         break;
                     }
@@ -73,10 +70,10 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
                 if (labelIndex < 0) return
 
                 // Capitalise first letter of label and attach it to the rest of the word
-                const upperCaseLetter = labels[labelIndex].charAt(0).toUpperCase()
-                const restOfWord = labels[labelIndex].substring(1)
+                const upperCaseLetter = pieChartKeys[labelIndex].charAt(0).toUpperCase()
+                const restOfWord = pieChartKeys[labelIndex].substring(1)
                 
-                labels[labelIndex] = `${upperCaseLetter}${restOfWord}`
+                pieChartKeys[labelIndex] = `${upperCaseLetter}${restOfWord}`
 
                 // Create tooltip
                 svg
@@ -86,7 +83,7 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
                     .attr("class", "tooltip")
                     .attr("x", dimensions.width - (dimensions.width / 3))
                     .attr("y", dimensions.height / 2)
-                    .text(`${labels[labelIndex]}: ${values[labelIndex]} Victims`)
+                    .text(`${pieChartKeys[labelIndex]}: ${pieChartValues[labelIndex]} Shootings`)
                 
                 // Select the slice we are currently hovering over and change the color
                 svg

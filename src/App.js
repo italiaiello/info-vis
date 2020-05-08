@@ -8,10 +8,11 @@ import data from './json/worldMap.geo.json'
 import StackedBarGraph from './components/StackedBarGraph/StackedBarGraph'
 
 import { csv } from 'd3'
-import massShootingCauses from './data/causeForHighFatalities.csv'
-import culpritDemographics from './data/culpritDemographics.csv'
+import allMassShootings from './data/Andrew/mass_shootings.csv'
+import massShootingCauses from './data/Andrew/causeForHighFatalities.csv'
+import culpritDemographics from './data/Andrew/culpritDemographics.csv'
 
-import { filterCasualtyData, filterCulpritDemographicData } from './functions/dataWrangling'
+import { filterCasualtyData, filterCulpritDemographicData, filterShootingTargetData } from './functions/andrewsFunctions'
 
 
 import './App.css';
@@ -28,7 +29,7 @@ function App() {
   const [pieChartData, setPieChartData] = useState({})
 
   // Bar graph data
-  // const [barGraphData, setBarGraphData] = useState([20, 30, 45, 70, 32, 25, 15])
+  const [barGraphData, setBarGraphData] = useState({})
 
   // Culprit Data for Stacked Bar Graph
   const [culpritData, setCulpritData] = useState({})
@@ -44,16 +45,25 @@ function App() {
 
 
   useEffect(() => {
-    // Filtering the data and preparing it for the pie chart
+    // Filtering the data and preparing it for the bar graph about causes/motives
     csv(massShootingCauses).then(data => {
       // Created a method (see functions folder) that extracts the data required
       const dataReceived = filterCasualtyData(data)
-      setPieChartData(dataReceived)
+      setBarGraphData(dataReceived)
     })
 
+    // Filtering the data for stacked bar chart about shootings per ages each year
     csv(culpritDemographics).then(data => {
+      // Created a method (see functions folder) that extracts the data required
       const dataReceived = filterCulpritDemographicData(data)
       setCulpritData(dataReceived)
+    })
+
+    // Filtering data for pie chart about the targets for mass shootings
+    csv(allMassShootings).then(data => {
+      // Created a method (see functions folder) that extracts the data required
+      const dataReceived = filterShootingTargetData(data)
+      setPieChartData(dataReceived)
     })
   }, [])
 
@@ -80,9 +90,11 @@ function App() {
       />
       <br />
       <br />
-      <LineGraph lineGraphData={lineGraphData} setLineGraphData={setLineGraphData} />
       <br />
-      <AnimatedBarGraph barGraphData={pieChartData} />
+      <AnimatedBarGraph barGraphData={barGraphData} />
+      <br/>
+      <br/>
+      <LineGraph lineGraphData={lineGraphData} setLineGraphData={setLineGraphData} />
       <br/>
       <br/>
     </section>

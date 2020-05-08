@@ -77,6 +77,7 @@ export const filterCulpritDemographicData = (data) => {
 
 }
 
+// Helper function for the function above
 const countDemographicFrequency = (shootingsForYear, currentYear) => {
 
     // Object that keeps track of demographic frequency for the current year
@@ -108,4 +109,40 @@ const countDemographicFrequency = (shootingsForYear, currentYear) => {
 
     // Demographic data is ready to be pushed to the array
     return demographics
+}
+
+// Grabbing the data for the targets of shootings
+export const filterShootingTargetData = (data) => {
+    const shootingTargets = {}
+    // Remove unknown target values by only keeping strings with at least one character
+    const filteredData = data.filter(row => row.Target.length)
+
+    for (let i = 0; i < filteredData.length; i++) {
+        // Check if current row's target is random
+        if (filteredData[i].Target.toLowerCase() === "random") {
+            // If so, increment the 'random' key value in shootingTargets
+            if (shootingTargets["random"] === undefined) {
+                shootingTargets["random"] = 1
+            } else {
+                shootingTargets["random"] += 1
+            }
+        } else {
+            // Otherwise, increment the 'targeted' value
+            if (shootingTargets["targeted"] === undefined) {
+                shootingTargets["targeted"] = 1
+            } else {
+                shootingTargets["targeted"] += 1
+            }
+        }
+    }
+
+    // Now that we have extracted all the random and targeted shootings
+    // we have to add the ones that were unknown
+    // To do this we grab all the rows that didn't have a target defined
+    const unknownData = data.filter(row => !row.Target.length)
+    
+    // And now we just add the number of unknown rows to the shootingTargets object
+    shootingTargets["unknown"] = unknownData.length
+    
+    return shootingTargets
 }

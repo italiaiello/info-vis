@@ -19,8 +19,6 @@ const AnimatedBarGraph = ({ barGraphData }) => {
         if (!dimensions) return
         if (!barGraphData.labels || !barGraphData.values) return
 
-        console.log('hello')
-
         // Setting up the x and y scales, which help us spread each point eveny across
         // the width and height of the svg respectively
         const xScale = scaleBand()
@@ -28,18 +26,21 @@ const AnimatedBarGraph = ({ barGraphData }) => {
             .range([0, dimensions.width])
             .padding(0.5)
 
-        // Finding the max value from the data and using it as the max for the y axis
+            // Finding the max value from the data and using it as the max for the y axis
         const maxYAxisValue = barGraphData.values.reduce((sum, value) => sum += value)
         const yScale = scaleLinear()
             .domain([0, maxYAxisValue])
             .range([dimensions.height, 0])
 
+        // Setting up the color scale
+        // I mapped colors to the lowest and highest value of the data
         const maxDataValue = Math.max(...barGraphData.values)
         const colorScale = scaleLinear()
-            .domain([0, maxDataValue / 2, maxDataValue])
-            .range(["#ff8780", "#ff5f57", "#ff473d"])
+            .domain([0, maxDataValue])
+            .range(["#ff8780", "#ff473d"])
             .clamp(true)
 
+        // Setting up the x and y axes
         const xAxis = axisBottom(xScale)
         svg
             .select(".x-axis")
@@ -52,6 +53,7 @@ const AnimatedBarGraph = ({ barGraphData }) => {
             .style("transform", `translateX(${dimensions.width}px)`)
             .call(yAxis)
 
+        // Displaying the individual bars onto the graph
         svg
             .selectAll(".bar")
             .data(barGraphData.values)
@@ -62,13 +64,18 @@ const AnimatedBarGraph = ({ barGraphData }) => {
             .attr("y", -dimensions.height)
             .attr("width", xScale.bandwidth())
             .on("mouseenter", (value, index) => {
+                // xScale(index) wasn't working so I had to make a work around
+                // I selected all the elements with the class '.bar'
+                // Then, by using 'index', I can select the 'x' attribute of a specific bar
+                // This value is used further down to centre the tooltip text
+                let xValueOfRect = +document.querySelectorAll(".bar")[index].getAttribute("x")
                 svg
                     .selectAll(".tooltip")
                     .data([value])
                     .join(enter => enter.append("text").attr("y", yScale(value) - 4))
                     .attr("class", "tooltip")
                     .text(value)
-                    .attr("x", xScale(index) + xScale.bandwidth() / 2)
+                    .attr("x", xValueOfRect + xScale.bandwidth() / 2)
                     .attr("text-anchor", "middle")
                     .transition()
                     .attr("y", yScale(value) - 8)
