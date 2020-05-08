@@ -36,10 +36,10 @@ function App() {
   const culpritKeys = ['kidsAndTeenagers', 'youngAdults', 'adults', 'middleAged']
   // Colors of each data point, which would colorise the stack of each year
   const culpritColors = {
-    kidsAndTeenagers:"#f7db52", 
-    youngAdults:"#3ebb5a", 
-    adults: "#f76252", 
-    middleAged: "#5d45aa"
+    kidsAndTeenagers:"#f75a52", 
+    youngAdults:"#f7bc52", 
+    adults: "#40c04f", 
+    middleAged: "#4165a4"
   }
 
 
