@@ -13,6 +13,12 @@ export const filterCasualtyData = (data) => {
         }
     }
 
+    // Since I had filtered out all the unknown causes, we can find how many there
+    // by minussing the number of filtered data rows from the main file's rows
+    // Main file = 323 rows
+
+    causesFreq["unknown"] = 323 - data.length
+
     const keys = Object.keys(causesFreq)
     const totalValues = Object.values(causesFreq)
 
@@ -145,4 +151,25 @@ export const filterShootingTargetData = (data) => {
     shootingTargets["unknown"] = unknownData.length
     
     return shootingTargets
+}
+
+// Grabs the number of shooters with a military background
+export const filterMilitaryCulprits = (data) => {
+    // The main csv file has 323 rows
+    // I have already filtered out the shooters with a military background and 
+    // placed them in their own csv file (called militaryShooters.csv)
+    // So now I just have to minus the number of rows of the filtered file from
+    // the main file
+
+    const difference  = 323 - data.length
+
+    // Now I can create an object that will be used to populate the pie chart
+
+    const finalData = {
+        military: data.length,
+        other: difference
+    }
+
+    return finalData
+
 }

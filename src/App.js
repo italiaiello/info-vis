@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import PieChart from './components/PieChart/PieChart'
 import LineGraph from './components/LineGraph/LineGraph'
-import AnimatedBarGraph from './components/AnimatedBarGraph/AnimatedBarGraph'
+import AnimatedBarGraph from './components/BarGraph/BarGraph'
 import GeoChart from './components/GeoChart/GeoChart'
 import data from './json/worldMap.geo.json'
 import StackedBarGraph from './components/StackedBarGraph/StackedBarGraph'
@@ -11,8 +11,9 @@ import { csv } from 'd3'
 import allMassShootings from './data/Andrew/mass_shootings.csv'
 import massShootingCauses from './data/Andrew/causeForHighFatalities.csv'
 import culpritDemographics from './data/Andrew/culpritDemographics.csv'
+import shooterOccupations from './data/Andrew/militaryShooters.csv' 
 
-import { filterCasualtyData, filterCulpritDemographicData, filterShootingTargetData } from './functions/andrewsFunctions'
+import { filterCasualtyData, filterCulpritDemographicData, filterShootingTargetData, filterMilitaryCulprits } from './functions/andrewsFunctions'
 
 
 import './App.css';
@@ -27,6 +28,7 @@ function App() {
 
   // PieChart Data
   const [pieChartData, setPieChartData] = useState({})
+  const [occupationsData, setOccupationsData] = useState({})
 
   // Bar graph data
   const [barGraphData, setBarGraphData] = useState({})
@@ -65,6 +67,12 @@ function App() {
       const dataReceived = filterShootingTargetData(data)
       setPieChartData(dataReceived)
     })
+
+    csv(shooterOccupations).then(data => {
+      // Created a method (see functions folder) that extracts the data required
+      const dataReceived = filterMilitaryCulprits(data)
+      setOccupationsData(dataReceived)
+    })
   }, [])
 
   return (
@@ -84,6 +92,15 @@ function App() {
       <br />
       <PieChart pieChartData={pieChartData} innerRadius={0} outerRadius={150} />
       <br />
+      <br />
+      <article>
+        <h2>Occupations of Shooters</h2>
+        <PieChart pieChartData={occupationsData} innerRadius={100} outerRadius={150} />
+      </article>
+      <br />
+      <br />
+      <h2>Number of U.S. Mass Shootings per year for each age group </h2>
+      <h3>{"Kids and Teenagers (red), Young Adults (yellow), Adults (green), Middle-Aged (blue)"}</h3>
       <StackedBarGraph  stackedBarGraphData={culpritData} 
                         keys={culpritKeys}
                         colors={culpritColors}
@@ -91,6 +108,7 @@ function App() {
       <br />
       <br />
       <br />
+      <h2>Causes/motives for mass shootings</h2>
       <AnimatedBarGraph barGraphData={barGraphData} />
       <br/>
       <br/>

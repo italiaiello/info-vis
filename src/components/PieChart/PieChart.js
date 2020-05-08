@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { select, arc, pie } from 'd3';
+import { select, arc, pie, scaleOrdinal } from 'd3';
 
 import { useResizeObserver } from '../../hooks/useResizeObserver'
 
@@ -34,6 +34,10 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
         const pieGenerator = pie()
         // Holds the information needed for the pieGenerator to work its magic
         const instructions = pieGenerator(pieChartValues)
+
+        const colorScale = scaleOrdinal()
+            .domain(pieChartValues)
+            .range(["red", "green", "blue"]);
         
         // Creating the pie chart
         // Gave each slice a class of value + the number of victims
@@ -45,7 +49,7 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
             .join("path")
             .attr("class", instruction => `slice value${instruction.value}`)
             .attr("stroke", "black")
-            .attr("fill", "lightgray")
+            .attr("fill", instruction => colorScale(instruction.value))
             .style(
                 "transform",
                 `translate(${dimensions.width / 2}px, ${dimensions.height / 2}px)`
@@ -83,7 +87,7 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
                     .attr("class", "tooltip")
                     .attr("x", dimensions.width - (dimensions.width / 3))
                     .attr("y", dimensions.height / 2)
-                    .text(`${pieChartKeys[labelIndex]}: ${pieChartValues[labelIndex]} Shootings`)
+                    .text(`${pieChartKeys[labelIndex]}: ${pieChartValues[labelIndex]}`)
                 
                 // Select the slice we are currently hovering over and change the color
                 svg
@@ -91,11 +95,11 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
                     .attr("fill", "#3d3d3d")
                 
             })
-            .on("mouseleave", () => {
+            .on("mouseleave", (data) => {
                 // Remove tooltip
                 svg.select(".tooltip").remove()
                 // Revert color back to grey
-                svg.selectAll(`.slice`).attr("fill", "lightgray")
+                svg.selectAll(`.slice`).attr("fill", data => colorScale(data.value))
             })
 
     }, [pieChartData, dimensions, innerRadius, outerRadius])
