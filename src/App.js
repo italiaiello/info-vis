@@ -30,8 +30,18 @@ function App() {
   // PieChart Data
   const [pieChartData, setPieChartData] = useState({})
 
-  // Stacked Bar Graph Data
-  const [stackedBarGraphData, setStackedBarGraphData] = useState({})
+  // Culprit Data for Stacked Bar Graph
+  const [culpritData, setCulpritData] = useState({})
+  // Data points we want to show in the stacked bar chart
+  const culpritKeys = ['kidsAndTeenagers', 'youngAdults', 'adults', 'middleAged']
+  // Colors of each data point, which would colorise the stack of each year
+  const culpritColors = {
+    kidsAndTeenagers:"#f7db52", 
+    youngAdults:"#3ebb5a", 
+    adults: "#f76252", 
+    middleAged: "#5d45aa"
+  }
+
 
   useEffect(() => {
     // Filtering the data and preparing it for the pie chart
@@ -43,7 +53,7 @@ function App() {
 
     csv(culpritDemographics).then(data => {
       const dataReceived = filterCulpritDemographicData(data)
-      setStackedBarGraphData(dataReceived)
+      setCulpritData(dataReceived)
     })
   }, [])
 
@@ -64,7 +74,11 @@ function App() {
       <br />
       <PieChart pieChartData={pieChartData} innerRadius={0} outerRadius={150} />
       <br />
-      <StackedBarGraph stackedBarGraphData={stackedBarGraphData} />
+      <StackedBarGraph  stackedBarGraphData={culpritData} 
+                        keys={culpritKeys}
+                        colors={culpritColors}
+      />
+      <br />
       <br />
       <LineGraph lineGraphData={lineGraphData} setLineGraphData={setLineGraphData} />
       <br />

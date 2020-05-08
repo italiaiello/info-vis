@@ -3,6 +3,7 @@ svg {
   overflow: visible;
   display: block;
   width: 100%;
+  height: 100%;
 }
 
 svg .country:hover {
@@ -42,16 +43,23 @@ button {
   overflow: hidden;
 }
 
-.geoChart svg {
-  height: 100%
-}
-
 /* Pie Chart */
 
 .pieChart svg {
-  height: 350px;
+  height: 350px
 }
 
 .slice:hover {
   background-color: white;
+}
+
+/* Stacked Graph */
+
+.stackedGraph svg {
+  height: 200px
+}
+
+.dataRect:hover {
+  fill: black;
+  cursor: pointer;
 }
