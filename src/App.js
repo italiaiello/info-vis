@@ -21,14 +21,14 @@ function App() {
   // Line graph data
   const [lineGraphData, setLineGraphData] = useState([20, 30, 45, 60, 20, 65, 75])
 
-  // Bar graph data
-  const [barGraphData, setBarGraphData] = useState([20, 30, 45, 60, 20, 65, 75])
-
   // GeoChart state
   const [property, setProperty] = useState("pop_est")
 
   // PieChart Data
   const [pieChartData, setPieChartData] = useState({})
+
+  // Bar graph data
+  // const [barGraphData, setBarGraphData] = useState([20, 30, 45, 70, 32, 25, 15])
 
   // Culprit Data for Stacked Bar Graph
   const [culpritData, setCulpritData] = useState({})
@@ -82,7 +82,9 @@ function App() {
       <br />
       <LineGraph lineGraphData={lineGraphData} setLineGraphData={setLineGraphData} />
       <br />
-      <AnimatedBarGraph barGraphData={barGraphData} setBarGraphData={setBarGraphData} />
+      <AnimatedBarGraph barGraphData={pieChartData} />
+      <br/>
+      <br/>
     </section>
   )
 }

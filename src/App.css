@@ -63,3 +63,9 @@ button {
   fill: black;
   cursor: pointer;
 }
+
+/* Bar Graph */
+
+.barGraph svg {
+  height: 300px;
+}

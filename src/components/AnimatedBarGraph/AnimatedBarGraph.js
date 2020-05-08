@@ -1,41 +1,46 @@
 import React, { useRef, useEffect } from 'react';
-import { 
-    select, 
-    axisBottom, 
-    axisRight,
-    scaleLinear, 
-    scaleBand } from 'd3';
+import { select, axisBottom, axisRight, scaleLinear, scaleBand } from 'd3';
 
 import { useResizeObserver } from '../../hooks/useResizeObserver'
 
 
-const AnimatedBarGraph = ({ barGraphData, setBarGraphData }) => {
+const AnimatedBarGraph = ({ barGraphData }) => {
     
     const barGraphRef = useRef()
     const wrapperRef = useRef()
     const dimensions = useResizeObserver(wrapperRef)
+
+    console.log(barGraphData)
 
     // will be called initially and then every time the barGraphData array changes
     useEffect(() => {
         const svg = select(barGraphRef.current)
 
         if (!dimensions) return
+        if (!barGraphData.labels || !barGraphData.values) return
 
+        console.log('hello')
+
+        // Setting up the x and y scales, which help us spread each point eveny across
+        // the width and height of the svg respectively
         const xScale = scaleBand()
-            .domain(barGraphData.map((value, index) => index))
+            .domain(barGraphData.labels)
             .range([0, dimensions.width])
             .padding(0.5)
 
+        // Finding the max value from the data and using it as the max for the y axis
+        const maxYAxisValue = barGraphData.values.reduce((sum, value) => sum += value)
         const yScale = scaleLinear()
-            .domain([0, 150])
+            .domain([0, maxYAxisValue])
             .range([dimensions.height, 0])
 
+        const maxDataValue = Math.max(...barGraphData.values)
         const colorScale = scaleLinear()
-            .domain([75, 100, 150])
-            .range(["green", "orange", "red"])
+            .domain([0, maxDataValue / 2, maxDataValue])
+            .range(["#ff8780", "#ff5f57", "#ff473d"])
             .clamp(true)
 
-        const xAxis = axisBottom(xScale).ticks(barGraphData.length)
+        const xAxis = axisBottom(xScale)
         svg
             .select(".x-axis")
             .style("transform", `translateY(${dimensions.height}px)`)
@@ -49,11 +54,11 @@ const AnimatedBarGraph = ({ barGraphData, setBarGraphData }) => {
 
         svg
             .selectAll(".bar")
-            .data(barGraphData)
+            .data(barGraphData.values)
             .join("rect")
             .attr("class", "bar")
             .style("transform", "scale(1, -1)")
-            .attr("x", (value, index) => xScale(index))
+            .attr("x", (value, index) => xScale(barGraphData.labels[index]))
             .attr("y", -dimensions.height)
             .attr("width", xScale.bandwidth())
             .on("mouseenter", (value, index) => {
@@ -84,18 +89,6 @@ const AnimatedBarGraph = ({ barGraphData, setBarGraphData }) => {
                     <g className="x-axis" />
                     <g className="y-axis" />
                 </svg>
-            </div>
-            <br />
-            <div className="graphButtons">
-                <button onClick={() => setBarGraphData(barGraphData.map(value => value < 150 && value + 5))}>
-                    Update Data
-                </button>
-                <button onClick={() => setBarGraphData(barGraphData.filter(value => value < 35))}>
-                    Filter Data
-                </button>
-                <button onClick={() => setBarGraphData([...barGraphData, Math.round(Math.random(0, 1) * 150)])}>
-                    Add Data
-                </button>
             </div>
         </article>
     );
