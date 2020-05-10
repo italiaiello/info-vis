@@ -11,7 +11,8 @@ import { csv } from 'd3'
 import allMassShootings from './data/Andrew/mass_shootings.csv'
 import massShootingCauses from './data/Andrew/causeForHighFatalities.csv'
 import culpritDemographics from './data/Andrew/culpritDemographics.csv'
-import shooterOccupations from './data/Andrew/militaryShooters.csv' 
+import shooterOccupations from './data/Andrew/militaryShooters.csv'
+
 
 import {  filterCasualtyData, 
           filterCulpritDemographicData, 

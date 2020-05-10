@@ -3,6 +3,8 @@ import { select, geoPath, geoMercator, min, max, scaleLinear } from 'd3'
 import { useResizeObserver } from '../../hooks/useResizeObserver'
 import { updateGeoJsonData } from '../../functions/andrewsFunctions'
 
+// https://exploratory.io/map
+
 const GeoChart = ({ data, shootingsPerState, property }) => {
     const geoChartRef = useRef()
     const wrapperRef = useRef()
