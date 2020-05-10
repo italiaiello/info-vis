@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import PieChart from './components/PieChart/PieChart'
 import LineGraph from './components/LineGraph/LineGraph'
 import AnimatedBarGraph from './components/BarGraph/BarGraph'
-import GeoChart from './components/GeoChart/GeoChartUS'
+import GeoChart from './components/GeoChart/GeoChart'
 import dataForUS from './json/states.geo.json'
 import StackedBarGraph from './components/StackedBarGraph/StackedBarGraph'
 

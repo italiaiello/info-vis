@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { select, geoPath, geoMercator, min, max, scaleLinear } from 'd3'
 import { useResizeObserver } from '../../hooks/useResizeObserver'
+import { updateGeoJsonData } from '../../functions/andrewsFunctions'
 
-const GeoChart = ({ data, property, setProperty }) => {
+const GeoChart = ({ data, shootingsPerState, property }) => {
     const geoChartRef = useRef()
     const wrapperRef = useRef()
     const dimensions = useResizeObserver(wrapperRef)
@@ -11,12 +12,14 @@ const GeoChart = ({ data, property, setProperty }) => {
     useEffect(() => {
         const svg = select(geoChartRef.current)
 
+        const updatedFeaturesData = updateGeoJsonData(data, shootingsPerState)
+
         // use resixed dimensions
         // but fallback on getBoundingClientRect if there are no dimensions yet
         const { width, height } = dimensions || wrapperRef.current.getBoundingClientRect()
 
-        const minProp = min(data.features, feature => feature.properties[property])
-        const maxProp = max(data.features, feature => feature.properties[property])
+        const minProp = min(updatedFeaturesData, feature => feature.properties[property])
+        const maxProp = max(updatedFeaturesData, feature => feature.properties[property])
         const colorScale = scaleLinear()
             .domain([minProp, maxProp])
             .range(["#ccc", "red"])
@@ -43,7 +46,10 @@ const GeoChart = ({ data, property, setProperty }) => {
             )
             .transition()
             .duration(1000)
-            .attr("fill", feature => colorScale(feature.properties[property]))
+            .attr("fill", feature => feature.properties[property] !== undefined 
+                                        ? colorScale(feature.properties[property])
+                                        : "light"
+                                        )
             .attr("d", feature => pathGenerator(feature))
 
         
@@ -54,14 +60,13 @@ const GeoChart = ({ data, property, setProperty }) => {
             .join("text")
             .attr("class", "label")
             .text(
-                feature => feature &&
-                `${feature.properties.name}: ${feature.properties[property].toLocaleString()}`
+                feature => feature && 
+                `${feature.properties.NAME}: ${feature.properties[property]}`
             )
             .attr("x", 10)
             .attr("y", 25)
 
-    }, [data, dimensions, property, selectedCountry])
-
+    }, [data, dimensions, property, selectedCountry, shootingsPerState])
     
 
     return (
