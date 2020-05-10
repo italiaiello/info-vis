@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import PieChart from './components/PieChart/PieChart'
 import LineGraph from './components/LineGraph/LineGraph'
 import AnimatedBarGraph from './components/BarGraph/BarGraph'
-import GeoChart from './components/GeoChart/GeoChart'
-import data from './json/worldMap.geo.json'
+import GeoChart from './components/GeoChart/GeoChartUS'
+import dataForUS from './json/states.geo.json'
 import StackedBarGraph from './components/StackedBarGraph/StackedBarGraph'
 
 import { csv } from 'd3'
@@ -13,8 +13,11 @@ import massShootingCauses from './data/Andrew/causeForHighFatalities.csv'
 import culpritDemographics from './data/Andrew/culpritDemographics.csv'
 import shooterOccupations from './data/Andrew/militaryShooters.csv' 
 
-import { filterCasualtyData, filterCulpritDemographicData, filterShootingTargetData, filterMilitaryCulprits } from './functions/andrewsFunctions'
-
+import {  filterCasualtyData, 
+          filterCulpritDemographicData, 
+          filterShootingTargetData, 
+          filterMilitaryCulprits, 
+          filterGeoChart  } from './functions/andrewsFunctions'
 
 import './App.css';
 
@@ -23,8 +26,9 @@ function App() {
   // Line graph data
   const [lineGraphData, setLineGraphData] = useState([20, 30, 45, 60, 20, 65, 75])
 
-  // GeoChart state
-  const [property, setProperty] = useState("pop_est")
+
+  // GeoChart Data
+  const [shootingsPerState, setShootingsPerState] = useState({})
 
   // PieChart Data
   const [pieChartData, setPieChartData] = useState({})
@@ -64,8 +68,13 @@ function App() {
     // Filtering data for pie chart about the targets for mass shootings
     csv(allMassShootings).then(data => {
       // Created a method (see functions folder) that extracts the data required
-      const dataReceived = filterShootingTargetData(data)
-      setPieChartData(dataReceived)
+      const dataForPieChart = filterShootingTargetData(data)
+      setPieChartData(dataForPieChart)
+
+      // Geo Chart Data
+      const dataForShootings = filterGeoChart(data)
+      setShootingsPerState(dataForShootings)
+
     })
 
     csv(shooterOccupations).then(data => {
@@ -73,21 +82,16 @@ function App() {
       const dataReceived = filterMilitaryCulprits(data)
       setOccupationsData(dataReceived)
     })
+
+    // updating GeoJson data with shootings per state
+    
+
   }, [])
 
   return (
     <section className="graphs">
-      <h2>World Map with d3-geo</h2>
-      <GeoChart data={data} property={property} />
-      <h2>Select property to highlight</h2>
-      <select
-          value={property}
-          onChange={event => setProperty(event.target.value)}
-      >
-          <option value="pop_est">Population</option>
-          <option value="name_len">Name length</option>
-          <option value="gdp_md_est">GDP</option>
-      </select>
+      <h2>Number of Mass Shootings in the U.S. Per State  </h2>
+      <GeoChart data={dataForUS} shootingsPerState={shootingsPerState} property={"shootings"} />
       <br />
       <br />
       <PieChart pieChartData={pieChartData} innerRadius={0} outerRadius={150} />

@@ -173,3 +173,39 @@ export const filterMilitaryCulprits = (data) => {
     return finalData
 
 }
+
+// Provides us with how many shootings occurred per state
+export const filterGeoChart = (data) => {
+    const shootingsPerState = {}
+
+    // Loop through each row of the dataset and count how 
+    // many times each state appears
+    for (let i = 0; i < data.length; i++) {
+        const state = data[i].State
+        if (shootingsPerState[state] === undefined) {
+            shootingsPerState[state] = 1
+        } else {
+            shootingsPerState[state] += 1
+        }
+    }
+
+    return shootingsPerState
+}
+
+export const updateGeoJsonData = (geoJson, data) => {
+    // Make a copy of the geoJson data
+    const updatedData = [...geoJson.features]
+
+    // Add shooting data to the respective U.S. state properties
+    for (let i = 0; i < updatedData.length; i++) {
+        const state = updatedData[i].properties.NAME
+        if (data[state] === undefined) {
+            updatedData[i].properties["shootings"] = 0
+        } else {
+            updatedData[i].properties["shootings"] = data[state]
+        }
+        
+    }
+
+    return updatedData
+}
