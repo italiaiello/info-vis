@@ -199,3 +199,12 @@ export const updateGeoJsonData = (geoJson, data) => {
 
     return updatedData
 }
+
+export const filterStackedBarGraph = (data, property, range) => {
+    const startOfRange = range[0]
+    const endOfRange = range[1]
+    const filteredData = data.filter(object =>  object[property] >= startOfRange &&
+                                                object[property] <= endOfRange)
+
+    return filteredData
+}

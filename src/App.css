@@ -66,3 +66,48 @@ button {
 .barGraph svg {
   height: 300px;
 }
+
+/* Range Sliders */
+
+.rangeSliders {
+  margin-top: 30px;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.sliderContainer {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 80%;
+  height: 7px;
+  outline: none;
+  background-color: black;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  z-index: 3;
+  position: relative;
+  border-radius: 50%;
+  background-color: pink;
+  width: 20px;
+  height: 20px;
+}
+
+.sliderValue {
+  width: 20%;
+  padding: 10px;
+}

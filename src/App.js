@@ -84,11 +84,33 @@ function App() {
       const dataReceived = filterMilitaryCulprits(data)
       setOccupationsData(dataReceived)
     })
-
-    // updating GeoJson data with shootings per state
     
 
   }, [])
+
+  // State for filtering stacked bar chart
+  // const [startYear, setStartYear] = useState("1966")
+  // const [endYear, setEndYear] = useState("2017")
+  // const [range, setRange] = useState(["1966", "2017"])
+  
+  // const updateRange = () => {
+  //   if (startYear > endYear) {
+  //     setRange([endYear, startYear])
+  //   } else {
+  //     setRange([startYear, endYear])
+  //   }
+    
+  // }
+
+  // const onStartYearChange = (e) => {
+  //   setStartYear(e.target.value)
+  // }
+
+  // const onEndYearChange = (e) => {
+  //   setEndYear(e.target.value)
+  // }
+
+
 
   return (
     <section className="graphs">

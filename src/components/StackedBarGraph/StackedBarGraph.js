@@ -1,11 +1,33 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { select, scaleBand, axisBottom, axisLeft, stack, max, scaleLinear } from 'd3';
+import { filterStackedBarGraph } from '../../functions/andrewsFunctions'
 
 import { useResizeObserver } from '../../hooks/useResizeObserver'
 
-// https://www.youtube.com/watch?v=bXN9anQN_kQ&list=PLDZ4p-ENjbiPo4WH7KdHjh_EMI7Ic8b2B&index=16
+// Tutorial: https://www.youtube.com/watch?v=bXN9anQN_kQ&list=PLDZ4p-ENjbiPo4WH7KdHjh_EMI7Ic8b2B&index=16
 
 const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
+
+    const [startValue, setStartValue] = useState("1966")
+    const [endValue, setEndValue] = useState("2017")
+    const [range, setRange] = useState(["1966", "2017"])
+    
+    const updateRange = () => {
+        if (startValue > endValue) {
+        setRange([endValue, startValue])
+        } else {
+        setRange([startValue, endValue])
+        }
+        
+    }
+
+    const onStartValueChange = (e) => {
+        setStartValue(e.target.value)
+    }
+
+    const onEndValueChange = (e) => {
+        setEndValue(e.target.value)
+    }
 
     // Pointers for the svg and wrapping article element respectively
     const stackedGraphRef = useRef()
@@ -22,15 +44,21 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
 
         // If no dimensions or data is provided, the function will stop
         if (!dimensions || !stackedBarGraphData.length) return
+        if (range === undefined) return
+
+        // Filtering data according to startValue and endValue
+        const dataForGraph = filterStackedBarGraph(stackedBarGraphData, "year", range)
+        console.log(dataForGraph)
+
 
         const stackGenerator = stack().keys(keys)
-        const layers = stackGenerator(stackedBarGraphData)
+        const layers = stackGenerator(dataForGraph)
         const yAxisRange = [0, max(layers, layer => max(layer, sequence => sequence[1]))]
 
         // Scales
         // This helps divide the width of the individual stacks evenly across the width of the svg
         const xScale = scaleBand()
-            .domain(stackedBarGraphData.map(data => data.year))
+            .domain(dataForGraph.map(data => data.year))
             .range([0, width])
             .padding(0.25)
         
@@ -68,23 +96,50 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
             .data(layer => layer)
             .join("rect")
             .attr("class", "dataRect")
+            .transition()
+            .duration(1500)
             .attr("x", sequence => xScale(sequence.data.year))
             .attr("width", xScale.bandwidth())
             .attr("y", sequence => yScale(sequence[1]))
             .attr("height", sequence => yScale(sequence[0]) - yScale(sequence[1]))
 
 
-    }, [stackedBarGraphData, dimensions, keys, colors])
+    }, [stackedBarGraphData, dimensions, keys, colors, range])
 
     return (
-    <article className="graph stackedGraph">
-        <div ref={wrapperRef}>
-            <svg ref={stackedGraphRef}>
-                <g className="x-axis" />
-                <g className="y-axis" />
-            </svg>
-        </div>
-        
+    <article>
+        <article className="graph stackedGraph">
+            <div ref={wrapperRef}>
+                <svg ref={stackedGraphRef}>
+                    <g className="x-axis" />
+                    <g className="y-axis" />
+                </svg>
+            </div>
+            
+        </article>
+        <article className="rangeSliders">
+            <div className="sliderContainer">
+                <input  className="slider" 
+                        type="range"
+                        min={"1966"} 
+                        max={"2017"}
+                        value={startValue}
+                        onChange={onStartValueChange}
+                />
+                <span className="sliderValue">{startValue}</span>
+            </div>
+            <div className="sliderContainer">
+                <input  className="slider" 
+                        type="range"
+                        min={"1966"} 
+                        max={"2017"}
+                        value={endValue}
+                        onChange={onEndValueChange}
+                />
+                <span className="sliderValue">{endValue}</span>
+            </div>
+        </article>
+        <button onClick={updateRange}>Update Graph</button>
     </article>
     )
 }
