@@ -17,26 +17,32 @@ const AnimatedBarGraph = ({ barGraphData }) => {
         const svg = select(barGraphRef.current)
 
         if (!dimensions) return
-        if (!barGraphData.labels || !barGraphData.values) return
+
+        const dataKeys = Object.keys(barGraphData)
+        const dataValues = Object.values(barGraphData)
+
+        if (dataKeys.length === 0 || dataValues.length === 0) return
+
 
         // Setting up the x and y scales, which help us spread each point eveny across
         // the width and height of the svg respectively
         const xScale = scaleBand()
-            .domain(barGraphData.labels)
+            .domain(dataKeys)
             .range([0, dimensions.width])
             .padding(0.5)
 
             // Finding the max value from the data and using it as the max for the y axis
-        const maxYAxisValue = barGraphData.values.reduce((sum, value) => sum += value)
+        const maxYAxisValue = dataValues.reduce((sum, value) => sum += value)
         const yScale = scaleLinear()
             .domain([0, maxYAxisValue])
             .range([dimensions.height, 0])
 
         // Setting up the color scale
         // I mapped colors to the lowest and highest value of the data
-        const maxDataValue = Math.max(...barGraphData.values)
+        const maxDataValue = Math.max(...dataValues)
         const colorScale = scaleLinear()
             .domain([0, maxDataValue])
+            // Change colors here
             .range(["#ff8780", "#ff473d"])
             .clamp(true)
 
@@ -56,11 +62,11 @@ const AnimatedBarGraph = ({ barGraphData }) => {
         // Displaying the individual bars onto the graph
         svg
             .selectAll(".bar")
-            .data(barGraphData.values)
+            .data(dataValues)
             .join("rect")
             .attr("class", "bar")
             .style("transform", "scale(1, -1)")
-            .attr("x", (value, index) => xScale(barGraphData.labels[index]))
+            .attr("x", (value, index) => xScale(dataKeys[index]))
             .attr("y", -dimensions.height)
             .attr("width", xScale.bandwidth())
             .on("mouseenter", (value, index) => {

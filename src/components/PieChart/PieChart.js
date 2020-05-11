@@ -18,11 +18,14 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
     useEffect(() => {
         const svg = select(pieChartRef.current)
 
-        // If no dimensions or data is provided, the function will exit
-        if (!dimensions) return
-        if(pieChartData === undefined) return
+        // If no dimensions or props are provided, the function will exit
+        if (!dimensions || pieChartData === undefined) return
         if (innerRadius === undefined || outerRadius === undefined) return
 
+
+        // Pie chart can only use numerical values, so we have to split up the data
+        // into two variables. One will hold all the titles or keys, and the other
+        // will hold all the values
         const pieChartKeys = Object.keys(pieChartData)
         const pieChartValues = Object.values(pieChartData)
         
@@ -37,16 +40,17 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
 
         const colorScale = scaleOrdinal()
             .domain(pieChartValues)
+            // Change colors here
             .range(["red", "green", "blue"]);
         
         // Creating the pie chart
-        // Gave each slice a class of value + the number of victims
-        // E.g. value157
-        // This will help us target specific slices
         svg
             .selectAll(".slice")
             .data(instructions)
             .join("path")
+            // Gave each slice a class of value + the number of victims
+            // E.g. value157
+            // This will help us target specific slices
             .attr("class", instruction => `slice value${instruction.value}`)
             .attr("stroke", "black")
             .attr("fill", instruction => colorScale(instruction.value))
@@ -73,13 +77,13 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
 
                 if (labelIndex < 0) return
 
-                // Capitalise first letter of label and attach it to the rest of the word
+                // Capitalises first letter of label and attaches it to the rest of the word
                 const upperCaseLetter = pieChartKeys[labelIndex].charAt(0).toUpperCase()
                 const restOfWord = pieChartKeys[labelIndex].substring(1)
                 
                 pieChartKeys[labelIndex] = `${upperCaseLetter}${restOfWord}`
 
-                // Create tooltip
+                // Creates tooltip
                 svg
                     .selectAll(".tooltip")
                     .data([data])
@@ -89,16 +93,16 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
                     .attr("y", dimensions.height / 2)
                     .text(`${pieChartKeys[labelIndex]}: ${pieChartValues[labelIndex]}`)
                 
-                // Select the slice we are currently hovering over and change the color
+                // Selects the slice we are currently hovering over and change the color
                 svg
                     .select(`.value${data.value}`)
                     .attr("fill", "#3d3d3d")
                 
             })
             .on("mouseleave", (data) => {
-                // Remove tooltip
+                // Removes tooltip
                 svg.select(".tooltip").remove()
-                // Revert color back to grey
+                // Reverts colors back to the original ones (red, green, blue)
                 svg.selectAll(`.slice`).attr("fill", data => colorScale(data.value))
             })
 

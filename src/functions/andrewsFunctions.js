@@ -19,17 +19,7 @@ export const filterCasualtyData = (data) => {
 
     causesFreq["unknown"] = 323 - data.length
 
-    const keys = Object.keys(causesFreq)
-    const totalValues = Object.values(causesFreq)
-
-    const finalData = {
-        labels: keys,
-        values: totalValues
-    }
-
-    // Returns only the total number of victims for each category
-    // So we will just have an array of numbers
-    return finalData
+    return causesFreq
 }
 
 export const filterCulpritDemographicData = (data) => {

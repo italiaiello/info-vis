@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from 'react';
 
 import PieChart from './components/PieChart/PieChart'
-import LineGraph from './components/LineGraph/LineGraph'
-import AnimatedBarGraph from './components/BarGraph/BarGraph'
+import BarGraph from './components/BarGraph/BarGraph'
 import GeoChart from './components/GeoChart/GeoChart'
 import dataForUS from './json/states.geo.json'
 import StackedBarGraph from './components/StackedBarGraph/StackedBarGraph'
 
 import { csv } from 'd3'
+// Import your data here so that all the data is one place
+// The name in blue can be whatever you like
 import allMassShootings from './data/Andrew/mass_shootings.csv'
 import massShootingCauses from './data/Andrew/causeForHighFatalities.csv'
 import culpritDemographics from './data/Andrew/culpritDemographics.csv'
 import shooterOccupations from './data/Andrew/militaryShooters.csv'
 
-
+// All filter and update functions (from the andrewsFunctions.js file)
+// If you make a separate, make a new import, don't append it to this one as
+// it won't find it in the andrewsFunctions.js file
 import {  filterCasualtyData, 
           filterCulpritDemographicData, 
           filterShootingTargetData, 
           filterMilitaryCulprits, 
-          filterGeoChart  } from './functions/andrewsFunctions'
+          filterGeoChart,
+          updateGeoJsonData  } from './functions/andrewsFunctions'
 
 import './App.css';
 
 function App() {
-
-  // Line graph data
-  const [lineGraphData, setLineGraphData] = useState([20, 30, 45, 60, 20, 65, 75])
-
-
+  
   // GeoChart Data
   const [shootingsPerState, setShootingsPerState] = useState({})
 
@@ -67,6 +67,7 @@ function App() {
     })
 
     // Filtering data for pie chart about the targets for mass shootings
+    // Also filtering data for the GeoChart
     csv(allMassShootings).then(data => {
       // Created a method (see functions folder) that extracts the data required
       const dataForPieChart = filterShootingTargetData(data)
@@ -91,10 +92,14 @@ function App() {
 
   return (
     <section className="graphs">
-      <h2>Number of Mass Shootings in the U.S. Per State  </h2>
-      <GeoChart data={dataForUS} shootingsPerState={shootingsPerState} property={"shootings"} />
+      <h2>Number of Mass Shootings in the U.S. Per State  </h2> 
+      <GeoChart data={dataForUS} filteredData={shootingsPerState} property={"shootings"} updateGeoJsonData={updateGeoJsonData} />
       <br />
       <br />
+                {/* Data goes here 
+                 The name in brackets should be what you named your data 
+                 This one is called pieChartData because I had to filter my 
+                 data first */}
       <PieChart pieChartData={pieChartData} innerRadius={0} outerRadius={150} />
       <br />
       <br />
@@ -106,18 +111,21 @@ function App() {
       <br />
       <h2>Number of U.S. Mass Shootings per year for each age group </h2>
       <h3>{"Kids and Teenagers (red), Young Adults (yellow), Adults (green), Middle-Aged (blue)"}</h3>
+                        {/* Add data here */}
       <StackedBarGraph  stackedBarGraphData={culpritData} 
+                        // Make a variable with all the keys as shown below
+                        // Or write them in like this:
+                        // keys={["key1", "key2", "key3" ... etc]}
                         keys={culpritKeys}
+                        // Same thing as above
                         colors={culpritColors}
       />
       <br />
       <br />
       <br />
       <h2>Causes/motives for mass shootings</h2>
-      <AnimatedBarGraph barGraphData={barGraphData} />
-      <br/>
-      <br/>
-      <LineGraph lineGraphData={lineGraphData} setLineGraphData={setLineGraphData} />
+                 {/* Add data here */}
+      <BarGraph barGraphData={barGraphData} />
       <br/>
       <br/>
     </section>

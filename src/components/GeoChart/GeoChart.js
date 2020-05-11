@@ -1,11 +1,12 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { select, geoPath, geoMercator, min, max, scaleLinear } from 'd3'
 import { useResizeObserver } from '../../hooks/useResizeObserver'
-import { updateGeoJsonData } from '../../functions/andrewsFunctions'
 
-// https://exploratory.io/map
+// Where I got the GeoMap from: https://exploratory.io/map
 
-const GeoChart = ({ data, shootingsPerState, property }) => {
+
+                    // These are what was passed in from App.js
+const GeoChart = ({ data, filteredData, property, updateGeoJsonData }) => {
     const geoChartRef = useRef()
     const wrapperRef = useRef()
     const dimensions = useResizeObserver(wrapperRef)
@@ -14,7 +15,7 @@ const GeoChart = ({ data, shootingsPerState, property }) => {
     useEffect(() => {
         const svg = select(geoChartRef.current)
 
-        const updatedFeaturesData = updateGeoJsonData(data, shootingsPerState)
+        const updatedFeaturesData = updateGeoJsonData(data, filteredData)
 
         // use resixed dimensions
         // but fallback on getBoundingClientRect if there are no dimensions yet
@@ -22,8 +23,10 @@ const GeoChart = ({ data, shootingsPerState, property }) => {
 
         const minProp = min(updatedFeaturesData, feature => feature.properties[property])
         const maxProp = max(updatedFeaturesData, feature => feature.properties[property])
+        
         const colorScale = scaleLinear()
             .domain([minProp, maxProp])
+            // Change colors here
             .range(["#ccc", "red"])
 
         // Projects coordinates on a 2D plane
@@ -50,6 +53,7 @@ const GeoChart = ({ data, shootingsPerState, property }) => {
             .duration(1000)
             .attr("fill", feature => feature.properties[property] !== undefined 
                                         ? colorScale(feature.properties[property])
+                                        // Change color for undefined values
                                         : "light"
                                         )
             .attr("d", feature => pathGenerator(feature))
@@ -68,7 +72,7 @@ const GeoChart = ({ data, shootingsPerState, property }) => {
             .attr("x", 10)
             .attr("y", 25)
 
-    }, [data, dimensions, property, selectedCountry, shootingsPerState])
+    }, [data, dimensions, property, selectedCountry, filteredData, updateGeoJsonData])
     
 
     return (
