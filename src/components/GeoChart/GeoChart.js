@@ -53,7 +53,8 @@ const GeoChart = ({ data, victimsPerState, property }) => {
                     .attr("class", "geoTooltip")
                     .attr("x", event.pageX)
                     .attr("y", event.pageY - 100)
-                    .text(`${feature.properties.NAME}: ${feature.properties.shootings} Shootings`)
+                    .text(`${feature.properties.NAME}: ${feature.properties[property]} 
+                            ${property.replace(/([a-z0-9])([A-Z])/g, '$1 $2').toLowerCase()}`)
                 
                 // Selects the slice we are currently hovering over and change the color
                 svg

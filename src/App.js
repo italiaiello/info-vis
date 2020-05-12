@@ -42,6 +42,7 @@ function App() {
   const [victimsPerState, setVictimsPerState] = useState([])
   const [property, setProperty] = useState("shootings")
 
+
   // PieChart Data
   const [pieChartData, setPieChartData] = useState({})
   const [occupationsData, setOccupationsData] = useState({})
@@ -62,7 +63,7 @@ function App() {
     adults: "#40c04f", 
     middleAged: "#4165a4"
   }
-
+  
 
   useEffect(() => {
     // Filtering the data and preparing it for the bar graph about causes/motives
@@ -116,16 +117,16 @@ function App() {
       <GeoChart data={dataForUS} 
                 // shootingsPerState={shootingsPerState}
                 victimsPerState={victimsPerState}
-                property={property} 
+                property={property}
       />
       <br />
       <br />
       <select className="dropdown" onChange={(e) => setProperty(e.target.value)}>
-        <option value="shootings">Shootings</option>
-        <option value="fatalities">Fatalities</option>
-        <option value="injuries">Injuries</option>
-        <option value="policemenKilled">Policemen Killed</option>
-        <option value="totalVictims">Total Victims</option>
+        <option value="shootings" label="Shootings">Shootings</option>
+        <option value="fatalities" label="Fatalities">Fatalities</option>
+        <option value="injuries" label="Injuries">Injuries</option>
+        <option value="policemenKilled" label="Policemen Killed">Policemen Killed</option>
+        <option value="totalVictims" label="Total Victims">Total Victims</option>
       </select>
       <br />
       <br />
