@@ -4,7 +4,7 @@ import { select, axisBottom, axisRight, scaleLinear, scaleBand } from 'd3';
 import { useResizeObserver } from '../../hooks/useResizeObserver'
 
 
-const AnimatedBarGraph = ({ barGraphData }) => {
+const AnimatedBarGraph = ({ barClassName, barGraphData }) => {
     
     const barGraphRef = useRef()
     const wrapperRef = useRef()
@@ -61,10 +61,10 @@ const AnimatedBarGraph = ({ barGraphData }) => {
 
         // Displaying the individual bars onto the graph
         svg
-            .selectAll(".bar")
+            .selectAll(`.${barClassName}`)
             .data(dataValues)
             .join("rect")
-            .attr("class", "bar")
+            .attr("class", barClassName)
             .style("transform", "scale(1, -1)")
             .attr("x", (value, index) => xScale(dataKeys[index]))
             .attr("y", -dimensions.height)
@@ -74,7 +74,7 @@ const AnimatedBarGraph = ({ barGraphData }) => {
                 // I selected all the elements with the class '.bar'
                 // Then, by using 'index', I can select the 'x' attribute of a specific bar
                 // This value is used further down to centre the tooltip text
-                let xValueOfRect = +document.querySelectorAll(".bar")[index].getAttribute("x")
+                let xValueOfRect = +document.querySelectorAll(`.${barClassName}`)[index].getAttribute("x")
                 svg
                     .selectAll(".tooltip")
                     .data([value])
@@ -93,7 +93,7 @@ const AnimatedBarGraph = ({ barGraphData }) => {
             .attr("fill", colorScale)
             .attr("height", value => dimensions.height - yScale(value))
 
-    }, [barGraphData, dimensions])
+    }, [barGraphData, barClassName, dimensions])
 
     return (
         <article className="graph barGraph">

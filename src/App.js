@@ -17,6 +17,10 @@ import shooterOccupations from './data/Andrew/militaryShooters.csv'
 // DC's Data
 import victimsOfShootings from './data/DC/victimsPerState.csv'
 
+// Nick's Data
+import mentalHealthIssues from './data/Nick/mentalHealthIssues.csv'
+import noMentalIssues from './data/Nick/noMentalHealthIssues.csv'
+
 // All filter and update functions (from the andrewsFunctions.js file)
 // If you make a separate, make a new import, don't append it to this one as
 // it won't find it in the andrewsFunctions.js file
@@ -26,6 +30,8 @@ import {  filterCasualtyData,
           filterMilitaryCulprits } from './functions/filterAndrewData'
 
 import { filterVictimsData } from './functions/filterDCData'
+
+import { formatNickData } from './functions/formatNickData'
 
 import './App.css';
 
@@ -42,6 +48,8 @@ function App() {
 
   // Bar graph data
   const [barGraphData, setBarGraphData] = useState({})
+  const [mentalHealthData, setMentalHealthData] = useState({})
+  const [mentalIllnessAbsentData, setMentalIllnessAbsentData] = useState({})
 
   // Culprit Data for Stacked Bar Graph
   const [culpritData, setCulpritData] = useState({})
@@ -88,6 +96,16 @@ function App() {
     csv(victimsOfShootings).then(data => {
       const dataReceived = filterVictimsData(data)
       setVictimsPerState(dataReceived)
+    })
+
+    csv(mentalHealthIssues).then(data => {
+      const dataReceived = formatNickData(data)
+      setMentalHealthData(dataReceived)
+    })
+
+    csv(noMentalIssues).then(data => {
+      const dataReceived = formatNickData(data)
+      setMentalIllnessAbsentData(dataReceived)
     })
 
   }, [])
@@ -140,7 +158,19 @@ function App() {
       <br />
       <h2>Causes/motives for mass shootings</h2>
                  {/* Add data here */}
-      <BarGraph barGraphData={barGraphData} />
+      <BarGraph barClassName={"motives"} barGraphData={barGraphData} />
+      <br/>
+      <br/>
+      <h2>Nick's Graphs</h2>
+      <h3>How many shooters had a mental health issue</h3>
+
+      <PieChart pieChartData={{ yes: 106, no: 93, unknown: 124 }} innerRadius={0} outerRadius={150} />
+      <br/>
+      <br/>
+      <BarGraph barClassName={"mhIssue"} barGraphData={mentalHealthData} />
+      <br/>
+      <br/>
+      <BarGraph barClassName={"noMHIssue"} barGraphData={mentalIllnessAbsentData} />
       <br/>
       <br/>
     </section>
