@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react'
-import { select, geoPath, geoMercator, min, max, scaleLinear } from 'd3'
+import { select, geoPath, geoMercator, min, max, scaleLinear, event } from 'd3'
 import { useResizeObserver } from '../../hooks/useResizeObserver'
 import { updateGeoJsonData } from '../../functions/filterAndrewData'
 
@@ -45,6 +45,28 @@ const GeoChart = ({ data, victimsPerState, property }) => {
             .data(data.features)
             .join("path")
             .attr("class", "country")
+            .on("mouseenter", feature => {
+                svg
+                    .selectAll(".geoTooltip")
+                    .data([feature])
+                    .join(enter => enter.append("text"))
+                    .attr("class", "geoTooltip")
+                    .attr("x", event.pageX)
+                    .attr("y", event.pageY - 100)
+                    .text(`${feature.properties.NAME}: ${feature.properties.shootings} Shootings`)
+                
+                // Selects the slice we are currently hovering over and change the color
+                svg
+                    .select(`.value${data.value}`)
+                    .attr("fill", "#3d3d3d")
+
+            })
+            .on("mouseleave", feature => {
+                // Removes tooltip
+                svg.select(".geoTooltip").remove()
+                // Reverts colors back to the original ones (red, green, blue)
+                svg.selectAll(`.slice`).attr("fill", feature => colorScale(feature.value))
+            })
             .on("click", feature => {
                 console.log(feature)
                 setSelectedCountry(selectedCountry === feature ? null : feature)
@@ -68,7 +90,8 @@ const GeoChart = ({ data, victimsPerState, property }) => {
             .attr("class", "label")
             .text(
                 feature => feature && 
-                `${feature.properties.NAME}: ${feature.properties[property]}`
+                `${feature.properties.NAME} Statistics
+                Shootings: ${feature.properties.shootings}`
             )
             .attr("x", 10)
             .attr("y", 25)
