@@ -10,16 +10,6 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
 
     const [startValue, setStartValue] = useState("1966")
     const [endValue, setEndValue] = useState("2017")
-    const [range, setRange] = useState(["1966", "2017"])
-    
-    const updateRange = () => {
-        if (startValue > endValue) {
-        setRange([endValue, startValue])
-        } else {
-        setRange([startValue, endValue])
-        }
-        
-    }
 
     const onStartValueChange = (e) => {
         setStartValue(e.target.value)
@@ -44,11 +34,15 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
 
         // If no dimensions or data is provided, the function will stop
         if (!dimensions || !stackedBarGraphData.length) return
-        if (range === undefined) return
 
         // Filtering data according to startValue and endValue
-        const dataForGraph = filterStackedBarGraph(stackedBarGraphData, "year", range)
-        console.log(dataForGraph)
+        // If the user makes the starting value higher than the ending value,
+        // I have to swap them around so that the filter still works
+        const dataForGraph = startValue > endValue 
+                            ? 
+                            filterStackedBarGraph(stackedBarGraphData, "year", endValue, startValue)
+                            :
+                            filterStackedBarGraph(stackedBarGraphData, "year", startValue, endValue)
 
 
         const stackGenerator = stack().keys(keys)
@@ -104,7 +98,7 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
             .attr("height", sequence => yScale(sequence[0]) - yScale(sequence[1]))
 
 
-    }, [stackedBarGraphData, dimensions, keys, colors, range])
+    }, [stackedBarGraphData, dimensions, keys, colors, startValue, endValue])
 
     return (
     <article>
@@ -139,7 +133,6 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
                 <span className="sliderValue">{endValue}</span>
             </div>
         </article>
-        <button onClick={updateRange}>Update Graph</button>
     </article>
     )
 }

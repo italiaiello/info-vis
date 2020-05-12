@@ -56,11 +56,6 @@ button {
   height: 200px
 }
 
-.dataRect:hover {
-  fill: black;
-  cursor: pointer;
-}
-
 /* Bar Graph */
 
 .barGraph svg {
