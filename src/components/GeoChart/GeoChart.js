@@ -1,12 +1,13 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { select, geoPath, geoMercator, min, max, scaleLinear } from 'd3'
 import { useResizeObserver } from '../../hooks/useResizeObserver'
+import { updateGeoJsonData } from '../../functions/filterAndrewData'
 
 // Where I got the GeoMap from: https://exploratory.io/map
 
 
                     // These are what was passed in from App.js
-const GeoChart = ({ data, filteredData, property, updateGeoJsonData }) => {
+const GeoChart = ({ data, victimsPerState, property }) => {
     const geoChartRef = useRef()
     const wrapperRef = useRef()
     const dimensions = useResizeObserver(wrapperRef)
@@ -15,7 +16,7 @@ const GeoChart = ({ data, filteredData, property, updateGeoJsonData }) => {
     useEffect(() => {
         const svg = select(geoChartRef.current)
 
-        const updatedFeaturesData = updateGeoJsonData(data, filteredData)
+        let updatedFeaturesData = updateGeoJsonData(data, victimsPerState)
 
         // use resixed dimensions
         // but fallback on getBoundingClientRect if there are no dimensions yet
@@ -72,7 +73,7 @@ const GeoChart = ({ data, filteredData, property, updateGeoJsonData }) => {
             .attr("x", 10)
             .attr("y", 25)
 
-    }, [data, dimensions, property, selectedCountry, filteredData, updateGeoJsonData])
+    }, [data, dimensions, property, selectedCountry, victimsPerState])
     
 
     return (

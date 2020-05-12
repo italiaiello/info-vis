@@ -1,3 +1,5 @@
+import { bindDCDataToGeoJson } from './filterDCData'
+
 export const filterCasualtyData = (data) => {
     // Extracting the number of victims associated with each cause
     const causesFreq = {}
@@ -164,38 +166,13 @@ export const filterMilitaryCulprits = (data) => {
 
 }
 
-// Provides us with how many shootings occurred per state
-export const filterGeoChart = (data) => {
-    const shootingsPerState = {}
-
-    // Loop through each row of the dataset and count how 
-    // many times each state appears
-    for (let i = 0; i < data.length; i++) {
-        const state = data[i].State
-        if (shootingsPerState[state] === undefined) {
-            shootingsPerState[state] = 1
-        } else {
-            shootingsPerState[state] += 1
-        }
-    }
-
-    return shootingsPerState
-}
-
-export const updateGeoJsonData = (geoJson, data) => {
+export const updateGeoJsonData = (geoJson, victims) => {
     // Make a copy of the geoJson data
-    const updatedData = [...geoJson.features]
+    let updatedData = [...geoJson.features]
 
     // Add shooting data to the respective U.S. state properties
-    for (let i = 0; i < updatedData.length; i++) {
-        const state = updatedData[i].properties.NAME
-        if (data[state] === undefined) {
-            updatedData[i].properties["shootings"] = 0
-        } else {
-            updatedData[i].properties["shootings"] = data[state]
-        }
-        
-    }
+    // This binds DC's data
+    bindDCDataToGeoJson(updatedData, victims)
 
     return updatedData
 }

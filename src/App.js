@@ -14,22 +14,27 @@ import massShootingCauses from './data/Andrew/causeForHighFatalities.csv'
 import culpritDemographics from './data/Andrew/culpritDemographics.csv'
 import shooterOccupations from './data/Andrew/militaryShooters.csv'
 
+// DC's Data
+import victimsOfShootings from './data/DC/victimsPerState.csv'
+
 // All filter and update functions (from the andrewsFunctions.js file)
 // If you make a separate, make a new import, don't append it to this one as
 // it won't find it in the andrewsFunctions.js file
 import {  filterCasualtyData, 
           filterCulpritDemographicData, 
           filterShootingTargetData, 
-          filterMilitaryCulprits, 
-          filterGeoChart,
-          updateGeoJsonData  } from './functions/andrewsFunctions'
+          filterMilitaryCulprits } from './functions/filterAndrewData'
+
+import { filterVictimsData } from './functions/filterDCData'
 
 import './App.css';
 
 function App() {
   
   // GeoChart Data
-  const [shootingsPerState, setShootingsPerState] = useState({})
+  // const [shootingsPerState, setShootingsPerState] = useState({})
+  const [victimsPerState, setVictimsPerState] = useState([])
+  const [property, setProperty] = useState("shootings")
 
   // PieChart Data
   const [pieChartData, setPieChartData] = useState({})
@@ -67,15 +72,10 @@ function App() {
     })
 
     // Filtering data for pie chart about the targets for mass shootings
-    // Also filtering data for the GeoChart
     csv(allMassShootings).then(data => {
       // Created a method (see functions folder) that extracts the data required
       const dataForPieChart = filterShootingTargetData(data)
       setPieChartData(dataForPieChart)
-
-      // Geo Chart Data
-      const dataForShootings = filterGeoChart(data)
-      setShootingsPerState(dataForShootings)
 
     })
 
@@ -84,38 +84,31 @@ function App() {
       const dataReceived = filterMilitaryCulprits(data)
       setOccupationsData(dataReceived)
     })
-    
+
+    csv(victimsOfShootings).then(data => {
+      const dataReceived = filterVictimsData(data)
+      setVictimsPerState(dataReceived)
+    })
 
   }, [])
-
-  // State for filtering stacked bar chart
-  // const [startYear, setStartYear] = useState("1966")
-  // const [endYear, setEndYear] = useState("2017")
-  // const [range, setRange] = useState(["1966", "2017"])
-  
-  // const updateRange = () => {
-  //   if (startYear > endYear) {
-  //     setRange([endYear, startYear])
-  //   } else {
-  //     setRange([startYear, endYear])
-  //   }
-    
-  // }
-
-  // const onStartYearChange = (e) => {
-  //   setStartYear(e.target.value)
-  // }
-
-  // const onEndYearChange = (e) => {
-  //   setEndYear(e.target.value)
-  // }
-
-
 
   return (
     <section className="graphs">
       <h2>Number of Mass Shootings in the U.S. Per State  </h2> 
-      <GeoChart data={dataForUS} filteredData={shootingsPerState} property={"shootings"} updateGeoJsonData={updateGeoJsonData} />
+      <GeoChart data={dataForUS} 
+                // shootingsPerState={shootingsPerState}
+                victimsPerState={victimsPerState}
+                property={property} 
+      />
+      <br />
+      <br />
+      <select className="dropdown" onChange={(e) => setProperty(e.target.value)}>
+        <option value="shootings">Shootings</option>
+        <option value="fatalities">Fatalities</option>
+        <option value="injuries">Injuries</option>
+        <option value="policemenKilled">Policemen Killed</option>
+        <option value="totalVictims">Total Victims</option>
+      </select>
       <br />
       <br />
                 {/* Data goes here 
