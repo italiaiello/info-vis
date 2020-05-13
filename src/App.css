@@ -43,10 +43,6 @@ button {
   overflow: hidden;
 }
 
-text {
-  color: green;
-}
-
 /* Pie Chart */
 
 .pieChart svg {
@@ -109,4 +105,10 @@ text {
 .sliderValue {
   width: 20%;
   padding: 10px;
+}
+
+/* Line Graph */
+
+.lineGraph svg {
+  height: 300px;
 }

@@ -5,10 +5,11 @@ import BarGraph from './components/BarGraph/BarGraph'
 import GeoChart from './components/GeoChart/GeoChart'
 import dataForUS from './json/states.geo.json'
 import StackedBarGraph from './components/StackedBarGraph/StackedBarGraph'
+import LineGraph from './components/LineGraph/LineGraph'
 
+// Converts csv files to an array so we can manipulate them
 import { csv } from 'd3'
-// Import your data here so that all the data is one place
-// The name in blue can be whatever you like
+// Andrew's Data
 import allMassShootings from './data/Andrew/mass_shootings.csv'
 import massShootingCauses from './data/Andrew/causeForHighFatalities.csv'
 import culpritDemographics from './data/Andrew/culpritDemographics.csv'
@@ -21,6 +22,10 @@ import victimsOfShootings from './data/DC/victimsPerState.csv'
 import mentalHealthIssues from './data/Nick/mentalHealthIssues.csv'
 import noMentalIssues from './data/Nick/noMentalHealthIssues.csv'
 
+// Tom's Data
+import numMassShootings from './data/Tom/numMassShootings.csv'
+import numShootingsOnADay from './data/Tom/numShootingsOnADay.csv'
+
 // All filter and update functions (from the andrewsFunctions.js file)
 // If you make a separate, make a new import, don't append it to this one as
 // it won't find it in the andrewsFunctions.js file
@@ -31,7 +36,7 @@ import {  filterCasualtyData,
 
 import { filterVictimsData } from './functions/filterDCData'
 
-import { formatNickData } from './functions/formatNickData'
+import { formatData } from './functions/formatData'
 
 import './App.css';
 
@@ -52,6 +57,10 @@ function App() {
   const [mentalHealthData, setMentalHealthData] = useState({})
   const [mentalIllnessAbsentData, setMentalIllnessAbsentData] = useState({})
 
+  // Line graph data
+  const [numShootingsData, setNumShootingsData] = useState({})
+  const [shootingsOnDayData, setShootingsOnDayData] = useState({})
+
   // Culprit Data for Stacked Bar Graph
   const [culpritData, setCulpritData] = useState({})
   // Data points we want to show in the stacked bar chart
@@ -63,7 +72,7 @@ function App() {
     adults: "#40c04f", 
     middleAged: "#4165a4"
   }
-  
+
 
   useEffect(() => {
     // Filtering the data and preparing it for the bar graph about causes/motives
@@ -100,14 +109,25 @@ function App() {
     })
 
     csv(mentalHealthIssues).then(data => {
-      const dataReceived = formatNickData(data)
+      const dataReceived = formatData(data, "Cause", "NumShooters")
       setMentalHealthData(dataReceived)
     })
 
     csv(noMentalIssues).then(data => {
-      const dataReceived = formatNickData(data)
+      const dataReceived = formatData(data, "Cause", "NumShooters")
       setMentalIllnessAbsentData(dataReceived)
     })
+
+    csv(numMassShootings).then(data => {
+      const dataReceived = formatData(data, "Date", "NumShootings")
+      setNumShootingsData(dataReceived)
+    })
+
+    csv(numShootingsOnADay).then(data => {
+      const dataReceived = formatData(data, "Date", "NumShootings")
+      setShootingsOnDayData(dataReceived)
+    })
+
 
   }, [])
 
@@ -172,6 +192,25 @@ function App() {
       <br/>
       <br/>
       <BarGraph barClassName={"noMHIssue"} barGraphData={mentalIllnessAbsentData} />
+      <br/>
+      <br/>
+      <h2>Tom's Graphs</h2>
+      <h3>Number of Shootings Per Year</h3>
+      <LineGraph  lineGraphData={numShootingsData} 
+                  yAxisMax={30} 
+                  reverseData={false}
+                  xAxisFontSize={10}
+      />
+      <br/>
+      <br/>
+      <h3>Number of Shootings On a Given Day</h3>
+      <LineGraph  lineGraphData={shootingsOnDayData} 
+                  yAxisMax={4.5} 
+                  reverseData={true} 
+                  xAxisFontSize={5}
+      />
+      <br/>
+      <br/>
       <br/>
       <br/>
     </section>

@@ -16,10 +16,17 @@ const AnimatedBarGraph = ({ barClassName, barGraphData }) => {
     useEffect(() => {
         const svg = select(barGraphRef.current)
 
-        if (!dimensions) return
+        const values = Object.values(barGraphData)
 
+        if (!dimensions || values.length === 0) return
+
+        // Finding the max value from the data and using it as the max for the y axis
+        console.log(values)
+        const maxYAxisValue = values.reduce((sum, value) => sum += value)
+        // Splitting the keys and values into two variables
         const dataKeys = Object.keys(barGraphData)
-        const dataValues = Object.values(barGraphData)
+            // Turning values into percentages
+        const dataValues = Object.values(barGraphData).map(value => Math.round((value / maxYAxisValue) * 100))
 
         if (dataKeys.length === 0 || dataValues.length === 0) return
 
@@ -31,10 +38,10 @@ const AnimatedBarGraph = ({ barClassName, barGraphData }) => {
             .range([0, dimensions.width])
             .padding(0.5)
 
-            // Finding the max value from the data and using it as the max for the y axis
-        const maxYAxisValue = dataValues.reduce((sum, value) => sum += value)
+            
+        
         const yScale = scaleLinear()
-            .domain([0, maxYAxisValue])
+            .domain([0, 100])
             .range([dimensions.height, 0])
 
         // Setting up the color scale
@@ -80,7 +87,7 @@ const AnimatedBarGraph = ({ barClassName, barGraphData }) => {
                     .data([value])
                     .join(enter => enter.append("text").attr("y", yScale(value) - 4))
                     .attr("class", "tooltip")
-                    .text(value)
+                    .text(`${value}%`)
                     .attr("x", xValueOfRect + xScale.bandwidth() / 2)
                     .attr("text-anchor", "middle")
                     .transition()

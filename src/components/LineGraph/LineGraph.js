@@ -9,7 +9,7 @@ import {
 
 import { useResizeObserver } from '../../hooks/useResizeObserver'
 
-const LineGraph = ({ lineGraphData, setLineGraphData }) => {
+const LineGraph = ({ lineGraphData, yAxisMax, reverseData, xAxisFontSize, xAxisRotationDeg }) => {
 
     const svgRef = useRef()
     const wrapperRef = useRef()
@@ -19,22 +19,39 @@ const LineGraph = ({ lineGraphData, setLineGraphData }) => {
     useEffect(() => {
     const svg = select(svgRef.current)
 
-    if (!dimensions) return
+    if (!dimensions || lineGraphData === undefined || xAxisFontSize === undefined) return
+    
+    let keys = Object.keys(lineGraphData)
+    let values = Object.values(lineGraphData)
+
+    if (reverseData !== undefined && reverseData === true) {
+        keys = keys.reverse()
+        values = values.reverse()
+    }
 
     const xScale = scaleLinear()
-        .domain([0, lineGraphData.length - 1])
+        .domain([0, keys.length - 1])
         .range([0, dimensions.width])
 
     const yScale = scaleLinear()
-        .domain([0, 150])
+        .domain([0, yAxisMax])
         .range([dimensions.height, 0])
 
     const xAxis = axisBottom(xScale)
-        .ticks(lineGraphData.length)
+        .ticks(keys.length)
+        .tickFormat(index => keys[index])
     svg
         .select(".x-axis")
         .style("transform", `translateY(${dimensions.height}px)`)
         .call(xAxis)
+        .selectAll("text")
+        .attr("y", 0)
+        .attr("x", 9)
+        .attr("dy", ".35em")
+        .attr("transform", "rotate(90)")
+        .style("text-anchor", "start")
+        .style("font-size", xAxisFontSize !== undefined ? `${xAxisFontSize}px` : "")
+
 
     const yAxis = axisRight(yScale)
     svg
@@ -52,14 +69,14 @@ const LineGraph = ({ lineGraphData, setLineGraphData }) => {
     // attribute from line generator above
     svg
         .selectAll(".line")
-        .data([lineGraphData])
+        .data([values])
         .join("path")
         .attr("class", "line")
         .attr("d", myLine)
         .attr("fill", "none")
         .attr("stroke", "blue")
 
-    }, [lineGraphData, dimensions])
+    }, [lineGraphData, reverseData, yAxisMax, xAxisFontSize, dimensions])
 
     return (
     <article className="graph lineGraph">
@@ -68,15 +85,6 @@ const LineGraph = ({ lineGraphData, setLineGraphData }) => {
                 <g className="x-axis" />
                 <g className="y-axis" />
             </svg>
-        </div>
-        <br />
-        <div className="graphButtons">
-            <button onClick={() => setLineGraphData(lineGraphData.map(value => value + 5))}>
-                Update Data
-            </button>
-            <button onClick={() => setLineGraphData(lineGraphData.filter(value => value < 35))}>
-                Filter Data
-            </button>
         </div>
     </article>
     )
