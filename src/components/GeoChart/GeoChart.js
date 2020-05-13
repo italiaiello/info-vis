@@ -6,7 +6,6 @@ import { updateGeoJsonData } from '../../functions/filterAndrewData'
 // Where I got the GeoMap from: https://exploratory.io/map
 
 
-                    // These are what was passed in from App.js
 const GeoChart = ({ data, victimsPerState, property }) => {
     const geoChartRef = useRef()
     const wrapperRef = useRef()
@@ -86,29 +85,30 @@ const GeoChart = ({ data, victimsPerState, property }) => {
                                         : "light"
                                         )
             .attr("d", feature => pathGenerator(feature))
-
-        
-        // Render text
-        svg
-            .selectAll(".label")
-            .data([selectedCountry])
-            .join("text")
-            .attr("class", "label")
-            .text(
-                feature => feature && 
-                `${feature.properties.NAME} Statistics
-                Shootings: ${feature.properties.shootings}`
-            )
-            .attr("x", 10)
-            .attr("y", 25)
-
+            
 
     }, [data, dimensions, property, selectedCountry, victimsPerState])
-    
+
 
     return (
         <div ref={wrapperRef} className="geoChart">
-            <svg ref={geoChartRef}></svg>
+            <svg ref={geoChartRef}>
+            </svg>
+            <div className="geoChartInfo">
+            {
+                selectedCountry !== null &&
+                <div>
+                    <p>{`${selectedCountry.properties.NAME} Statistics:`}</p>
+                    <p>{`Shootings: ${selectedCountry.properties.shootings}`}</p>
+                    <p>{`Fatalities: ${selectedCountry.properties.fatalities}`}</p>
+                    <p>{`Injuries: ${selectedCountry.properties.injuries}`}</p>
+                    <p>{`Poliemen Killed: ${selectedCountry.properties.policemenKilled}`}</p>
+                    <p>{`Total Victims: ${selectedCountry.properties.totalVictims}`}</p>
+                </div>
+                
+                    
+            }
+            </div>
         </div>
     )
 }
