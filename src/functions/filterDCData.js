@@ -30,7 +30,8 @@ const bindVictimsData = (updatedData, victims) => {
 }
 
 const bindTargetsData = (updatedData, targets) => {
-    for (let i = 0; i < updatedData; i++) {
+    console.log("hello", targets, updatedData)
+    for (let i = 0; i < updatedData.length; i++) {
         const state = updatedData[i].properties.NAME
         if (targets[state] === undefined) {
             updatedData[i].properties["targets"] = 0
@@ -38,6 +39,8 @@ const bindTargetsData = (updatedData, targets) => {
             updatedData[i].properties["targets"] = targets[state]
         }
     }
+
+    return updatedData
 }
 
 export const filterVictimsData = (data) => {
@@ -69,7 +72,7 @@ export const filterTargetsData = (data) => {
                 ?
                 {
                     target: row.Target,
-                    victims: row[key]
+                    victims: +row[key]
                 }
                 :
                 {

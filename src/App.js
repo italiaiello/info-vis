@@ -49,6 +49,29 @@ function App() {
   const [targetsPerState, setTargetsPerState] = useState({})
   const [property, setProperty] = useState("shootings")
   const [isTargetsOptionSelected, setIsTargetsOptionSelected] = useState(false)
+  // This holds the index of which target has been selected
+  // This index will help us retrieve the number of victims associated with that target
+  // for a specific state
+  const [selectedTargetIndex, setSelectedTargetIndex] = useState(0)
+
+
+  // For first dropdown
+  const onStatChange = (e) => {
+    if (e.target.value !== "target") {
+      setProperty(e.target.value)
+      setIsTargetsOptionSelected(false)
+    } else {
+      setProperty(e.target.value)
+      setIsTargetsOptionSelected(true)
+    }
+  }
+
+  // For the second dropdown that appears when 'Targets' is selected
+  const onTargetChange = (e) => {
+    const index = document.getElementById("targetSelect").selectedIndex
+    setProperty(e.target.value)
+    setSelectedTargetIndex(index)
+  }
 
 
   // PieChart Data
@@ -154,17 +177,16 @@ function App() {
                 targetsPerState={targetsPerState}
                 property={property}
                 isTargetsOptionSelected={isTargetsOptionSelected}
+                selectedTargetIndex={selectedTargetIndex}
       />
       <br />
       <br />
       <article className="dropdownContainer">
                                                 {/* If 'Targets' isn't selected, then update the value as usual */}
-        <select className="dropdown" onChange={(e) => e.target.value !== "targets" 
-                                                      ? setProperty(e.target.value) 
-                                                      : setIsTargetsOptionSelected(true)}
+        <select className="dropdown" onChange={onStatChange}
         >
           <option value="shootings">Shootings</option>
-          <option value="targets">Targets</option>
+          <option value="target">Targets</option>
           <option value="fatalities">Fatalities</option>
           <option value="injuries">Injuries</option>
           <option value="policemenKilled">Policemen Killed</option>
@@ -173,20 +195,19 @@ function App() {
 
         {
           isTargetsOptionSelected &&
-          <select className="dropdown" onChange={(e) => setProperty(e.target.value)}>
-              {
-                
-                // We need to create a dropdown with all the targets.
-                // Every state has the targets defined, so we can just choose a state
-                // and grab all the targets from there
-                targetsPerState["Alabama"].map((currentTarget, index) => {
-                    let targetString = currentTarget.target.replace(/([a-z0-9])([A-Z])/g, '$1 $2')
-                    targetString = `${targetString.charAt(0).toUpperCase()}${targetString.substring(1)}`
+          <select id="targetSelect" className="dropdown" onChange={onTargetChange}>
+                {
+                    // We need to create a dropdown with all the targets.
+                    // Every state has the targets defined, so we can just choose a state
+                    // and grab all the targets from there
+                    targetsPerState["Alabama"].map((currentTarget, index) => {
+                        let targetString = currentTarget.target.replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+                        targetString = `${targetString.charAt(0).toUpperCase()}${targetString.substring(1)}`
 
-                    return <option key={index} value>{targetString}</option>
+                        return <option onClick={console.log(index)} key={index} value={currentTarget.target} data-index={index}>{targetString}</option>
+                    }
+                    )
                 }
-                )
-            }
           </select>
         }
       </article>
