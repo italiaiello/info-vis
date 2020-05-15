@@ -68,11 +68,13 @@ export const filterTargetsData = (data) => {
                 row[key] !== ""
                 ?
                 {
-                    [row.Target]: +row[key]
+                    target: row.Target,
+                    victims: row[key]
                 }
                 :
                 {
-                    [row.Target]: 0
+                    target: row.Target,
+                    victims: 0
                 }
             )),
             writable : true,
@@ -80,7 +82,6 @@ export const filterTargetsData = (data) => {
             configurable : true
         })}
     )
-                        
     
     return stateTargets
 

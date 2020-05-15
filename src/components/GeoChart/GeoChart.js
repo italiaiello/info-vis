@@ -104,7 +104,7 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
                     <p>{`Shootings: ${selectedCountry.properties.shootings}`}</p>
                     <p>{`Fatalities: ${selectedCountry.properties.fatalities}`}</p>
                     <p>{`Injuries: ${selectedCountry.properties.injuries}`}</p>
-                    <p>{`Poliemen Killed: ${selectedCountry.properties.policemenKilled}`}</p>
+                    <p>{`Policemen Killed: ${selectedCountry.properties.policemenKilled}`}</p>
                     <p>{`Total Victims: ${selectedCountry.properties.totalVictims}`}</p>
                 </div>
                 

@@ -114,6 +114,7 @@ function App() {
 
     csv(targetsFrequency).then(data => {
       const dataReceived = filterTargetsData(data)
+
       setTargetsPerState(dataReceived)
     })
 
@@ -173,11 +174,19 @@ function App() {
         {
           isTargetsOptionSelected &&
           <select className="dropdown" onChange={(e) => setProperty(e.target.value)}>
-            <option value="basketballPl">Shootings</option>
-            <option value="fatalities">Fatalities</option>
-            <option value="injuries">Injuries</option>
-            <option value="policemenKilled">Policemen Killed</option>
-            <option value="totalVictims">Total Victims</option>
+              {
+                
+                // We need to create a dropdown with all the targets.
+                // Every state has the targets defined, so we can just choose a state
+                // and grab all the targets from there
+                targetsPerState["Alabama"].map((currentTarget, index) => {
+                    let targetString = currentTarget.target.replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+                    targetString = `${targetString.charAt(0).toUpperCase()}${targetString.substring(1)}`
+
+                    return <option key={index} value>{targetString}</option>
+                }
+                )
+            }
           </select>
         }
       </article>
