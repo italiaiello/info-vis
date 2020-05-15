@@ -17,6 +17,7 @@ import shooterOccupations from './data/Andrew/militaryShooters.csv'
 
 // DC's Data
 import victimsOfShootings from './data/DC/victimsPerState.csv'
+import targetsFrequency from './data/DC/targetsFrequency.csv'
 
 // Nick's Data
 import mentalHealthIssues from './data/Nick/mentalHealthIssues.csv'
@@ -34,7 +35,7 @@ import {  filterCasualtyData,
           filterShootingTargetData, 
           filterMilitaryCulprits } from './functions/filterAndrewData'
 
-import { filterVictimsData } from './functions/filterDCData'
+import { filterVictimsData, filterTargetsData } from './functions/filterDCData'
 
 import { formatData } from './functions/formatData'
 
@@ -44,8 +45,10 @@ function App() {
   
   // GeoChart Data
   // const [shootingsPerState, setShootingsPerState] = useState({})
-  const [victimsPerState, setVictimsPerState] = useState([])
+  const [victimsPerState, setVictimsPerState] = useState({})
+  const [targetsPerState, setTargetsPerState] = useState({})
   const [property, setProperty] = useState("shootings")
+  const [isTargetsOptionSelected, setIsTargetsOptionSelected] = useState(false)
 
 
   // PieChart Data
@@ -103,26 +106,36 @@ function App() {
       setOccupationsData(dataReceived)
     })
 
+    // Filtering data for geo chart
     csv(victimsOfShootings).then(data => {
       const dataReceived = filterVictimsData(data)
       setVictimsPerState(dataReceived)
     })
 
+    csv(targetsFrequency).then(data => {
+      const dataReceived = filterTargetsData(data)
+      setTargetsPerState(dataReceived)
+    })
+
+    // Filtering data for bar graph about mental health
     csv(mentalHealthIssues).then(data => {
       const dataReceived = formatData(data, "Cause", "NumShooters")
       setMentalHealthData(dataReceived)
     })
 
+    // Filtering data for bar graph about mental health
     csv(noMentalIssues).then(data => {
       const dataReceived = formatData(data, "Cause", "NumShooters")
       setMentalIllnessAbsentData(dataReceived)
     })
 
+    // Filtering data for line graph about number of shootings
     csv(numMassShootings).then(data => {
       const dataReceived = formatData(data, "Date", "NumShootings")
       setNumShootingsData(dataReceived)
     })
 
+    // Filtering data for line graph about number of shootings
     csv(numShootingsOnADay).then(data => {
       const dataReceived = formatData(data, "Date", "NumShootings")
       setShootingsOnDayData(dataReceived)
@@ -137,17 +150,38 @@ function App() {
       <GeoChart data={dataForUS} 
                 // shootingsPerState={shootingsPerState}
                 victimsPerState={victimsPerState}
+                targetsPerState={targetsPerState}
                 property={property}
+                isTargetsOptionSelected={isTargetsOptionSelected}
       />
       <br />
       <br />
-      <select className="dropdown" onChange={(e) => setProperty(e.target.value)}>
-        <option value="shootings" label="Shootings">Shootings</option>
-        <option value="fatalities" label="Fatalities">Fatalities</option>
-        <option value="injuries" label="Injuries">Injuries</option>
-        <option value="policemenKilled" label="Policemen Killed">Policemen Killed</option>
-        <option value="totalVictims" label="Total Victims">Total Victims</option>
-      </select>
+      <article className="dropdownContainer">
+                                                {/* If 'Targets' isn't selected, then update the value as usual */}
+        <select className="dropdown" onChange={(e) => e.target.value !== "targets" 
+                                                      ? setProperty(e.target.value) 
+                                                      : setIsTargetsOptionSelected(true)}
+        >
+          <option value="shootings">Shootings</option>
+          <option value="targets">Targets</option>
+          <option value="fatalities">Fatalities</option>
+          <option value="injuries">Injuries</option>
+          <option value="policemenKilled">Policemen Killed</option>
+          <option value="totalVictims">Total Victims</option>
+        </select>
+
+        {
+          isTargetsOptionSelected &&
+          <select className="dropdown" onChange={(e) => setProperty(e.target.value)}>
+            <option value="basketballPl">Shootings</option>
+            <option value="fatalities">Fatalities</option>
+            <option value="injuries">Injuries</option>
+            <option value="policemenKilled">Policemen Killed</option>
+            <option value="totalVictims">Total Victims</option>
+          </select>
+        }
+      </article>
+      
       <br />
       <br />
                 {/* Data goes here 

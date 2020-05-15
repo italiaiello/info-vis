@@ -6,7 +6,7 @@ import { updateGeoJsonData } from '../../functions/filterAndrewData'
 // Where I got the GeoMap from: https://exploratory.io/map
 
 
-const GeoChart = ({ data, victimsPerState, property }) => {
+const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsOptionSelected }) => {
     const geoChartRef = useRef()
     const wrapperRef = useRef()
     const dimensions = useResizeObserver(wrapperRef)
@@ -15,7 +15,9 @@ const GeoChart = ({ data, victimsPerState, property }) => {
     useEffect(() => {
         const svg = select(geoChartRef.current)
 
-        let updatedFeaturesData = updateGeoJsonData(data, victimsPerState)
+        if (!dimensions || targetsPerState === undefined || victimsPerState === undefined) return
+
+        const updatedFeaturesData = updateGeoJsonData(data, victimsPerState, targetsPerState)
 
         // use resixed dimensions
         // but fallback on getBoundingClientRect if there are no dimensions yet
@@ -55,8 +57,8 @@ const GeoChart = ({ data, victimsPerState, property }) => {
                     .data([feature])
                     .join(enter => enter.append("text"))
                     .attr("class", "geoTooltip")
-                    .attr("x", event.pageX)
-                    .attr("y", event.pageY - 100)
+                    .attr("x", event.pageX - 100)
+                    .attr("y", event.pageY - 25)
                     .text(`${feature.properties.NAME}: ${feature.properties[property]} 
                             ${property.replace(/([a-z0-9])([A-Z])/g, '$1 $2').toLowerCase()}`)
                 
@@ -87,7 +89,7 @@ const GeoChart = ({ data, victimsPerState, property }) => {
             .attr("d", feature => pathGenerator(feature))
             
 
-    }, [data, dimensions, property, selectedCountry, victimsPerState])
+    }, [data, dimensions, property, selectedCountry, victimsPerState, targetsPerState])
 
 
     return (

@@ -1,6 +1,13 @@
 
 // Binding the data from DC's data to the main geoJson object imported into the App.js file
-export const bindDCDataToGeoJson = (updatedData, victims) => {
+export const bindDCDataToGeoJson = (updatedData, victims, targets) => {
+    bindVictimsData(updatedData, victims)
+    bindTargetsData(updatedData, targets)
+
+    return updatedData
+}
+
+const bindVictimsData = (updatedData, victims) => {
     for (let i = 0; i < updatedData.length; i++) {
         const state = updatedData[i].properties.NAME
         if (victims[state] === undefined) {
@@ -22,6 +29,17 @@ export const bindDCDataToGeoJson = (updatedData, victims) => {
     return updatedData
 }
 
+const bindTargetsData = (updatedData, targets) => {
+    for (let i = 0; i < updatedData; i++) {
+        const state = updatedData[i].properties.NAME
+        if (targets[state] === undefined) {
+            updatedData[i].properties["targets"] = 0
+        } else {
+            updatedData[i].properties["targets"] = targets[state]
+        }
+    }
+}
+
 export const filterVictimsData = (data) => {
     const filteredData = {}
 
@@ -38,4 +56,32 @@ export const filterVictimsData = (data) => {
     }
 
     return filteredData
+}
+
+export const filterTargetsData = (data) => {
+    // Filter the data so that each state has the data all targets
+    const stateTargets = {}
+    const filteredData = Object.keys(data[0]).filter(key => key !== "Target")
+    filteredData.forEach(key => {
+        Object.defineProperty(stateTargets, `${key}`, {
+            value : data.map(row => (
+                row[key] !== ""
+                ?
+                {
+                    [row.Target]: +row[key]
+                }
+                :
+                {
+                    [row.Target]: 0
+                }
+            )),
+            writable : true,
+            enumerable : true,
+            configurable : true
+        })}
+    )
+                        
+    
+    return stateTargets
+
 }

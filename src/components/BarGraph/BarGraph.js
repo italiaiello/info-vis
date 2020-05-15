@@ -10,8 +10,6 @@ const AnimatedBarGraph = ({ barClassName, barGraphData }) => {
     const wrapperRef = useRef()
     const dimensions = useResizeObserver(wrapperRef)
 
-    console.log(barGraphData)
-
     // will be called initially and then every time the barGraphData array changes
     useEffect(() => {
         const svg = select(barGraphRef.current)
@@ -21,7 +19,6 @@ const AnimatedBarGraph = ({ barClassName, barGraphData }) => {
         if (!dimensions || values.length === 0) return
 
         // Finding the max value from the data and using it as the max for the y axis
-        console.log(values)
         const maxYAxisValue = values.reduce((sum, value) => sum += value)
         // Splitting the keys and values into two variables
         const dataKeys = Object.keys(barGraphData)

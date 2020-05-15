@@ -166,13 +166,13 @@ export const filterMilitaryCulprits = (data) => {
 
 }
 
-export const updateGeoJsonData = (geoJson, victims) => {
+export const updateGeoJsonData = (geoJson, victims, targets) => {
     // Make a copy of the geoJson data
     let updatedData = [...geoJson.features]
 
     // Add shooting data to the respective U.S. state properties
     // This binds DC's data
-    bindDCDataToGeoJson(updatedData, victims)
+    bindDCDataToGeoJson(updatedData, victims, targets)
 
     return updatedData
 }
