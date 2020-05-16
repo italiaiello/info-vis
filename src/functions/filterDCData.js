@@ -89,3 +89,17 @@ export const filterTargetsData = (data) => {
     return stateTargets
 
 }
+
+export const parseClosedOpenData = (data) => {
+    const parsedData = data.map(row => (
+        {
+            space: row.Space,
+            fatalities: parseFloat(row.Fatalities),
+            injured: parseFloat(row.Injured),
+            totalVictims: parseFloat(row["Total victims"])
+
+        }
+    ))
+
+    return parsedData
+}

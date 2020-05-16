@@ -8,7 +8,16 @@ import { useResizeObserver } from '../../hooks/useResizeObserver'
 
 const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
 
-    console.log(stackedBarGraphData)
+    const [startValue, setStartValue] = useState("1966")
+    const [endValue, setEndValue] = useState("2017")
+
+    const onStartValueChange = (e) => {
+        setStartValue(e.target.value)
+    }
+
+    const onEndValueChange = (e) => {
+        setEndValue(e.target.value)
+    }
 
     // Pointers for the svg and wrapping article element respectively
     const stackedGraphRef = useRef()
@@ -26,17 +35,25 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
         // If no dimensions or data is provided, the function will stop
         if (!dimensions || !stackedBarGraphData.length) return
 
+        // Filtering data according to startValue and endValue
+        // If the user makes the starting value higher than the ending value,
+        // I have to swap them around so that the filter still works
+        const dataForGraph = startValue > endValue 
+                            ? 
+                            filterStackedBarGraph(stackedBarGraphData, "year", endValue, startValue)
+                            :
+                            filterStackedBarGraph(stackedBarGraphData, "year", startValue, endValue)
+
 
         const stackGenerator = stack().keys(keys)
-        const layers = stackGenerator(stackedBarGraphData)
-        const yAxisRange = [0, 100]
+        const layers = stackGenerator(dataForGraph)
+        const yAxisRange = [0, max(layers, layer => {console.log(layer) 
+            return max(layer, sequence => sequence[1])})]
 
         // Scales
         // This helps divide the width of the individual stacks evenly across the width of the svg
         const xScale = scaleBand()
-            .domain(stackedBarGraphData.map(data => {
-                console.log(data) 
-                return data.space}))
+            .domain(dataForGraph.map(data => data.year))
             .range([0, width])
             .padding(0.25)
         
@@ -76,13 +93,13 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
             .attr("class", "dataRect")
             .transition()
             .duration(1500)
-            .attr("x", sequence => xScale(sequence.data.space))
+            .attr("x", sequence => xScale(sequence.data.year))
             .attr("width", xScale.bandwidth())
             .attr("y", sequence => yScale(sequence[1]))
             .attr("height", sequence => yScale(sequence[0]) - yScale(sequence[1]))
 
 
-    }, [stackedBarGraphData, dimensions, keys, colors])
+    }, [stackedBarGraphData, dimensions, keys, colors, startValue, endValue])
 
     return (
     <article>
@@ -94,6 +111,28 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
                 </svg>
             </div>
             
+        </article>
+        <article className="rangeSliders">
+            <div className="sliderContainer">
+                <input  className="slider" 
+                        type="range"
+                        min={"1966"} 
+                        max={"2017"}
+                        value={startValue}
+                        onChange={onStartValueChange}
+                />
+                <span className="sliderValue">{startValue}</span>
+            </div>
+            <div className="sliderContainer">
+                <input  className="slider" 
+                        type="range"
+                        min={"1966"} 
+                        max={"2017"}
+                        value={endValue}
+                        onChange={onEndValueChange}
+                />
+                <span className="sliderValue">{endValue}</span>
+            </div>
         </article>
     </article>
     )

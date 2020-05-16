@@ -4,6 +4,7 @@ import PieChart from './components/PieChart/PieChart'
 import BarGraph from './components/BarGraph/BarGraph'
 import GeoChart from './components/GeoChart/GeoChart'
 import dataForUS from './json/states.geo.json'
+import AnimatedStackedBarGraph from './components/StackedBarGraph/AnimatedStackedBarGraph'
 import StackedBarGraph from './components/StackedBarGraph/StackedBarGraph'
 import LineGraph from './components/LineGraph/LineGraph'
 
@@ -18,6 +19,7 @@ import shooterOccupations from './data/Andrew/militaryShooters.csv'
 // DC's Data
 import victimsOfShootings from './data/DC/victimsPerState.csv'
 import targetsFrequency from './data/DC/targetsFrequency.csv'
+import closeOpenSpaces from './data/DC/closeOpenSpaces.csv'
 
 // Nick's Data
 import mentalHealthIssues from './data/Nick/mentalHealthIssues.csv'
@@ -35,7 +37,7 @@ import {  filterCasualtyData,
           filterShootingTargetData, 
           filterMilitaryCulprits } from './functions/filterAndrewData'
 
-import { filterVictimsData, filterTargetsData } from './functions/filterDCData'
+import { filterVictimsData, filterTargetsData, parseClosedOpenData } from './functions/filterDCData'
 
 import { formatData } from './functions/formatData'
 
@@ -87,7 +89,9 @@ function App() {
   const [numShootingsData, setNumShootingsData] = useState({})
   const [shootingsOnDayData, setShootingsOnDayData] = useState({})
 
-  // Culprit Data for Stacked Bar Graph
+
+
+  // Animated Stacked Bar Graph data
   const [culpritData, setCulpritData] = useState({})
   // Data points we want to show in the stacked bar chart
   const culpritKeys = ['kidsAndTeenagers', 'youngAdults', 'adults', 'middleAged']
@@ -97,6 +101,14 @@ function App() {
     youngAdults:"#f7bc52", 
     adults: "#40c04f", 
     middleAged: "#4165a4"
+  }
+
+  // Stacked Bar Graph Data
+  const [spaceData, setSpaceData] = useState([])
+  const spaceKeys = ["fatalities", "injured"]
+  const spaceColors = {
+    fatalities:"#f75a52", 
+    injured:"#f7bc52"
   }
 
 
@@ -165,6 +177,12 @@ function App() {
       setShootingsOnDayData(dataReceived)
     })
 
+    // Filtering data for stacked bar graph about closed and open spaces
+    csv(closeOpenSpaces).then(data => {
+      const dataReceived = parseClosedOpenData(data)
+      setSpaceData(dataReceived)
+    })
+
 
   }, [])
 
@@ -230,7 +248,7 @@ function App() {
       <h2>Number of U.S. Mass Shootings per year for each age group </h2>
       <h3>{"Kids and Teenagers (red), Young Adults (yellow), Adults (green), Middle-Aged (blue)"}</h3>
                         {/* Add data here */}
-      <StackedBarGraph  stackedBarGraphData={culpritData} 
+      <AnimatedStackedBarGraph  stackedBarGraphData={culpritData} 
                         // Make a variable with all the keys as shown below
                         // Or write them in like this:
                         // keys={["key1", "key2", "key3" ... etc]}
@@ -240,6 +258,14 @@ function App() {
       />
       <br />
       <br />
+      <StackedBarGraph  stackedBarGraphData={spaceData} 
+                        // Make a variable with all the keys as shown below
+                        // Or write them in like this:
+                        // keys={["key1", "key2", "key3" ... etc]}
+                        keys={spaceKeys}
+                        // Same thing as above
+                        colors={spaceColors}
+      />
       <br />
       <h2>Causes/motives for mass shootings</h2>
                  {/* Add data here */}
