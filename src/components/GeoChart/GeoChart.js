@@ -124,7 +124,7 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
                     .join(enter => enter.append("text"))
                     .attr("class", "geoTooltip")
                     .attr("x", event.pageX - 100)
-                    .attr("y", event.pageY - 180)
+                    .attr("y", event.pageY - 200)
                     .text(setTooltipText(feature))
                 
                 // Selects the slice we are currently hovering over and change the color

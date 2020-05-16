@@ -53,7 +53,7 @@ button {
   align-items: center;
 }
 
-.geoChartContainer h2 {
+.geoChartContainer h2, .geoChartContainer h3{
   color: white;
   margin-top: 0;
 }
@@ -70,7 +70,7 @@ button {
 }
 
 .geoChart svg text {
-  fill: yellow;
+  fill: rgb(102, 171, 194);
 }
 
 .geoChartInfoContainer {

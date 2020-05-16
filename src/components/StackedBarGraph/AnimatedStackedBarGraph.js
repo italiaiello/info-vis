@@ -71,6 +71,12 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
             .select(".x-axis")
             .attr("transform", `translate(0, ${height})`)
             .call(xAxis)
+            .selectAll("text")
+            .attr("y", 0)
+            .attr("x", 9)
+            .attr("dy", ".35em")
+            .attr("transform", "rotate(90)")
+            .style("text-anchor", "start")
 
         const yAxis = axisLeft(yScale)
         svg

@@ -52,7 +52,7 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
             // E.g. value157
             // This will help us target specific slices
             .attr("class", instruction => `slice value${instruction.value}`)
-            .attr("stroke", "black")
+            // .attr("stroke", "black")
             .attr("fill", instruction => colorScale(instruction.value))
             .style(
                 "transform",

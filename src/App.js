@@ -189,7 +189,8 @@ function App() {
   return (
     <section className="graphs">
       <article className="geoChartContainer">
-        <h2>Number of Mass Shootings in the U.S. Per State  </h2> 
+        <h2>Mass Shootings in the U.S. per State  </h2> 
+        <h3>Hover over or click a state for more info</h3>
         <GeoChart data={dataForUS}
                   victimsPerState={victimsPerState}
                   targetsPerState={targetsPerState}

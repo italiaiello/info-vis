@@ -38,7 +38,7 @@ const AnimatedBarGraph = ({ barClassName, barGraphData }) => {
             
         
         const yScale = scaleLinear()
-            .domain([0, 100])
+            .domain([0, 50])
             .range([dimensions.height, 0])
 
         // Setting up the color scale

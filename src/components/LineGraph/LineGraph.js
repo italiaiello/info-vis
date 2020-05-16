@@ -2,7 +2,6 @@ import React, { useRef, useEffect } from 'react';
 import { 
   select, 
   line, 
-  curveCardinal, 
   axisBottom, 
   axisRight,
   scaleLinear } from 'd3';
@@ -63,7 +62,7 @@ const LineGraph = ({ lineGraphData, yAxisMax, reverseData, xAxisFontSize, xAxisR
     const myLine = line()
     .x((value, index) => xScale(index))
     .y(yScale)
-    .curve(curveCardinal)
+    // .curve(curveCardinal)
 
     // renders the path element and attaches the "d" 
     // attribute from line generator above
