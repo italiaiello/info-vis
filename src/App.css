@@ -1,5 +1,4 @@
 svg {
-  background: #eee;
   overflow: visible;
   display: block;
   width: 100%;
@@ -47,10 +46,20 @@ button {
   align-items: center;
 }
 
-.geoChartInfo {
+.geoChartInfoContainer {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 10;
+  left: 10;
+}
+
+.geoChartInfo {
+  padding: 20px;
+  background-color: white;
+  border-radius: 20px;
+}
+
+.infoTitle {
+  font-weight: bold;
 }
 
 
@@ -95,7 +104,7 @@ button {
   width: 80%;
   height: 7px;
   outline: none;
-  background-color: black;
+  background-color: grey;
   border-radius: 3px;
   margin-right: 10px;
 }
@@ -108,7 +117,7 @@ button {
   z-index: 3;
   position: relative;
   border-radius: 50%;
-  background-color: pink;
+  background-color: black;
   width: 20px;
   height: 20px;
 }

@@ -157,11 +157,11 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
         <div ref={wrapperRef} className="geoChart">
             <svg ref={geoChartRef}>
             </svg>
-            <div className="geoChartInfo">
+            <div className="geoChartInfoContainer">
             {
                 selectedCountry !== null &&
-                <div>
-                    <p>{`${selectedCountry.properties.NAME} Statistics:`}</p>
+                <div className="geoChartInfo">
+                    <p className="infoTitle">{`${selectedCountry.properties.NAME} Statistics:`}</p>
                     <p>{`Shootings: ${selectedCountry.properties.shootings}`}</p>
                     <p>{`Fatalities: ${selectedCountry.properties.fatalities}`}</p>
                     <p>{`Injuries: ${selectedCountry.properties.injuries}`}</p>

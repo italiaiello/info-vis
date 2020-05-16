@@ -1,6 +1,5 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { select, scaleBand, axisBottom, axisLeft, stack, max, scaleLinear } from 'd3';
-import { filterStackedBarGraph } from '../../functions/filterAndrewData'
+import React, { useRef, useEffect } from 'react';
+import { select, scaleBand, axisBottom, axisLeft, stack, scaleLinear } from 'd3';
 
 import { useResizeObserver } from '../../hooks/useResizeObserver'
 
