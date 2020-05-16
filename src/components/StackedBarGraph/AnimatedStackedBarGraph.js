@@ -114,24 +114,30 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
         </article>
         <article className="rangeSliders">
             <div className="sliderContainer">
-                <input  className="slider" 
-                        type="range"
-                        min={"1966"} 
-                        max={"2017"}
-                        value={startValue}
-                        onChange={onStartValueChange}
-                />
-                <span className="sliderValue">{startValue}</span>
+                <label>Start Value</label>
+                <div>
+                    <input  className="slider" 
+                            type="range"
+                            min={"1966"} 
+                            max={"2017"}
+                            value={startValue}
+                            onChange={onStartValueChange}
+                    />
+                    <span className="sliderValue">{startValue}</span>
+                </div>
             </div>
             <div className="sliderContainer">
-                <input  className="slider" 
-                        type="range"
-                        min={"1966"} 
-                        max={"2017"}
-                        value={endValue}
-                        onChange={onEndValueChange}
-                />
-                <span className="sliderValue">{endValue}</span>
+                <label>End Value</label>
+                <div>
+                    <input  className="slider" 
+                            type="range"
+                            min={"1966"} 
+                            max={"2017"}
+                            value={endValue}
+                            onChange={onEndValueChange}
+                    />
+                    <span className="sliderValue">{endValue}</span>
+                </div>
             </div>
         </article>
     </article>

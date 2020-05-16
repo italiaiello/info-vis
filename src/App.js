@@ -97,18 +97,18 @@ function App() {
   const culpritKeys = ['kidsAndTeenagers', 'youngAdults', 'adults', 'middleAged']
   // Colors of each data point, which would colorise the stack of each year
   const culpritColors = {
-    kidsAndTeenagers:"#f75a52", 
-    youngAdults:"#f7bc52", 
-    adults: "#40c04f", 
-    middleAged: "#4165a4"
+    kidsAndTeenagers:"#DA0000", 
+    youngAdults:"#DAAC00", 
+    adults: "#00AE00", 
+    middleAged: "#3B0D95"
   }
 
   // Stacked Bar Graph Data
   const [spaceData, setSpaceData] = useState([])
   const spaceKeys = ["fatalities", "injured"]
   const spaceColors = {
-    fatalities:"#f75a52", 
-    injured:"#f7bc52"
+    fatalities:"#DA0000", 
+    injured:"#DAAC00"
   }
 
 
@@ -188,46 +188,50 @@ function App() {
 
   return (
     <section className="graphs">
-      <h2>Number of Mass Shootings in the U.S. Per State  </h2> 
-      <GeoChart data={dataForUS} 
-                // shootingsPerState={shootingsPerState}
-                victimsPerState={victimsPerState}
-                targetsPerState={targetsPerState}
-                property={property}
-                isTargetsOptionSelected={isTargetsOptionSelected}
-                selectedTargetIndex={selectedTargetIndex}
-      />
-      <br />
-      <br />
-      <article className="dropdownContainer">
-                                                {/* If 'Targets' isn't selected, then update the value as usual */}
-        <select className="dropdown" onChange={onStatChange}
-        >
-          <option value="shootings">Shootings</option>
-          <option value="target">Targets</option>
-          <option value="fatalities">Fatalities</option>
-          <option value="injuries">Injuries</option>
-          <option value="policemenKilled">Policemen Killed</option>
-          <option value="totalVictims">Total Victims</option>
-        </select>
-
-        {
-          isTargetsOptionSelected &&
-          <select id="targetSelect" className="dropdown" onChange={onTargetChange}>
-                {
-                    // We need to create a dropdown with all the targets.
-                    // Every state has the targets defined, so we can just choose a state
-                    // and grab all the targets from there
-                    targetsPerState["Alabama"].map((currentTarget, index) => {
-                        let targetString = currentTarget.target.replace(/([a-z0-9])([A-Z])/g, '$1 $2')
-                        targetString = `${targetString.charAt(0).toUpperCase()}${targetString.substring(1)}`
-
-                        return <option onClick={console.log(index)} key={index} value={currentTarget.target} data-index={index}>{targetString}</option>
-                    }
-                    )
-                }
+      <article className="geoChartContainer">
+        <h2>Number of Mass Shootings in the U.S. Per State  </h2> 
+        <GeoChart data={dataForUS}
+                  victimsPerState={victimsPerState}
+                  targetsPerState={targetsPerState}
+                  property={property}
+                  isTargetsOptionSelected={isTargetsOptionSelected}
+                  selectedTargetIndex={selectedTargetIndex}
+        />
+        <article className="dropdownContainer">
+          <select className="dropdown" onChange={onStatChange} >
+            <option value="shootings">Shootings</option>
+            <option value="target">Targets</option>
+            <option value="fatalities">Fatalities</option>
+            <option value="injuries">Injuries</option>
+            <option value="policemenKilled">Policemen Killed</option>
+            <option value="totalVictims">Total Victims</option>
           </select>
-        }
+          {
+            isTargetsOptionSelected &&
+            <select id="targetSelect" className="dropdown" onChange={onTargetChange}>
+                  {
+                      // We need to create a dropdown with all the targets.
+                      // Every state has the targets defined, so we can just choose a state
+                      // and grab all the targets from there
+                      targetsPerState["Alabama"].map((currentTarget, index) => {
+                          let targetString = currentTarget.target.replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+                          targetString = `${targetString.charAt(0).toUpperCase()}${targetString.substring(1)}`
+
+                          return <option onClick={console.log(index)} 
+                                          key={index} 
+                                          value={currentTarget.target} 
+                                          data-index={index}
+                                  >
+                                  {targetString}
+                                  </option>
+                      })
+                  }
+            </select>
+          }
+        </article>
+        <div className="fancyArrow"></div>
+        <br/>
+        <br/>
       </article>
       
       <br />

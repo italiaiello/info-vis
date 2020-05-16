@@ -74,7 +74,7 @@ const LineGraph = ({ lineGraphData, yAxisMax, reverseData, xAxisFontSize, xAxisR
         .attr("class", "line")
         .attr("d", myLine)
         .attr("fill", "none")
-        .attr("stroke", "blue")
+        .attr("stroke", "#DA0000")
 
     }, [lineGraphData, reverseData, yAxisMax, xAxisFontSize, dimensions])
 

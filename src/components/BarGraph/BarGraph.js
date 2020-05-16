@@ -47,7 +47,7 @@ const AnimatedBarGraph = ({ barClassName, barGraphData }) => {
         const colorScale = scaleLinear()
             .domain([0, maxDataValue])
             // Change colors here
-            .range(["#ff8780", "#ff473d"])
+            .range(["#DAAC00", "#DA0000"])
             .clamp(true)
 
         // Setting up the x and y axes

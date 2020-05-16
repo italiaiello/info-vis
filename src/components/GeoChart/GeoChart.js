@@ -48,7 +48,7 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
         const colorScale = scaleLinear()
             .domain(isTargetsOptionSelected ? [0, maxPropTargets] : [minProp, maxProp])
             // Change colors here
-            .range(["#ccc", "red"])
+            .range(["#f8cccc", "#DA0000"])
 
         // Projects coordinates on a 2D plane
         const projection = geoMercator()
@@ -78,7 +78,7 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
                 :
                 (   
                     targetsText !== "Unknown" ?
-                    `${feature.properties.NAME}: ${number} ${targetsText} as a target`
+                    `${feature.properties.NAME}: ${number} had ${targetsText} as a target`
                     :
                     targetsText
                 )
@@ -124,7 +124,7 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
                     .join(enter => enter.append("text"))
                     .attr("class", "geoTooltip")
                     .attr("x", event.pageX - 100)
-                    .attr("y", event.pageY - 25)
+                    .attr("y", event.pageY - 180)
                     .text(setTooltipText(feature))
                 
                 // Selects the slice we are currently hovering over and change the color
@@ -154,7 +154,7 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
 
 
     return (
-        <div ref={wrapperRef} className="geoChart">
+        <div ref={wrapperRef} className="graph geoChart">
             <svg ref={geoChartRef}>
             </svg>
             <div className="geoChartInfoContainer">
