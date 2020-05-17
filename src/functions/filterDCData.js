@@ -30,7 +30,6 @@ const bindVictimsData = (updatedData, victims) => {
 }
 
 const bindTargetsData = (updatedData, targets) => {
-    console.log("hello", targets, updatedData)
     for (let i = 0; i < updatedData.length; i++) {
         const state = updatedData[i].properties.NAME
         if (targets[state] === undefined) {

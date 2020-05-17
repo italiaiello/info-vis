@@ -78,10 +78,12 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
                 :
                 (   
                     targetsText !== "Unknown" ?
-                    `${feature.properties.NAME}: ${number} had ${targetsText} as a target`
+                    `${feature.properties.NAME}: ${number}`
                     :
                     targetsText
                 )
+
+                // had ${targetsText} as a target`
             
         }
 
@@ -97,19 +99,30 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
                         colorScale(targetValue[selectedTargetIndex].victims)
                     // colorScale(target)
                 } else {
-                    return "light"
+                    return "lightgray"
                 }
             } else {
 
                return feature.properties[property] !== undefined 
                     ? colorScale(feature.properties[property])
                     // Change color for undefined values
-                    : "light"
+                    : "lightgray"
             }
                         
         }
         
      // set position etc.
+     const displayTooltip = (feature) => {
+        const tooltip = document.getElementById("geoTooltip");
+        document.addEventListener("mousemove", (e) => {
+            const x = e.clientX
+            const y = e.clientY
+            tooltip.style.left = (x + 50) + "px"
+            tooltip.style.top = (y - 190) + "px"
+        })
+        const text = document.getElementById("stateInfo")
+        text.textContent = setTooltipText(feature)
+    }
 
         // Render each country
         svg
@@ -118,24 +131,14 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
             .join("path")
             .attr("class", "country")
             .on("mouseenter", feature => {
-                svg
-                    .selectAll(".geoTooltip")
-                    .data([feature])
-                    .join(enter => enter.append("text"))
-                    .attr("class", "geoTooltip")
-                    .attr("x", event.pageX - 100)
-                    .attr("y", event.pageY - 200)
-                    .text(setTooltipText(feature))
-                
-                // Selects the slice we are currently hovering over and change the color
-                svg
-                    .select(`.value${data.value}`)
-                    .attr("fill", "#3d3d3d")
+
+                select("#geoTooltip").style("display", "block")
+                displayTooltip(feature)
 
             })
             .on("mouseleave", feature => {
                 // Removes tooltip
-                svg.select(".geoTooltip").remove()
+                select("#geoTooltip").style("display", "none")
                 // Reverts colors back to the original ones (red, green, blue)
                 svg.selectAll(`.slice`).attr("fill", feature => colorScale(feature.value))
             })
@@ -148,6 +151,7 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
             .duration(1000)
             .attr("fill", feature => setFillOfMap(feature))
             .attr("d", feature => pathGenerator(feature))
+
             
 
     }, [data, dimensions, property, selectedCountry, victimsPerState, targetsPerState, isTargetsOptionSelected, selectedTargetIndex])
@@ -155,8 +159,8 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
 
     return (
         <div ref={wrapperRef} className="graph geoChart">
-            <svg ref={geoChartRef}>
-            </svg>
+            <svg ref={geoChartRef}></svg>
+            
             <div className="geoChartInfoContainer">
             {
                 selectedCountry !== null &&
@@ -171,6 +175,9 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
                 
                     
             }
+            </div>
+            <div id="geoTooltip">
+                <p id="stateInfo"></p>
             </div>
         </div>
     )

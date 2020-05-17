@@ -53,7 +53,7 @@ button {
   align-items: center;
 }
 
-.geoChartContainer h2, .geoChartContainer h3{
+.geoChartContainer h2, .geoChartContainer h3 {
   color: white;
   margin-top: 0;
 }
@@ -67,10 +67,7 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.geoChart svg text {
-  fill: rgb(102, 171, 194);
+  position: relative;
 }
 
 .geoChartInfoContainer {
@@ -95,7 +92,41 @@ button {
   border-bottom: 5px solid gray;
   border-left: 5px solid gray;
   transform: rotate(-45deg);
-  /* border-radius: 10px; */
+}
+
+#geoTooltip {
+  position: absolute;
+  width: auto;
+  height: auto;
+  background-color: white;
+  border: 2px solid #000;
+  box-sizing: border-box;
+  transition: 0.1s;
+  padding: 10px;
+  display: none;
+}
+
+#geoTooltip p {
+  margin: 0;
+}
+
+.dropdownContainer {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.dropdownContainer span {
+  color: white;
+  padding: 0 10px;
+}
+
+.show {
+  display: block;
+} 
+
+.hide {
+  display: none;
 }
 
 /* Pie Chart */
@@ -116,18 +147,30 @@ button {
   margin: 0 auto;
 }
 
-/* Bar Graph */
+  /* Age Group Checkboxes */
 
-.barGraph svg {
-  height: 300px;
-}
-
-.barGraph div {
-  width: 80%;
+.fields {
+  width: 60%;
   margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
-/* Range Sliders */
+.field {
+  display: flex;
+  align-items: center;
+}
+
+.field input {
+  margin: 0;
+}
+
+.field label {
+  margin-left: 5px;
+}
+
+  /* Range Sliders */
 
 .rangeSliders {
   margin-top: 30px;
@@ -178,6 +221,17 @@ button {
 .sliderValue {
   width: 20%;
   padding: 10px;
+}
+
+/* Bar Graph */
+
+.barGraph svg {
+  height: 300px;
+}
+
+.barGraph div {
+  width: 80%;
+  margin: 0 auto;
 }
 
 /* Line Graph */

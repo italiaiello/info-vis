@@ -173,12 +173,12 @@ export const updateGeoJsonData = (geoJson, victims, targets) => {
     // Add shooting data to the respective U.S. state properties
     // This binds DC's data
     bindDCDataToGeoJson(updatedData, victims, targets)
-    console.log(updatedData)
 
     return updatedData
 }
 
 export const filterStackedBarGraph = (data, property, startOfRange, endOfRange) => {
+    
     const filteredData = data.filter(object =>  object[property] >= startOfRange &&
                                                 object[property] <= endOfRange)
 

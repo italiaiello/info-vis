@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { select, scaleBand, axisBottom, axisLeft, stack, max, scaleLinear } from 'd3';
+import { select, scaleBand, axisBottom, axisLeft, stack, max, scaleLinear, stackOrderAscending } from 'd3';
 import { filterStackedBarGraph } from '../../functions/filterAndrewData'
 
 import { useResizeObserver } from '../../hooks/useResizeObserver'
@@ -45,10 +45,14 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
                             filterStackedBarGraph(stackedBarGraphData, "year", startValue, endValue)
 
 
-        const stackGenerator = stack().keys(keys)
+        
+
+        const stackGenerator = stack().keys(keys).order(stackOrderAscending)
         const layers = stackGenerator(dataForGraph)
-        const yAxisRange = [0, max(layers, layer => {console.log(layer) 
-            return max(layer, sequence => sequence[1])})]
+        const yAxisRange = [0, max(layers, layer => {
+            return max(layer, sequence => {
+                // console.log(sequence)
+                return sequence[1]})})]
 
         // Scales
         // This helps divide the width of the individual stacks evenly across the width of the svg

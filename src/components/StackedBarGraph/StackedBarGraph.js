@@ -7,8 +7,6 @@ import { useResizeObserver } from '../../hooks/useResizeObserver'
 
 const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
 
-    console.log(stackedBarGraphData)
-
     // Pointers for the svg and wrapping article element respectively
     const stackedGraphRef = useRef()
     const wrapperRef = useRef()
@@ -33,9 +31,7 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
         // Scales
         // This helps divide the width of the individual stacks evenly across the width of the svg
         const xScale = scaleBand()
-            .domain(stackedBarGraphData.map(data => {
-                console.log(data) 
-                return data.space}))
+            .domain(stackedBarGraphData.map(data => data.space))
             .range([0, width])
             .padding(0.25)
         

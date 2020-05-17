@@ -92,15 +92,26 @@ function App() {
 
 
   // Animated Stacked Bar Graph data
-  const [culpritData, setCulpritData] = useState({})
+  const [ageGroupData, setAgeGroupData] = useState({})
   // Data points we want to show in the stacked bar chart
-  const culpritKeys = ['kidsAndTeenagers', 'youngAdults', 'adults', 'middleAged']
+  const ageGroupKeys = ['kidsAndTeenagers', 'youngAdults', 'adults', 'middleAged']
+  const [ageGroups, setAgeGroups] = useState(ageGroupKeys)
   // Colors of each data point, which would colorise the stack of each year
-  const culpritColors = {
+  const ageGroupColors = {
     kidsAndTeenagers:"#DA0000", 
     youngAdults:"#DAAC00", 
     adults: "#00AE00", 
     middleAged: "#3B0D95"
+  }
+
+
+  const onAgeGroupChange = (e, key) => {
+      if (!e.target.checked) {
+          const removedAgeGroup = ageGroups.filter(ageGroup => ageGroup !== key)
+          setAgeGroups(removedAgeGroup)
+      } else {
+          setAgeGroups(Array.from(new Set([...ageGroups, key])))
+      }
   }
 
   // Stacked Bar Graph Data
@@ -124,7 +135,7 @@ function App() {
     csv(culpritDemographics).then(data => {
       // Created a method (see functions folder) that extracts the data required
       const dataReceived = filterCulpritDemographicData(data)
-      setCulpritData(dataReceived)
+      setAgeGroupData(dataReceived)
     })
 
     // Filtering data for pie chart about the targets for mass shootings
@@ -199,14 +210,7 @@ function App() {
                   selectedTargetIndex={selectedTargetIndex}
         />
         <article className="dropdownContainer">
-          <select className="dropdown" onChange={onStatChange} >
-            <option value="shootings">Shootings</option>
-            <option value="target">Targets</option>
-            <option value="fatalities">Fatalities</option>
-            <option value="injuries">Injuries</option>
-            <option value="policemenKilled">Policemen Killed</option>
-            <option value="totalVictims">Total Victims</option>
-          </select>
+          <span className={isTargetsOptionSelected ? "show" : "hide"}>had</span>
           {
             isTargetsOptionSelected &&
             <select id="targetSelect" className="dropdown" onChange={onTargetChange}>
@@ -229,6 +233,16 @@ function App() {
                   }
             </select>
           }
+          <span className={isTargetsOptionSelected ? "show" : "hide"}>as a</span>
+          <select className="dropdown" onChange={onStatChange} >
+            <option value="shootings">Shootings</option>
+            <option value="target">Target</option>
+            <option value="fatalities">Fatalities</option>
+            <option value="injuries">Injuries</option>
+            <option value="policemenKilled">Policemen Killed</option>
+            <option value="totalVictims">Total Victims</option>
+          </select>
+          
         </article>
         <div className="fancyArrow"></div>
         <br/>
@@ -251,29 +265,36 @@ function App() {
       <br />
       <br />
       <h2>Number of U.S. Mass Shootings per year for each age group </h2>
-      <h3>{"Kids and Teenagers (red), Young Adults (yellow), Adults (green), Middle-Aged (blue)"}</h3>
-                        {/* Add data here */}
-      <AnimatedStackedBarGraph  stackedBarGraphData={culpritData} 
-                        // Make a variable with all the keys as shown below
-                        // Or write them in like this:
-                        // keys={["key1", "key2", "key3" ... etc]}
-                        keys={culpritKeys}
-                        // Same thing as above
-                        colors={culpritColors}
+      <div className="fields">
+        {
+          ageGroupKeys.map(key => (
+            <div key={key} className="field">
+              <input
+                id={key}
+                type="checkbox"
+                checked={ageGroups.includes(key)}
+                onChange={(e) => onAgeGroupChange(e, key)}
+              />
+              <label htmlFor={key} style={{ color: ageGroupColors[key] }}>
+                {/* The key is in camel case, so this will split it into individual words */}
+                {`${key.charAt(0).toUpperCase()}${key.substring(1).replace(/([a-z0-9])([A-Z])/g, '$1 $2')}`}
+              </label>
+            </div>
+          ))
+        }
+      </div>
+      <AnimatedStackedBarGraph  stackedBarGraphData={ageGroupData} 
+                        keys={ageGroups}
+                        colors={ageGroupColors}
       />
       <br />
       <br />
       <StackedBarGraph  stackedBarGraphData={spaceData} 
-                        // Make a variable with all the keys as shown below
-                        // Or write them in like this:
-                        // keys={["key1", "key2", "key3" ... etc]}
                         keys={spaceKeys}
-                        // Same thing as above
                         colors={spaceColors}
       />
       <br />
       <h2>Causes/motives for mass shootings</h2>
-                 {/* Add data here */}
       <BarGraph barClassName={"motives"} barGraphData={barGraphData} />
       <br/>
       <br/>
