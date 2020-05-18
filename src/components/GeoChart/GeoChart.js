@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react'
 import { select, geoPath, geoMercator, min, max, scaleLinear } from 'd3'
 import { useResizeObserver } from '../../hooks/useResizeObserver'
 import { updateGeoJsonData } from '../../functions/filterAndrewData'
+import DropShadow from './DropShadow'
 
 // Where I got the GeoMap from: https://exploratory.io/map
 
@@ -82,8 +83,6 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
                     :
                     targetsText
                 )
-
-                // had ${targetsText} as a target`
             
         }
 
@@ -117,8 +116,8 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
         document.addEventListener("mousemove", (e) => {
             const x = e.clientX
             const y = e.clientY
-            tooltip.style.left = (x + 50) + "px"
-            tooltip.style.top = (y - 190) + "px"
+            tooltip.style.left = (x - 80) + "px"
+            tooltip.style.top = (y - 220) + "px"
         })
         const text = document.getElementById("stateInfo")
         text.textContent = setTooltipText(feature)
@@ -159,7 +158,10 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
 
     return (
         <div ref={wrapperRef} className="graph geoChart">
-            <svg ref={geoChartRef}></svg>
+            <p id="usaText">U S A</p>
+            <svg ref={geoChartRef}>
+                <DropShadow stdDeviation={10} slope={0.5} />
+            </svg>
             
             <div className="geoChartInfoContainer">
             {
@@ -171,9 +173,7 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
                     <p>{`Injuries: ${selectedCountry.properties.injuries}`}</p>
                     <p>{`Policemen Killed: ${selectedCountry.properties.policemenKilled}`}</p>
                     <p>{`Total Victims: ${selectedCountry.properties.totalVictims}`}</p>
-                </div>
-                
-                    
+                </div>    
             }
             </div>
             <div id="geoTooltip">

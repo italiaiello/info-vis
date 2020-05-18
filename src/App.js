@@ -200,7 +200,7 @@ function App() {
   return (
     <section className="graphs">
       <article className="geoChartContainer">
-        <h2>Mass Shootings in the U.S. per State  </h2> 
+        <h2>Mass Shootings in the U.S. <br /><span id="subheading">as shown per state</span>  </h2> 
         <h3>Hover over or click a state for more info</h3>
         <GeoChart data={dataForUS}
                   victimsPerState={victimsPerState}
@@ -244,23 +244,31 @@ function App() {
           </select>
           
         </article>
-        <div className="fancyArrow"></div>
         <br/>
         <br/>
       </article>
       
       <br />
       <br />
-                {/* Data goes here 
-                 The name in brackets should be what you named your data 
-                 This one is called pieChartData because I had to filter my 
-                 data first */}
-      <PieChart pieChartData={pieChartData} innerRadius={0} outerRadius={150} />
+      <article className="pieChartLayout">
+        <div className="pieChartDesc">
+          <h2>Some kind of heading</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies congue nunc eget imperdiet. Cras ac purus nisi. Aliquam erat volutpat. Ut quis purus dapibus, imperdiet arcu ut, porttitor diam. In hac habitasse platea dictumst. In suscipit metus sit amet orci tempus lobortis semper non ex. Aliquam euismod, elit at sollicitudin tincidunt, metus justo ultrices dolor, quis gravida mi felis non neque. Quisque ac ligula nec ligula commodo hendrerit ut eu lacus.
+
+            Donec quis metus orci. Nullam sapien orci, tempus eget velit nec, semper egestas augue. Fusce vitae odio tellus. Vivamus vulputate interdum nisi, dapibus convallis turpis tincidunt nec. Aliquam scelerisque tortor vel dignissim fermentum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed et risus ut est consequat fermentum.</p>
+        </div>
+        <PieChart pieChartData={pieChartData} innerRadius={0} outerRadius={150} />
+      </article>
       <br />
       <br />
-      <article>
-        <h2>Occupations of Shooters</h2>
+      <article className="pieChartLayout">
         <PieChart pieChartData={occupationsData} innerRadius={100} outerRadius={150} />
+        <div className="pieChartDesc">
+          <h2>Some kind of heading</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies congue nunc eget imperdiet. Cras ac purus nisi. Aliquam erat volutpat. Ut quis purus dapibus, imperdiet arcu ut, porttitor diam. In hac habitasse platea dictumst. In suscipit metus sit amet orci tempus lobortis semper non ex. Aliquam euismod, elit at sollicitudin tincidunt, metus justo ultrices dolor, quis gravida mi felis non neque. Quisque ac ligula nec ligula commodo hendrerit ut eu lacus.
+
+            Donec quis metus orci. Nullam sapien orci, tempus eget velit nec, semper egestas augue. Fusce vitae odio tellus. Vivamus vulputate interdum nisi, dapibus convallis turpis tincidunt nec. Aliquam scelerisque tortor vel dignissim fermentum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed et risus ut est consequat fermentum.</p>
+        </div>
       </article>
       <br />
       <br />

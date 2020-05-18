@@ -89,8 +89,8 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
                     .data([data])
                     .join(enter => enter.append("text"))
                     .attr("class", "tooltip")
-                    .attr("x", dimensions.width - (dimensions.width / 3))
-                    .attr("y", dimensions.height / 2)
+                    .attr("x", (dimensions.width / 2) - 40)
+                    .attr("y", dimensions.height)
                     .text(`${pieChartKeys[labelIndex]}: ${pieChartValues[labelIndex]}`)
                 
                 // Selects the slice we are currently hovering over and change the color
