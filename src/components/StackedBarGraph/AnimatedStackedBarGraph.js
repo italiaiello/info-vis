@@ -47,12 +47,10 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
 
         
 
-        const stackGenerator = stack().keys(keys).order(stackOrderAscending)
+        const stackGenerator = stack().keys(keys)
         const layers = stackGenerator(dataForGraph)
         const yAxisRange = [0, max(layers, layer => {
-            return max(layer, sequence => {
-                // console.log(sequence)
-                return sequence[1]})})]
+            return max(layer, sequence => sequence[1])})]
 
         // Scales
         // This helps divide the width of the individual stacks evenly across the width of the svg
