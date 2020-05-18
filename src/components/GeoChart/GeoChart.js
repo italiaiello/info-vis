@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react'
-import { select, geoPath, geoMercator, min, max, scaleLinear, event } from 'd3'
+import { select, geoPath, geoMercator, min, max, scaleLinear } from 'd3'
 import { useResizeObserver } from '../../hooks/useResizeObserver'
 import { updateGeoJsonData } from '../../functions/filterAndrewData'
 
