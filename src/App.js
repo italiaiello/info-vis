@@ -297,35 +297,6 @@ function App() {
       <br />
       <br />
       <article className="stackedGraphSection">
-        <h2>Number of U.S. Mass Shootings per year for each age group </h2>
-        <div className="fields">
-          {
-            ageGroupKeys.map(key => (
-              <div key={key} className="fieldContainer" style={{ backgroundColor: ageGroupColors[key] }}>
-                <div className="field">
-                  <input
-                    id={key}
-                    type="checkbox"
-                    checked={ageGroups.includes(key)}
-                    onChange={(e) => onCheckboxChange(e, key, ageGroups, setAgeGroups)}
-                  />
-                  <label htmlFor={key}>
-                    {/* The key is in camel case, so this will split it into individual words */}
-                    {`${key.charAt(0).toUpperCase()}${key.substring(1).replace(/([a-z0-9])([A-Z])/g, '$1 $2')}`}
-                  </label>
-                </div>
-              </div>
-            ))
-          }
-        </div>
-        <AnimatedStackedBarGraph  stackedBarGraphData={ageGroupData} 
-                                  keys={ageGroups}
-                                  colors={ageGroupColors}
-        />
-      </article>
-      <br />
-      <br />
-      <article className="stackedGraphSection">
         <div className="stackedGraphHeading">
           <h2>Number of U.S. Mass Shootings per year in relation to</h2>
           <select className="dropdown" onChange={onDataChange}>
