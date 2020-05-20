@@ -6,7 +6,7 @@ import { useResizeObserver } from '../../hooks/useResizeObserver'
 
 // Tutorial: https://www.youtube.com/watch?v=bXN9anQN_kQ&list=PLDZ4p-ENjbiPo4WH7KdHjh_EMI7Ic8b2B&index=16
 
-const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
+const AnimatedStackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
 
     const [startValue, setStartValue] = useState("1966")
     const [endValue, setEndValue] = useState("2017")
@@ -45,12 +45,14 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
                             filterStackedBarGraph(stackedBarGraphData, "year", startValue, endValue)
 
 
-        
+        console.log(dataForGraph)
 
         const stackGenerator = stack().keys(keys)
         const layers = stackGenerator(dataForGraph)
         const yAxisRange = [0, max(layers, layer => {
+            console.log(layer)
             return max(layer, sequence => sequence[1])})]
+
 
         // Scales
         // This helps divide the width of the individual stacks evenly across the width of the svg
@@ -73,6 +75,7 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
             .select(".x-axis")
             .attr("transform", `translate(0, ${height})`)
             .call(xAxis)
+            // .attr("class", "axisWhite")
             .selectAll("text")
             .attr("y", 0)
             .attr("x", 9)
@@ -152,4 +155,4 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
     )
 }
 
-export default StackedBarGraph
+export default AnimatedStackedBarGraph

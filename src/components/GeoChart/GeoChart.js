@@ -142,7 +142,7 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
                 svg.selectAll(`.slice`).attr("fill", feature => colorScale(feature.value))
             })
             .on("click", feature => {
-                console.log(feature)
+                
                 setSelectedCountry(selectedCountry === feature ? null : feature)
             }
             )

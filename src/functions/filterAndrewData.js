@@ -184,3 +184,102 @@ export const filterStackedBarGraph = (data, property, startOfRange, endOfRange) 
 
     return filteredData
 }
+
+
+export const filterMentalHealthData = (data) => {
+    let yearlyMentalHealth = []
+    
+    // 2017 - 1966 is 51, and we can use this to loop over the data one time per year
+    for (let i = 0, currentYear = 17; i < 52; i++) {
+        let currentYearData = []
+        // Sifting through 2000s data
+        if (currentYear < 65 && currentYear >= 0) {
+            currentYearData = data.filter(shooting => {
+                const year = shooting.Date.split("/")[2]
+                if (year === `${2000 + currentYear}` || +year === currentYear) {
+                    return true
+                }
+                return false
+            })
+        // Sifting through 1900s data
+        } else {
+            currentYearData = data.filter(shooting => {
+                const year = shooting.Date.split("/")[2]
+                if (year === `${1900 + currentYear}` || +year === currentYear) {
+                    return true
+                }
+                return false
+            })
+        }
+
+        // Adding all the yearly shootings into one place
+        // Made a function (down below) that counts the demographics
+        yearlyMentalHealth.push(countMentalHealthFrequency(currentYearData))
+        // Updating year property within the object so we can use it for the
+        // x-axis of stacked bar graph
+        if (currentYear < 65 && currentYear >= 0) {
+            yearlyMentalHealth[yearlyMentalHealth.length - 1].year = 2000 + currentYear
+        } else {
+            yearlyMentalHealth[yearlyMentalHealth.length - 1].year = 1900 + currentYear
+        }
+        
+        // Move to the next year
+        currentYear -= 1
+
+        // If we are done with 2000s, start with the 1900s
+        if (currentYear < 0) {
+            currentYear = 99
+        }
+
+    }
+
+    return yearlyMentalHealth.reverse()
+
+}
+
+// Helper function for the function above
+const countMentalHealthFrequency = (mentalHealthData) => {
+
+    // Object that keeps track of demographic frequency for the current year
+    let mentalIllnesses = {
+        year: 0,
+        actsOfTerrorism: 0,
+        psychologicalFactors: 0,
+        anger: 0,
+        frustration: 0,
+        unknown: 0
+    }
+
+    // Loop over each row associated with the current year and map the ages
+    // to the object above
+    for (let i = 0; i < mentalHealthData.length; i++) {
+        const row = mentalHealthData[i]
+
+        switch(row.Cause) {
+            case "terrorism":
+                mentalIllnesses["actsOfTerrorism"] += 1
+                break;
+            case "psycho":
+                mentalIllnesses["psychologicalFactors"] += 1
+                break;
+            case "anger":
+                mentalIllnesses["anger"] += 1
+                break;
+            case "frustration":
+                mentalIllnesses["frustration"] += 1
+                break;
+            case "unknown":
+            case "":
+                mentalIllnesses["unknown"] += 1
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    console.log(mentalIllnesses)
+
+    // Mental health data is ready to be pushed to the array
+    return mentalIllnesses
+}

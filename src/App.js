@@ -35,7 +35,8 @@ import numShootingsOnADay from './data/Tom/numShootingsOnADay.csv'
 import {  filterCasualtyData, 
           filterCulpritDemographicData, 
           filterShootingTargetData, 
-          filterMilitaryCulprits } from './functions/filterAndrewData'
+          filterMilitaryCulprits,
+          filterMentalHealthData } from './functions/filterAndrewData'
 
 import { filterVictimsData, filterTargetsData, parseClosedOpenData } from './functions/filterDCData'
 
@@ -91,28 +92,38 @@ function App() {
 
 
 
-  // Animated Stacked Bar Graph data
+  // First Animated Stacked Bar Graph data
   const [ageGroupData, setAgeGroupData] = useState({})
-  // Data points we want to show in the stacked bar chart
   const ageGroupKeys = ['kidsAndTeenagers', 'youngAdults', 'adults', 'middleAged']
   const [ageGroups, setAgeGroups] = useState(ageGroupKeys)
-  // Colors of each data point, which would colorise the stack of each year
   const ageGroupColors = {
-    kidsAndTeenagers:"#DA0000", 
-    youngAdults:"#DAAC00", 
-    adults: "#00AE00", 
-    middleAged: "#3B0D95"
+    kidsAndTeenagers:"#BB86FC", 
+    youngAdults:"#FF867D", 
+    adults: "#7CFDA3", 
+    middleAged: "#FFF57D"
   }
 
-
-  const onAgeGroupChange = (e, key) => {
-      if (!e.target.checked) {
-          const removedAgeGroup = ageGroups.filter(ageGroup => ageGroup !== key)
-          setAgeGroups(removedAgeGroup)
-      } else {
-          setAgeGroups(Array.from(new Set([...ageGroups, key])))
-      }
+  // Second Animated Stacked Bar Graph data
+  const [mentalHealthFrequencies, setMentalHealthFrequencies] = useState([])
+  const mentalHealthKeys = ["actsOfTerrorism", "psychologicalFactors", "anger", "frustration", "unknown"]
+  const [mentalIllnesses, setMentalIllnesses] = useState(mentalHealthKeys)
+  const mentalHealthColors = {
+    actsOfTerrorism:"#BB86FC", 
+    psychologicalFactors:"#FF867D", 
+    anger: "#7CFDA3", 
+    frustration: "#E14C92",
+    unknown: "#FFAA57"
   }
+
+  // Function for filtering data for both stacked bar graphs
+  const onCheckboxChange = (e, key, keysArray, setKeysArray) => {
+    if (!e.target.checked) {
+        const filteredKeysArray = keysArray.filter(currentKey => currentKey !== key)
+        setKeysArray(filteredKeysArray)
+    } else {
+        setKeysArray(Array.from(new Set([...keysArray, key])))
+    }
+}
 
   // Stacked Bar Graph Data
   const [spaceData, setSpaceData] = useState([])
@@ -143,6 +154,9 @@ function App() {
       // Created a method (see functions folder) that extracts the data required
       const dataForPieChart = filterShootingTargetData(data)
       setPieChartData(dataForPieChart)
+
+      const dataForStackedGraph = filterMentalHealthData(data)
+      setMentalHealthFrequencies(dataForStackedGraph)
 
     })
 
@@ -272,29 +286,62 @@ function App() {
       </article>
       <br />
       <br />
-      <h2>Number of U.S. Mass Shootings per year for each age group </h2>
-      <div className="fields">
-        {
-          ageGroupKeys.map(key => (
-            <div key={key} className="field">
-              <input
-                id={key}
-                type="checkbox"
-                checked={ageGroups.includes(key)}
-                onChange={(e) => onAgeGroupChange(e, key)}
-              />
-              <label htmlFor={key} style={{ color: ageGroupColors[key] }}>
-                {/* The key is in camel case, so this will split it into individual words */}
-                {`${key.charAt(0).toUpperCase()}${key.substring(1).replace(/([a-z0-9])([A-Z])/g, '$1 $2')}`}
-              </label>
-            </div>
-          ))
-        }
-      </div>
-      <AnimatedStackedBarGraph  stackedBarGraphData={ageGroupData} 
-                        keys={ageGroups}
-                        colors={ageGroupColors}
-      />
+      <article className="stackedGraphSection">
+        <h2>Number of U.S. Mass Shootings per year for each age group </h2>
+        <div className="fields">
+          {
+            ageGroupKeys.map(key => (
+              <div key={key} className="fieldContainer" style={{ backgroundColor: ageGroupColors[key] }}>
+                <div className="field">
+                  <input
+                    id={key}
+                    type="checkbox"
+                    checked={ageGroups.includes(key)}
+                    onChange={(e) => onCheckboxChange(e, key, ageGroups, setAgeGroups)}
+                  />
+                  <label htmlFor={key}>
+                    {/* The key is in camel case, so this will split it into individual words */}
+                    {`${key.charAt(0).toUpperCase()}${key.substring(1).replace(/([a-z0-9])([A-Z])/g, '$1 $2')}`}
+                  </label>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+        <AnimatedStackedBarGraph  stackedBarGraphData={ageGroupData} 
+                          keys={ageGroups}
+                          colors={ageGroupColors}
+        />
+      </article>
+      <br />
+      <br />
+      <article className="stackedGraphSection">
+        <h2>Number of U.S. Mass Shootings per year for each age group </h2>
+        <div className="fields">
+          {
+            mentalHealthKeys.map(key => (
+              <div key={key} className="fieldContainer mentalHealthFieldContainer" style={{ backgroundColor: mentalHealthColors[key] }}>
+                <div className="field">
+                  <input
+                    id={key}
+                    type="checkbox"
+                    checked={mentalIllnesses.includes(key)}
+                    onChange={(e) => onCheckboxChange(e, key, mentalIllnesses, setMentalIllnesses)}
+                  />
+                  <label htmlFor={key}>
+                    {/* The key is in camel case, so this will split it into individual words */}
+                    {`${key.charAt(0).toUpperCase()}${key.substring(1).replace(/([a-z0-9])([A-Z])/g, '$1 $2')}`}
+                  </label>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+        <AnimatedStackedBarGraph  stackedBarGraphData={mentalHealthFrequencies} 
+                                  keys={mentalIllnesses}
+                                  colors={mentalHealthColors}
+        />
+      </article>
       <br />
       <br />
       <StackedBarGraph  stackedBarGraphData={spaceData} 
@@ -307,9 +354,16 @@ function App() {
       <br/>
       <br/>
       <h2>Nick's Graphs</h2>
-      <h3>How many shooters had a mental health issue</h3>
+      
+      <article className="pieChartLayout">
+        <div className="pieChartDesc">
+          <h3>How many shooters had a mental health issue?</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies congue nunc eget imperdiet. Cras ac purus nisi. Aliquam erat volutpat. Ut quis purus dapibus, imperdiet arcu ut, porttitor diam. In hac habitasse platea dictumst. In suscipit metus sit amet orci tempus lobortis semper non ex. Aliquam euismod, elit at sollicitudin tincidunt, metus justo ultrices dolor, quis gravida mi felis non neque. Quisque ac ligula nec ligula commodo hendrerit ut eu lacus.
 
-      <PieChart pieChartData={{ yes: 106, no: 93, unknown: 124 }} innerRadius={0} outerRadius={150} />
+              Donec quis metus orci. Nullam sapien orci, tempus eget velit nec, semper egestas augue. Fusce vitae odio tellus. Vivamus vulputate interdum nisi, dapibus convallis turpis tincidunt nec. Aliquam scelerisque tortor vel dignissim fermentum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed et risus ut est consequat fermentum.</p>
+        </div>
+        <PieChart pieChartData={{ yes: 106, no: 93, unknown: 124 }} innerRadius={0} outerRadius={150} />
+      </article>
       <br/>
       <br/>
       <BarGraph barClassName={"mhIssue"} barGraphData={mentalHealthData} />

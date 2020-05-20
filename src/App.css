@@ -154,10 +154,13 @@ svg .country:hover {
 .pieChartDesc {
   width: 40%;
   padding: 0 50px;
+}
+
+.pieChartDesc:nth-child(odd) {
   text-align: left;
 }
 
-.pieChartDesc:nth-child(2) {
+.pieChartDesc:nth-child(even) {
   text-align: right;
 }
 
@@ -170,7 +173,30 @@ svg .country:hover {
 }
 
 
-/* Stacked Graph */
+/* Animated Stacked Graph */
+
+.stackedGraphSection {
+  width: 100%;
+  padding: 50px 0;
+  height: auto;
+  background-color: #121212;
+}
+
+.stackedGraphSection h2 {
+  color: rgb(175, 175, 175);
+}
+
+.axisWhite line{
+  stroke: rgb(175, 175, 175);
+}
+
+.axisWhite path{
+  stroke: rgb(175, 175, 175);
+}
+
+.axisWhite text{
+  fill: rgb(175, 175, 175);
+}  
 
 .stackedGraph svg {
   height: 250px
@@ -181,7 +207,7 @@ svg .country:hover {
   margin: 0 auto;
 }
 
-  /* Age Group Checkboxes */
+  /* Checkboxes */
 
 .fields {
   width: 60%;
@@ -191,9 +217,23 @@ svg .country:hover {
   justify-content: space-evenly;
 }
 
+.fieldContainer {
+  padding: 10px;
+  border-radius: 10px;
+  width: 20%;
+  display: flex;
+  justify-content: center;
+}
+
+.mentalHealthFieldContainer {
+  width: 25%;
+  margin: 10px 0
+}
+
 .field {
   display: flex;
   align-items: center;
+  color: black;
 }
 
 .field input {
@@ -229,6 +269,10 @@ svg .country:hover {
   align-items: center;
 }
 
+.sliderContainer label {
+  color: white;
+}
+
 .slider {
   -webkit-appearance: none;
   width: 80%;
@@ -247,7 +291,7 @@ svg .country:hover {
   z-index: 3;
   position: relative;
   border-radius: 50%;
-  background-color: #DA0000;
+  background-color: rgb(80, 80, 80);
   width: 20px;
   height: 20px;
 }
@@ -255,6 +299,7 @@ svg .country:hover {
 .sliderValue {
   width: 20%;
   padding: 10px;
+  color: #eee;
 }
 
 /* Bar Graph */
