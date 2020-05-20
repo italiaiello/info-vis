@@ -5,6 +5,7 @@ import BarGraph from './components/BarGraph/BarGraph'
 import GeoChart from './components/GeoChart/GeoChart'
 import dataForUS from './json/states.geo.json'
 import AnimatedStackedBarGraph from './components/StackedBarGraph/AnimatedStackedBarGraph'
+import FilterButtons from './components/StackedBarGraph/FilterButtons'
 import StackedBarGraph from './components/StackedBarGraph/StackedBarGraph'
 import LineGraph from './components/LineGraph/LineGraph'
 
@@ -123,7 +124,16 @@ function App() {
     } else {
         setKeysArray(Array.from(new Set([...keysArray, key])))
     }
-}
+  }
+
+  const [stackedDataToView, setStackedDataToView] = useState("")
+
+  const onDataChange = (e) => {
+    console.log(e.target.value)
+    setStackedDataToView(e.target.value)
+  }
+
+
 
   // Stacked Bar Graph Data
   const [spaceData, setSpaceData] = useState([])
@@ -309,38 +319,49 @@ function App() {
           }
         </div>
         <AnimatedStackedBarGraph  stackedBarGraphData={ageGroupData} 
-                          keys={ageGroups}
-                          colors={ageGroupColors}
+                                  keys={ageGroups}
+                                  colors={ageGroupColors}
         />
       </article>
       <br />
       <br />
       <article className="stackedGraphSection">
-        <h2>Number of U.S. Mass Shootings per year for each age group </h2>
-        <div className="fields">
-          {
-            mentalHealthKeys.map(key => (
-              <div key={key} className="fieldContainer mentalHealthFieldContainer" style={{ backgroundColor: mentalHealthColors[key] }}>
-                <div className="field">
-                  <input
-                    id={key}
-                    type="checkbox"
-                    checked={mentalIllnesses.includes(key)}
-                    onChange={(e) => onCheckboxChange(e, key, mentalIllnesses, setMentalIllnesses)}
-                  />
-                  <label htmlFor={key}>
-                    {/* The key is in camel case, so this will split it into individual words */}
-                    {`${key.charAt(0).toUpperCase()}${key.substring(1).replace(/([a-z0-9])([A-Z])/g, '$1 $2')}`}
-                  </label>
-                </div>
-              </div>
-            ))
-          }
+        <div className="stackedGraphHeading">
+          <h2>Number of U.S. Mass Shootings per year in relation to</h2>
+          <select className="dropdown" onChange={onDataChange}>
+            <option value="mentalHealth">Mental Health</option>
+            <option value="ageGroups">Age Groups</option>
+          </select>
         </div>
-        <AnimatedStackedBarGraph  stackedBarGraphData={mentalHealthFrequencies} 
-                                  keys={mentalIllnesses}
-                                  colors={mentalHealthColors}
-        />
+        {
+          stackedDataToView === "ageGroups"
+          ?
+          <div>
+            <FilterButtons keysState={ageGroups} 
+                            keysArray={ageGroupKeys} 
+                            colors={ageGroupColors} 
+                            setKeysArray={setAgeGroups} 
+                            onCheckboxChange={onCheckboxChange} 
+            />
+            <AnimatedStackedBarGraph  stackedBarGraphData={ageGroupData} 
+                                    keys={ageGroups}
+                                    colors={ageGroupColors}
+            />
+          </div>
+          :
+          <div>
+            <FilterButtons keysState={mentalIllnesses} 
+                            keysArray={mentalHealthKeys} 
+                            colors={mentalHealthColors} 
+                            setKeysArray={setMentalIllnesses} 
+                            onCheckboxChange={onCheckboxChange} 
+            />
+            <AnimatedStackedBarGraph  stackedBarGraphData={mentalHealthFrequencies} 
+                                      keys={mentalIllnesses}
+                                      colors={mentalHealthColors}
+            />
+          </div>
+        }
       </article>
       <br />
       <br />

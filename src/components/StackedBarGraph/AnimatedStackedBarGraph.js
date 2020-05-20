@@ -75,7 +75,6 @@ const AnimatedStackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
             .select(".x-axis")
             .attr("transform", `translate(0, ${height})`)
             .call(xAxis)
-            // .attr("class", "axisWhite")
             .selectAll("text")
             .attr("y", 0)
             .attr("x", 9)

@@ -182,19 +182,26 @@ svg .country:hover {
   background-color: #121212;
 }
 
-.stackedGraphSection h2 {
+.stackedGraphHeading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stackedGraphHeading h2 {
+  margin-right: 5px;
   color: rgb(175, 175, 175);
 }
 
-.axisWhite line{
+.x-axis line, .y-axis line {
   stroke: rgb(175, 175, 175);
 }
 
-.axisWhite path{
+.x-axis path, .y-axis path {
   stroke: rgb(175, 175, 175);
 }
 
-.axisWhite text{
+.x-axis text, .y-axis text {
   fill: rgb(175, 175, 175);
 }  
 
@@ -214,7 +221,7 @@ svg .country:hover {
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 .fieldContainer {
@@ -223,11 +230,11 @@ svg .country:hover {
   width: 20%;
   display: flex;
   justify-content: center;
+  margin: 10px 10px
 }
 
 .mentalHealthFieldContainer {
   width: 25%;
-  margin: 10px 0
 }
 
 .field {
