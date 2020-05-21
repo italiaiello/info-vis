@@ -139,8 +139,8 @@ function App() {
   const [spaceData, setSpaceData] = useState([])
   const spaceKeys = ["fatalities", "injured"]
   const spaceColors = {
-    fatalities:"#DA0000", 
-    injured:"#DAAC00"
+    fatalities:"#803A29", 
+    injured:"#FFB19E"
   }
 
 
@@ -349,7 +349,7 @@ function App() {
       
       <article className="pieChartLayout">
         <div className="pieChartDesc">
-          <h3>How many shooters had a mental health issue?</h3>
+          <h2>How many shooters had a mental health issue?</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies congue nunc eget imperdiet. Cras ac purus nisi. Aliquam erat volutpat. Ut quis purus dapibus, imperdiet arcu ut, porttitor diam. In hac habitasse platea dictumst. In suscipit metus sit amet orci tempus lobortis semper non ex. Aliquam euismod, elit at sollicitudin tincidunt, metus justo ultrices dolor, quis gravida mi felis non neque. Quisque ac ligula nec ligula commodo hendrerit ut eu lacus.
 
               Donec quis metus orci. Nullam sapien orci, tempus eget velit nec, semper egestas augue. Fusce vitae odio tellus. Vivamus vulputate interdum nisi, dapibus convallis turpis tincidunt nec. Aliquam scelerisque tortor vel dignissim fermentum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed et risus ut est consequat fermentum.</p>
@@ -379,8 +379,6 @@ function App() {
                   reverseData={true} 
                   xAxisFontSize={5}
       />
-      <br/>
-      <br/>
       <br/>
       <br/>
     </section>

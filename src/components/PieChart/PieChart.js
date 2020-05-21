@@ -41,7 +41,7 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
         const colorScale = scaleOrdinal()
             .domain(pieChartValues)
             // Change colors here
-            .range(["#DA0000", "#DAAC00", "#3B0D95"]);
+            .range(["#CC5D41", "#FFB19E", "#80594F"]);
         
         // Creating the pie chart
         svg

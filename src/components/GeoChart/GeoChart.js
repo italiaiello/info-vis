@@ -49,7 +49,7 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
         const colorScale = scaleLinear()
             .domain(isTargetsOptionSelected ? [0, maxPropTargets] : [minProp, maxProp])
             // Change colors here
-            .range(["#f8cccc", "#DA0000"])
+            .range(["#FFB19E", "#CC5D41"])
 
         // Projects coordinates on a 2D plane
         const projection = geoMercator()

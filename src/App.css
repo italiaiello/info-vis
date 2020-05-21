@@ -51,7 +51,7 @@ svg .country:hover {
   /* background-image: url("./images/network.jpg");
   background-size: cover;
   background-repeat: no-repeat; */
-  background-image: linear-gradient(to bottom, lightgrey, white);
+  background-image: linear-gradient(to bottom, #803A29, white);
   height: 100vh;
   padding-top: 30px;
   display: flex;
@@ -154,6 +154,10 @@ svg .country:hover {
 .pieChartDesc {
   width: 40%;
   padding: 0 50px;
+}
+
+.pieChartDesc h2 {
+  color: #803A29;
 }
 
 .pieChartDesc:nth-child(odd) {
