@@ -41,7 +41,7 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
         const colorScale = scaleOrdinal()
             .domain(pieChartValues)
             // Change colors here
-            .range(["#CC5D41", "#FFB19E", "#80594F"]);
+            .range(["#CC8E7E", "#803A29", "#FFB19E"]);
         
         // Creating the pie chart
         svg
@@ -96,7 +96,7 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
                 // Selects the slice we are currently hovering over and change the color
                 svg
                     .select(`.value${data.value}`)
-                    .attr("fill", "#990000")
+                    .attr("fill", "#80594F")
                 
             })
             .on("mouseleave", (data) => {

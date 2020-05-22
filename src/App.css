@@ -51,7 +51,7 @@ svg .country:hover {
   /* background-image: url("./images/network.jpg");
   background-size: cover;
   background-repeat: no-repeat; */
-  background-image: linear-gradient(to bottom, #803A29, white);
+  background-image: linear-gradient(to bottom, lightgray, white);
   height: 100vh;
   padding-top: 30px;
   display: flex;
@@ -183,7 +183,7 @@ svg .country:hover {
   width: 100%;
   padding: 50px 0;
   height: auto;
-  background-color: #121212;
+  background-color: #803A29
 }
 
 .stackedGraphHeading {
@@ -234,7 +234,7 @@ svg .country:hover {
   width: 20%;
   display: flex;
   justify-content: center;
-  margin: 10px 10px
+  margin: 10px 10px;
 }
 
 .mentalHealthFieldContainer {
@@ -249,10 +249,12 @@ svg .country:hover {
 
 .field input {
   margin: 0;
+  cursor: pointer;
 }
 
 .field label {
   margin-left: 5px;
+  cursor: pointer;
 }
 
   /* Range Sliders */
@@ -302,7 +304,7 @@ svg .country:hover {
   z-index: 3;
   position: relative;
   border-radius: 50%;
-  background-color: rgb(80, 80, 80);
+  background-color: #CC8E7E;
   width: 20px;
   height: 20px;
 }
