@@ -183,7 +183,7 @@ svg .country:hover {
   width: 100%;
   padding: 50px 0;
   height: auto;
-  background-color: #803A29
+  background-color: #693E3C
 }
 
 .stackedGraphHeading {
@@ -197,15 +197,15 @@ svg .country:hover {
   color: rgb(175, 175, 175);
 }
 
-.x-axis line, .y-axis line {
+.stackedGraph .x-axis line,  .stackedGraph .y-axis line {
   stroke: rgb(175, 175, 175);
 }
 
-.x-axis path, .y-axis path {
+.stackedGraph .x-axis path, .stackedGraph .y-axis path {
   stroke: rgb(175, 175, 175);
 }
 
-.x-axis text, .y-axis text {
+.stackedGraph .x-axis text, .stackedGraph .y-axis text {
   fill: rgb(175, 175, 175);
 }  
 
@@ -304,7 +304,7 @@ svg .country:hover {
   z-index: 3;
   position: relative;
   border-radius: 50%;
-  background-color: #CC8E7E;
+  background-color: #E8473F;
   width: 20px;
   height: 20px;
 }
