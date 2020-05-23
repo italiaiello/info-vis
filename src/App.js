@@ -300,8 +300,8 @@ function App() {
         <div className="stackedGraphHeading">
           <h2>Number of U.S. Mass Shootings per year in relation to</h2>
           <select className="dropdown" onChange={onDataChange}>
-            <option value="mentalHealth">Mental Health</option>
-            <option value="ageGroups">Age Groups</option>
+            <option value="mentalHealth">motives of individuals suffering from mental health conditions</option>
+            <option value="ageGroups">age groups</option>
           </select>
         </div>
         {

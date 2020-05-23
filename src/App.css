@@ -32,6 +32,14 @@ button {
   outline: none;
 }
 
+.dropdown {
+  width: auto;
+  height: 35px;
+  font-size: 15px;
+  outline: none;
+  padding: 20px;
+}
+
 /* Geo Chart */
 
 #subheading {
@@ -127,11 +135,12 @@ svg .country:hover {
   width: 50%;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .dropdownContainer span {
-  /* color: white; */
   padding: 0 10px;
+  font-size: 15px;
 }
 
 .show {
@@ -183,7 +192,8 @@ svg .country:hover {
   width: 100%;
   padding: 50px 0;
   height: auto;
-  background-color: #693E3C
+  /* background-color: #693E3C */
+  background-color: #121212
 }
 
 .stackedGraphHeading {
