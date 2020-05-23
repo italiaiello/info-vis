@@ -109,7 +109,7 @@ const PieChart = ({ chartAlign, pieChartData, innerRadius, outerRadius }) => {
                 svg.selectAll(`.slice`).attr("fill", data => colorScale(data.value))
             })
 
-    }, [pieChartData, dimensions, innerRadius, outerRadius])
+    }, [pieChartData, dimensions, innerRadius, outerRadius, chartAlign])
 
     return (
     <article className="graph pieChart">

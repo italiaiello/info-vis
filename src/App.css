@@ -1,3 +1,8 @@
+html {
+  scroll-behavior: smooth;
+  transition: all .2s ease-in-out
+}
+
 svg {
   overflow: visible;
   display: block;
@@ -11,6 +16,7 @@ svg {
   flex-direction: column;
   align-items: stretch;
   text-align: center;
+  position: relative;
 }
 
 h1, h2, h3, h4 {
@@ -57,6 +63,11 @@ button {
   padding: 20px;
 }
 
+.navBar {
+  position: absolute;
+  right: 0;
+}
+
 /* Geo Chart */
 
 #subheading {
@@ -78,15 +89,19 @@ svg .country:hover {
   background-repeat: no-repeat; */
   background-image: linear-gradient(to bottom, lightgray, white);
   height: 100vh;
-  padding-top: 30px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 }
 
 .geoChartContainer h2, .geoChartContainer h3 {
   margin-top: 0;
+}
+
+.geoChartContainer p {
+  width: 60%;
+  font-weight: bold
 }
 
 .geoChart {
@@ -118,8 +133,8 @@ svg .country:hover {
 
 .geoChartInfoContainer {
   position: absolute;
-  top: 10;
-  left: 10;
+  top: 15px;
+  left: 15px;
 }
 
 .geoChartInfo {
@@ -239,7 +254,7 @@ svg .country:hover {
 }
 
 .stackedGraph div {
-  width: 80%;
+  width: 60%;
   margin: 0 auto;
 }
 
@@ -342,6 +357,11 @@ svg .country:hover {
 
 /* Bar Graph */
 
+.barGraph {
+  margin: 0 auto;
+  width: 60%;
+}
+
 .barGraph svg {
   height: 300px;
 }
@@ -352,6 +372,11 @@ svg .country:hover {
 }
 
 /* Line Graph */
+
+.lineGraph {
+  width: 60%;
+  margin: 0 auto;
+}
 
 .lineGraph svg {
   height: 300px;
@@ -366,10 +391,26 @@ svg .country:hover {
   stroke-width: 2px;
 }
 
+/* Footer */
+
+footer {
+  width: 100%;
+  height: 100px;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+/* Sidebar */
+
 aside {
-	grid-area: aside;
+  position: fixed;
+  top: 0;
+  right: 0;
 	color: #207070;
-	padding: 10px 30px;
+  padding: 10px 30px;
 }
 
 .aside-container {
@@ -377,8 +418,6 @@ aside {
   width: auto;
   border-top: 3px #207070 solid;
   border-bottom: 3px #207070 solid;
-	position: sticky;
-	top: 20px;
 	width: 240px;
 	background-color: rgba(32, 112, 112, .1);
 
