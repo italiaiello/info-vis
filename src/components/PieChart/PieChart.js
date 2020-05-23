@@ -5,7 +5,7 @@ import { useResizeObserver } from '../../hooks/useResizeObserver'
 
 // https://www.youtube.com/watch?v=HLpw0JFY4-E&t=37s
 
-const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
+const PieChart = ({ chartAlign, pieChartData, innerRadius, outerRadius }) => {
 
     // Pointers for the svg and wrapping article element respectively
     const pieChartRef = useRef()
@@ -43,6 +43,9 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
             // Change colors here
             .range(["#EC8C86", "#B53731", "#69201C"]);
         
+        // Sets the x align for the pie chart
+        const alignPie = chartAlign === "alignRight" ? dimensions.width - 150 : 0 + 150
+        
         // Creating the pie chart
         svg
             .selectAll(".slice")
@@ -56,7 +59,7 @@ const PieChart = ({ pieChartData, innerRadius, outerRadius }) => {
             .attr("fill", instruction => colorScale(instruction.value))
             .style(
                 "transform",
-                `translate(${dimensions.width / 2}px, ${dimensions.height / 2}px)`
+                `translate(${alignPie}px, ${dimensions.height / 2}px)`
             )
             .attr("d", instruction => arcGenerator(instruction))
             .on("mouseenter", (data) => {

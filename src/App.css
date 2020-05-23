@@ -13,6 +13,23 @@ svg {
   text-align: center;
 }
 
+h1, h2, h3, h4 {
+  color: #803A29;
+}
+
+.bodyHeading {
+  width: 60%;
+  margin: 50px auto;
+  text-align: left;
+}
+
+.bodyText {
+  margin: 0 auto;
+  width: 60%;
+  line-height: 25px;
+  text-align: left;
+}
+
 .graph {
   padding: 50px 0;
 }
@@ -154,23 +171,21 @@ svg .country:hover {
 /* Pie Chart */
 
 .pieChartLayout {
-  width: 100%;
+  width: 60%;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .pieChartDesc {
-  width: 40%;
-  padding: 0 50px;
-}
-
-.pieChartDesc h2 {
-  color: #803A29;
-}
-
-.pieChartDesc:nth-child(odd) {
+  width: 50%;
   text-align: left;
+}
+
+.pieChartDesc p {
+  line-height: 25px;
+  width: auto;
 }
 
 .pieChartDesc:nth-child(even) {
@@ -178,7 +193,7 @@ svg .country:hover {
 }
 
 .pieChart {
-  width: 40%
+  width: 50%
 }
 
 .pieChart svg {
@@ -349,4 +364,63 @@ svg .country:hover {
 
 .line {
   stroke-width: 2px;
+}
+
+aside {
+	grid-area: aside;
+	color: #207070;
+	padding: 10px 30px;
+}
+
+.aside-container {
+  margin: 1em auto;
+  width: auto;
+  border-top: 3px #207070 solid;
+  border-bottom: 3px #207070 solid;
+	position: sticky;
+	top: 20px;
+	width: 240px;
+	background-color: rgba(32, 112, 112, .1);
+
+}
+
+.aside-container h4 {
+	padding-left: none;
+	margin: 20px 0;
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 3px;
+	font-size: 1em;
+	color: #207070;
+}
+
+aside ol {
+	padding-left: 20px;
+	list-style: none;
+}
+
+aside ol li {
+	margin: 20px 0;
+	font-size: 0.8em;
+}
+
+aside li a:active {
+	font-weight: 600;
+}
+
+aside a,
+header a {
+	color: #207070;
+	text-decoration: none;
+	font-size: 1em;
+	transition: all 0.3s ease-in-out;
+}
+
+aside a {
+	font-size: 1.2em;
+	font-weight: 500;
+}
+
+aside a:hover {
+	color: #BB8E35;
 }
