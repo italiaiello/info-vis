@@ -201,7 +201,6 @@ function App() {
 
         <article className="dropdownContainer">
           <span className={isTargetsOptionSelected ? "show" : "hide"}>had</span>
-          <form>
           {
             isTargetsOptionSelected &&
             <select value={target} id="targetSelect" className="dropdown" onChange={onTargetChange}>
@@ -233,7 +232,6 @@ function App() {
             <option value="policemenKilled">Policemen Killed</option>
             <option value="totalVictims">Total Victims</option>
           </select>
-          </form>
         </article>
         <p className="dataSource">Kaggle, 2017, Mass Shootings in the U.S. (per state).
           Obtained from Wikipedia, Mother Jones, Stanford, USA Today, and other web sources,
