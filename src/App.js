@@ -226,7 +226,6 @@ function App() {
           }
           <span className={isTargetsOptionSelected ? "show" : "hide"}>as a</span>
           <select value={property} className="dropdown" onChange={onStatChange}>
-            <option disabled selected value> -- select an option -- </option>
             <option value="shootings">Shootings</option>
             <option value="target">Target</option>
             <option value="fatalities">Fatalities</option>
