@@ -350,6 +350,11 @@ svg .country:hover {
   margin-top: 50px;
 }
 
+.stackedGraph rect .dataRect {
+  cursor: pointer;
+  fill: black;
+}
+
   /* Checkboxes */
 
 .fields {
@@ -526,7 +531,7 @@ aside {
 }
 
 aside ol {
-	padding-left: 20px;
+	padding: 0 20px;
   list-style: none;
   text-align: left;
 }

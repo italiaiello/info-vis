@@ -45,6 +45,7 @@ function App() {
   const [victimsPerState, setVictimsPerState] = useState({})
   const [targetsPerState, setTargetsPerState] = useState({})
   const [property, setProperty] = useState("shootings")
+  const [target, setTarget] = useState("basketballPlayers")
   const [isTargetsOptionSelected, setIsTargetsOptionSelected] = useState(false)
   // This holds the index of which target has been selected
   // This index will help us retrieve the number of victims associated with that target
@@ -66,7 +67,7 @@ function App() {
   // For the second dropdown that appears when 'Targets' is selected
   const onTargetChange = (e) => {
     const index = document.getElementById("targetSelect").selectedIndex
-    setProperty(e.target.value)
+    setTarget(e.target.value)
     setSelectedTargetIndex(index)
   }
 
@@ -193,6 +194,7 @@ function App() {
                   victimsPerState={victimsPerState}
                   targetsPerState={targetsPerState}
                   property={property}
+                  target={target}
                   isTargetsOptionSelected={isTargetsOptionSelected}
                   selectedTargetIndex={selectedTargetIndex}
         />
@@ -201,7 +203,7 @@ function App() {
           <span className={isTargetsOptionSelected ? "show" : "hide"}>had</span>
           {
             isTargetsOptionSelected &&
-            <select id="targetSelect" className="dropdown" onChange={onTargetChange}>
+            <select value={target} id="targetSelect" className="dropdown" onChange={onTargetChange}>
                   {
                       // We need to create a dropdown with all the targets.
                       // Every state has the targets defined, so we can just choose a state
@@ -222,7 +224,7 @@ function App() {
             </select>
           }
           <span className={isTargetsOptionSelected ? "show" : "hide"}>as a</span>
-          <select className="dropdown" onChange={onStatChange} >
+          <select value={property} className="dropdown" onChange={onStatChange} >
             <option value="shootings">Shootings</option>
             <option value="target">Target</option>
             <option value="fatalities">Fatalities</option>
