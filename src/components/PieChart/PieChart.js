@@ -6,7 +6,7 @@ import { useResizeObserver } from '../../hooks/useResizeObserver'
 
 // https://www.youtube.com/watch?v=HLpw0JFY4-E&t=37s
 
-const PieChart = ({ chartAlign, pieChartData, innerRadius, outerRadius }) => {
+const PieChart = ({ chartId, chartAlign, pieChartData, innerRadius, outerRadius }) => {
 
     // Pointers for the svg and wrapping article element respectively
     const pieChartRef = useRef()
@@ -46,9 +46,6 @@ const PieChart = ({ chartAlign, pieChartData, innerRadius, outerRadius }) => {
             // Change colors here
             .range(["#EC8C86", "#B53731", "#69201C"]);
         
-        // Sets the x align for the pie chart
-        const alignPie = chartAlign === "alignRight" ? dimensions.width - 150 : 0 + 150
-        
         // Creating the pie chart
         svg
             .selectAll(".slice")
@@ -62,11 +59,12 @@ const PieChart = ({ chartAlign, pieChartData, innerRadius, outerRadius }) => {
             .attr("fill", instruction => colorScale(instruction.value))
             .style(
                 "transform",
-                `translate(${alignPie}px, ${dimensions.height / 2}px)`
+                `translate(${dimensions.width / 2}px, ${dimensions.height / 2}px)`
             )
             .attr("d", instruction => arcGenerator(instruction))
             .on("mouseenter", (data) => {
 
+                console.log(data)
                 // We need to grab the label that corresponds to the numerical value
                 // Just made some variables to make it easier to access the 
                 // labels and values arrays
@@ -89,36 +87,33 @@ const PieChart = ({ chartAlign, pieChartData, innerRadius, outerRadius }) => {
                 
                 pieChartKeys[labelIndex] = `${upperCaseLetter}${restOfWord}`
 
-                // Creates tooltip
-                svg
-                    .selectAll(".tooltip")
-                    .data([data])
-                    .join(enter => enter.append("text"))
-                    .attr("class", "tooltip")
-                    .attr("x", (dimensions.width / 2) - 40)
-                    .attr("y", dimensions.height)
-                    .text(`${pieChartKeys[labelIndex]}: ${pieChartValues[labelIndex]}`)
+                const text = document.getElementById(chartId)
+                text.textContent = `${pieChartKeys[labelIndex]}: ${pieChartValues[labelIndex]}`
                 
                 // Selects the slice we are currently hovering over and change the color
                 svg
                     .select(`.value${data.value}`)
-                    .attr("fill", "#693E3C")
+                    .attr("fill", "#E8483F")
                 
             })
             .on("mouseleave", (data) => {
-                // Removes tooltip
-                svg.select(".tooltip").remove()
+                // Revert tooltip text back to original
+                const text = document.getElementById(chartId)
+                text.textContent = 'Hover over a slice'
                 // Reverts colors back to the original ones (red, green, blue)
                 svg.selectAll(`.slice`).attr("fill", data => colorScale(data.value))
             })
 
-    }, [pieChartData, dimensions, innerRadius, outerRadius, chartAlign, pieChartKeys, pieChartValues])
+    }, [pieChartData, dimensions, innerRadius, outerRadius, chartId, chartAlign, pieChartKeys, pieChartValues])
 
     return (
     <article className="graph pieChart">
         <Legend keys={pieChartKeys} colors={["#EC8C86", "#B53731", "#69201C"]} />
         <div ref={wrapperRef}>
             <svg ref={pieChartRef}></svg>
+        </div>
+        <div className="tooltipBox">
+            <p id={chartId}>Hover over a slice</p>
         </div>
     </article>
     )

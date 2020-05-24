@@ -320,7 +320,7 @@ function App() {
             there are many shooters who wish to vent their frustrations on specific targets, 
             likely to be the people who upset the shooter in the first place.</p>
         </div>
-        <PieChart chartAlign={"alignRight"} pieChartData={pieChartData} innerRadius={0} outerRadius={150} />
+        <PieChart chartId="firstChart" chartAlign={"alignRight"} pieChartData={pieChartData} innerRadius={0} outerRadius={150} />
       </article>
 
       <br/>
@@ -367,7 +367,7 @@ function App() {
             due to the information not being revealed, or the information being unavailable, 
             such as when the shooter commits suicide.</p>
         </div>
-        <PieChart chartAlign={"alignRight"} pieChartData={{ yes: 106, no: 93, unknown: 124 }} innerRadius={0} outerRadius={150} />
+        <PieChart chartId="secondChart" chartAlign={"alignRight"} pieChartData={{ yes: 106, no: 93, unknown: 124 }} innerRadius={0} outerRadius={150} />
       </article>
 
       <br />
@@ -375,7 +375,7 @@ function App() {
 
       <article className="stackedGraphSection">
         <div className="stackedGraphHeading">
-          <h2 id="part6">Number of U.S. Mass Shootings per year in relation to</h2>
+          <h2 id="part6">Number of U.S. Mass Shootings per year in relation to:</h2>
           <select className="dropdown" onChange={onDataChange}>
             <option value="mentalHealth">motives of individuals suffering from mental health conditions</option>
             <option value="ageGroups">age groups</option>
@@ -412,7 +412,7 @@ function App() {
         }
       </article>
 
-      <p className="bodyText">
+      <p id="stackGraphContent" className="bodyText">
         Among the known motives for mass shootings, a significant number of mass shootings 
         were classified as “acts of terrorism”. Upon further investigation into the summaries 
         of mass shootings categorised as acts of terrorism, we presume that “acts of terrorism” 
@@ -464,7 +464,7 @@ function App() {
       <br />
 
       <article className="pieChartLayout">
-        <PieChart chartClass={"alignPieRight"} pieChartData={occupationsData} innerRadius={100} outerRadius={150} />
+        <PieChart chartId="thirdChart" chartAlign={"alignLeft"} pieChartData={occupationsData} innerRadius={100} outerRadius={150} />
         <div className="pieChartDesc">
           <h3 id="part7-1">Percentage of shooters with a background in the military or police force</h3>
           <p>With psychological factors playing such a large role, we looked into the occupations 

@@ -83,7 +83,6 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
                     :
                     targetsText
                 )
-            
         }
 
         const setFillOfMap = feature => {

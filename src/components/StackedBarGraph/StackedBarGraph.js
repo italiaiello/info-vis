@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { select, scaleBand, axisBottom, axisLeft, stack, scaleLinear } from 'd3';
+import Legend from '../Legend/Legend'
 
 import { useResizeObserver } from '../../hooks/useResizeObserver'
 
@@ -69,8 +70,7 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
             .data(layer => layer)
             .join("rect")
             .attr("class", "dataRect")
-            .transition()
-            .duration(1500)
+            .on("mouseenter", layer => console.log(layer))
             .attr("x", sequence => xScale(sequence.data.space))
             .attr("width", xScale.bandwidth())
             .attr("y", sequence => yScale(sequence[1]))
@@ -80,16 +80,17 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
     }, [stackedBarGraphData, dimensions, keys, colors])
 
     return (
-    <article>
-        <article className="graph stackedGraph">
-            <div ref={wrapperRef}>
-                <svg ref={stackedGraphRef}>
-                    <g className="x-axis" />
-                    <g className="y-axis" />
-                </svg>
-            </div>
-            
-        </article>
+    <article className="graph stackedGraph">
+        <Legend keys={keys} colors={Object.values(colors)} />
+        <div ref={wrapperRef}>
+            <svg ref={stackedGraphRef}>
+                <g className="x-axis" />
+                <g className="y-axis" />
+            </svg>
+        </div>
+        <div className="tooltipBox">
+            <p id="stackedTooltipText">Hover over a block</p>
+        </div>
     </article>
     )
 }

@@ -36,6 +36,8 @@ const LineGraph = ({ lineGraphData, yAxisMax, reverseData, xAxisFontSize }) => {
     const xAxis = axisBottom(xScale)
         .ticks(keys.length)
         .tickFormat(index => keys[index])
+
+    
     svg
         .select(".x-axis")
         .style("transform", `translateY(${dimensions.height}px)`)
@@ -59,7 +61,6 @@ const LineGraph = ({ lineGraphData, yAxisMax, reverseData, xAxisFontSize }) => {
     const myLine = line()
     .x((value, index) => xScale(index))
     .y(yScale)
-    // .curve(curveCardinal)
 
     // renders the path element and attaches the "d" 
     // attribute from line generator above
@@ -84,6 +85,9 @@ const LineGraph = ({ lineGraphData, yAxisMax, reverseData, xAxisFontSize }) => {
             </svg>
         </div>
         <Legend keys={["frequency"]} colors={["#DA0000"]} />
+        <div id="lineTooltip" className="tooltip">
+            <p id="pointInfo"></p>
+        </div>
     </article>
     )
 }

@@ -1,6 +1,5 @@
 html {
   scroll-behavior: smooth;
-  transition: all .2s ease-in-out
 }
 
 svg {
@@ -80,6 +79,22 @@ button {
   color: white;
 }
 
+.stackedGraph .legend, .lineGraph .legend {
+  width: 20%;
+  margin-top: 50px;
+}
+
+.tooltipBox {
+  margin: 0 auto;
+  width: 50%;
+  height: 50px;
+  background-color: #121212;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Geo Chart */
 
 svg .country {
@@ -92,9 +107,6 @@ svg .country:hover {
 
 .geoChartContainer {
   width: 100%;
-  /* background-image: url("./images/network.jpg");
-  background-size: cover;
-  background-repeat: no-repeat; */
   background-image: linear-gradient(to bottom, lightgray, white);
   height: 100vh;
   display: flex;
@@ -239,9 +251,13 @@ svg .country:hover {
 }
 
 .stackedGraphHeading {
+  width: 60%;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  margin-bottom: 20px;
 }
 
 .stackedGraphHeading h2 {
@@ -268,6 +284,15 @@ svg .country:hover {
 .stackedGraph div {
   width: 60%;
   margin: 0 auto;
+}
+
+#stackGraphContent {
+  margin-top: 50px;
+}
+
+.stackedGraph .legend {
+  margin-top: 0;
+  margin-bottom: 50px;
 }
 
   /* Checkboxes */
