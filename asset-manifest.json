@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/info-vis/static/css/main.06f6bb61.chunk.css",
+    "main.js": "/info-vis/static/js/main.be4dc770.chunk.js",
+    "main.js.map": "/info-vis/static/js/main.be4dc770.chunk.js.map",
+    "runtime-main.js": "/info-vis/static/js/runtime-main.e1e3a3f8.js",
+    "runtime-main.js.map": "/info-vis/static/js/runtime-main.e1e3a3f8.js.map",
+    "static/js/2.4c4fb087.chunk.js": "/info-vis/static/js/2.4c4fb087.chunk.js",
+    "static/js/2.4c4fb087.chunk.js.map": "/info-vis/static/js/2.4c4fb087.chunk.js.map",
+    "index.html": "/info-vis/index.html",
+    "precache-manifest.f19a556fa6703193bc4cf80a10deffb4.js": "/info-vis/precache-manifest.f19a556fa6703193bc4cf80a10deffb4.js",
+    "service-worker.js": "/info-vis/service-worker.js",
+    "static/css/main.06f6bb61.chunk.css.map": "/info-vis/static/css/main.06f6bb61.chunk.css.map",
+    "static/js/2.4c4fb087.chunk.js.LICENSE.txt": "/info-vis/static/js/2.4c4fb087.chunk.js.LICENSE.txt",
+    "static/media/closeOpenSpaces.csv": "/info-vis/static/media/closeOpenSpaces.1488bc2d.csv",
+    "static/media/culpritDemographics.csv": "/info-vis/static/media/culpritDemographics.11227ee2.csv",
+    "static/media/mass_shootings.csv": "/info-vis/static/media/mass_shootings.773507f0.csv",
+    "static/media/militaryShooters.csv": "/info-vis/static/media/militaryShooters.ef2a8fae.csv",
+    "static/media/numMassShootings.csv": "/info-vis/static/media/numMassShootings.ad365587.csv",
+    "static/media/targetsFrequency.csv": "/info-vis/static/media/targetsFrequency.005a85c2.csv",
+    "static/media/victimsPerState.csv": "/info-vis/static/media/victimsPerState.1b622d14.csv"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e1e3a3f8.js",
+    "static/js/2.4c4fb087.chunk.js",
+    "static/css/main.06f6bb61.chunk.css",
+    "static/js/main.be4dc770.chunk.js"
+  ]
+}
