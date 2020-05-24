@@ -63,6 +63,12 @@ button {
   padding: 20px;
 }
 
+select {
+  -webkit-appearance: menulist;  /* for webkit (safari, chrome) compatibility */
+  -moz-appearance: menulist; /* for firefox compatibility */
+  appearance: menulist;
+}
+
 .navBar {
   position: absolute;
   right: 0;
