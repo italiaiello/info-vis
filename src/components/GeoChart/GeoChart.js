@@ -116,8 +116,8 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
         document.addEventListener("mousemove", (e) => {
             const x = e.clientX
             const y = e.clientY
-            tooltip.style.left = (x - 80) + "px"
-            tooltip.style.top = (y - 220) + "px"
+            tooltip.style.left = (x - 300) + "px"
+            tooltip.style.top = (y - 80) + "px"
         })
         const text = document.getElementById("stateInfo")
         text.textContent = setTooltipText(feature)

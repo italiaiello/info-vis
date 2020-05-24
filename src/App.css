@@ -68,11 +68,19 @@ button {
   right: 0;
 }
 
-/* Geo Chart */
-
-#subheading {
-  font-size: 15px;
+.legend {
+  margin: 0 auto;
+  width: 80%;
+  display: flex;
+  justify-content: center;
 }
+
+.key {
+  flex: 1;
+  color: white;
+}
+
+/* Geo Chart */
 
 svg .country {
   cursor: pointer;
@@ -97,11 +105,6 @@ svg .country:hover {
 
 .geoChartContainer h2, .geoChartContainer h3 {
   margin-top: 0;
-}
-
-.geoChartContainer p {
-  width: 60%;
-  font-weight: bold
 }
 
 .geoChart {
@@ -183,6 +186,15 @@ svg .country:hover {
   display: none;
 }
 
+#subheading {
+  font-size: 15px;
+}
+
+.hypothesis {
+  width: 60%;
+  font-weight: bold
+}
+
 /* Pie Chart */
 
 .pieChartLayout {
@@ -208,7 +220,7 @@ svg .country:hover {
 }
 
 .pieChart {
-  width: 50%
+  width: 50%;
 }
 
 .pieChart svg {
@@ -410,7 +422,7 @@ aside {
   top: 0;
   right: 0;
 	color: #207070;
-  padding: 10px 30px;
+  padding: 10px 20px;
 }
 
 .aside-container {
@@ -435,12 +447,13 @@ aside {
 
 aside ol {
 	padding-left: 20px;
-	list-style: none;
+  list-style: none;
+  text-align: left;
 }
 
 aside ol li {
 	margin: 20px 0;
-	font-size: 0.8em;
+	font-size: 0.7em;
 }
 
 aside li a:active {
@@ -462,4 +475,8 @@ aside a {
 
 aside a:hover {
 	color: #BB8E35;
+}
+
+.subheadings {
+  font-size: 0.9em;
 }

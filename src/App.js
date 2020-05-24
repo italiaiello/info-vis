@@ -7,6 +7,7 @@ import AnimatedStackedBarGraph from './components/StackedBarGraph/AnimatedStacke
 import FilterButtons from './components/StackedBarGraph/FilterButtons'
 import StackedBarGraph from './components/StackedBarGraph/StackedBarGraph'
 import LineGraph from './components/LineGraph/LineGraph'
+import Sidebar from './components/Sidebar/Sidebar'
 
 // Converts csv files to an array so we can manipulate them
 import { csv } from 'd3'
@@ -187,7 +188,7 @@ function App() {
 
   return (
     <section className="graphs">
-      <article className="geoChartContainer">
+      <article id="part1" className="geoChartContainer">
         <GeoChart data={dataForUS}
                   victimsPerState={victimsPerState}
                   targetsPerState={targetsPerState}
@@ -234,29 +235,19 @@ function App() {
         <br/>
         <h2>Mass Shootings in the U.S. <br /><span id="subheading">as shown per state</span></h2> 
         <h3>Hover over or click a state for more info</h3>
-        <p>Does the public accessibility of firearms and the complexity of mental health in the 
+        <p className="hypothesis">Does the public accessibility of firearms and the complexity of mental health in the 
           United States of America increase the likelihood of gun violence and mass shootings?</p>
 
       </article>
 
-      <aside>
-          <div class="aside-container">
-            <h4>Jump To...</h4>
-            <ol>
-                <li><a href="#part1">Transcripts</a></li>
-                <li><a href="#part1-2">Online Ethnography</a></li>
-                <li><a href="#part1-3">Walkthrough Map</a></li>
-                <li><a href="#affinity">Affinity Diagram</a></li>
-            </ol>
-          </div>
-      </aside>
+      <Sidebar />
 
       <p className="bodyText">Based on a dataset of mass shootings in the United States of America (USA), we look 
         into a wide range of mass shootings that occurred from the 1st of July in 1966 to the 
         5th of November 2017, covering 323 shootings which resulted in a total of 1433 deaths 
         and 1995 injuries.</p>
 
-      <h2 className="bodyHeading">Where do shootings occur most often?</h2>
+      <h2 id="part2" className="bodyHeading">Where do shootings occur most often?</h2>
       
       <p className="bodyText">The USA is a large country, consisting of 50 states. But does the location of the 
         shooting make any difference?
@@ -287,8 +278,8 @@ function App() {
       
       <br />
       <br />
-      <h2 className="bodyHeading">Percentage of fatalities and injuries as a result of mass shootings in open or 
-        closed spaces</h2>
+      <h3 id="part2-1" className="bodyHeading">Percentage of fatalities and injuries as a result of mass shootings in open or 
+        closed spaces</h3>
       <StackedBarGraph  stackedBarGraphData={spaceData} 
                         keys={spaceKeys}
                         colors={spaceColors}
@@ -304,7 +295,7 @@ function App() {
       <br />
       <br />
 
-      <h2 className="bodyHeading">Who is being targeted?</h2>
+      <h2 id="part3" className="bodyHeading">Who is being targeted?</h2>
       <p className="bodyText">According to the data, nearly half of all recorded mass shootings in America from 1966 
         to 2017 either did not involve a specific target, or the shooters’ motives for targeting 
         these individuals is unclear.
@@ -316,7 +307,7 @@ function App() {
 
       <article className="pieChartLayout">
         <div className="pieChartDesc">
-          <h2>Shootings involving a specific vs random target</h2>
+          <h3 id="part3-1">Shootings involving a specific vs random target</h3>
           <p>Looking at this from a different perspective, we compared the number of mass 
             shootings where shooters open fire randomly at a crowd, versus having a specific 
             target in mind when conducting the shooting.
@@ -335,7 +326,7 @@ function App() {
       <br/>
       <br/>
 
-      <h2 className="bodyHeading">Frequency of shootings</h2>
+      <h2 id="part4" className="bodyHeading">Frequency of shootings</h2>
       <p className="bodyText">
       The date of mass shootings has also been considered, in order to learn what role it may have on mass shootings, if any.
       </p>
@@ -362,9 +353,14 @@ function App() {
       <br />
       <br />
 
-      <article id="part1" className="pieChartLayout">
+      <h2 id="part5" className="bodyHeading">Why do they do it?</h2>
+      <p className="bodyText">The data has provided various information about the shooter, such as their 
+        age, gender, possible mental health, their intended target, their motives, 
+        and more.</p>
+
+      <article id="part5-1" className="pieChartLayout">
         <div className="pieChartDesc">
-          <h2>Did the shooter suffer from a mental health issue?</h2>
+          <h3>Did the shooter suffer from a mental health issue?</h3>
           <p>We can see that 33% of assailants were diagnosed as mentally ill while 29% did 
             not have any major mental health issues. It is important to note that 38% of 
             recorded shooters mental health status was not identified. This could have been 
@@ -379,7 +375,7 @@ function App() {
 
       <article className="stackedGraphSection">
         <div className="stackedGraphHeading">
-          <h2>Number of U.S. Mass Shootings per year in relation to</h2>
+          <h2 id="part6">Number of U.S. Mass Shootings per year in relation to</h2>
           <select className="dropdown" onChange={onDataChange}>
             <option value="mentalHealth">motives of individuals suffering from mental health conditions</option>
             <option value="ageGroups">age groups</option>
@@ -431,10 +427,14 @@ function App() {
         excluding mass shootings with unknown motives. Together with the previous pie chart, this 
         illustrates how prevalent mass shootings involving assailants suffering from mental health 
         illness are.
+      </p>
 
         <br />
         <br />
 
+      <h2 id="part7" className="bodyHeading">Who are they?</h2>
+
+      <p className="bodyText">
         Another factor to consider is the shooter’s age. Among the list of mass shootings, 
         roughly 25% are committed by teenagers, ranging from 12 to 19 years old. Despite gun 
         laws in the USA permitting persons 18 years and above to purchase rifles or shotguns, 
@@ -466,17 +466,19 @@ function App() {
       <article className="pieChartLayout">
         <PieChart chartClass={"alignPieRight"} pieChartData={occupationsData} innerRadius={100} outerRadius={150} />
         <div className="pieChartDesc">
-          <h2>Percentage of shooters with a military or police background</h2>
+          <h3 id="part7-1">Percentage of shooters with a background in the military or police force</h3>
           <p>With psychological factors playing such a large role, we looked into the occupations 
             of shooters, specifically the military and police, as they are most commonly 
             associated with mental and stress issues related to firearms due to post-traumatic 
             stress disorder (PTSD) being a common issue faced by uniformed officers, which may 
             play a role in inciting a current or former uniformed officer into instigating a mass 
             shooting.
-
+            <br />
+            <br />
             From the data, we learn that individuals with a military or police background were 
             responsible for 7% of all mass shootings in the USA, based on the data set. 
-
+            <br />
+            <br />
             However, Barbara Vam Dahlen, the founder of non-profit “Give an Hour”, an organisation 
             that provides counselling and other support to veterans, states that PTSD “creates a 
             risk factor”, but doesn’t necessarily determine whether or not they will initiate a mass 
@@ -489,7 +491,7 @@ function App() {
       <br/>
       <br/>
 
-      <h2 className="bodyHeading">Conclusion</h2>
+      <h2 id="part8" className="bodyHeading">Conclusion</h2>
       <p className="bodyText">
           While the data may imply that the likelihood of gun violence and mass shootings in 
           the USA is influenced by the public accessibility of firearms and the complexity of 

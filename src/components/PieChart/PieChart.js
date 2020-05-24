@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { select, arc, pie, scaleOrdinal } from 'd3';
+import Legend from '../Legend/Legend'
 
 import { useResizeObserver } from '../../hooks/useResizeObserver'
 
@@ -14,20 +15,22 @@ const PieChart = ({ chartAlign, pieChartData, innerRadius, outerRadius }) => {
     // Allows us to make the chart a bit more responsive
     const dimensions = useResizeObserver(wrapperRef)
 
+    // Pie chart can only use numerical values, so we have to split up the data
+    // into two variables. One will hold all the titles or keys, and the other
+    // will hold all the values
+    const pieChartKeys = Object.keys(pieChartData)
+    const pieChartValues = Object.values(pieChartData)
+
     // will be called initially and then every time the data array changes
     useEffect(() => {
         const svg = select(pieChartRef.current)
 
         // If no dimensions or props are provided, the function will exit
-        if (!dimensions || pieChartData === undefined) return
+        if (!dimensions || !pieChartKeys.length || !pieChartValues.length) return
         if (innerRadius === undefined || outerRadius === undefined) return
 
 
-        // Pie chart can only use numerical values, so we have to split up the data
-        // into two variables. One will hold all the titles or keys, and the other
-        // will hold all the values
-        const pieChartKeys = Object.keys(pieChartData)
-        const pieChartValues = Object.values(pieChartData)
+        
         
         // Helps us to create the individual arcs for each data point
         const arcGenerator = arc()
@@ -109,14 +112,14 @@ const PieChart = ({ chartAlign, pieChartData, innerRadius, outerRadius }) => {
                 svg.selectAll(`.slice`).attr("fill", data => colorScale(data.value))
             })
 
-    }, [pieChartData, dimensions, innerRadius, outerRadius, chartAlign])
+    }, [pieChartData, dimensions, innerRadius, outerRadius, chartAlign, pieChartKeys, pieChartValues])
 
     return (
     <article className="graph pieChart">
+        <Legend keys={pieChartKeys} colors={["#EC8C86", "#B53731", "#69201C"]} />
         <div ref={wrapperRef}>
             <svg ref={pieChartRef}></svg>
         </div>
-        
     </article>
     )
 }

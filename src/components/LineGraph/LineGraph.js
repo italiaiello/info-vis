@@ -1,14 +1,11 @@
 import React, { useRef, useEffect } from 'react';
-import { 
-  select, 
-  line, 
-  axisBottom, 
-  axisRight,
-  scaleLinear } from 'd3';
+import {  select, line, axisBottom, axisRight, scaleLinear } from 'd3';
+
+import Legend from '../Legend/Legend'
 
 import { useResizeObserver } from '../../hooks/useResizeObserver'
 
-const LineGraph = ({ lineGraphData, yAxisMax, reverseData, xAxisFontSize, xAxisRotationDeg }) => {
+const LineGraph = ({ lineGraphData, yAxisMax, reverseData, xAxisFontSize }) => {
 
     const svgRef = useRef()
     const wrapperRef = useRef()
@@ -79,12 +76,14 @@ const LineGraph = ({ lineGraphData, yAxisMax, reverseData, xAxisFontSize, xAxisR
 
     return (
     <article className="graph lineGraph">
+        <h3 id="part4-1">Number of mass shootings recorded per year</h3>
         <div ref={wrapperRef}>
             <svg ref={svgRef}>
                 <g className="x-axis" />
                 <g className="y-axis" />
             </svg>
         </div>
+        <Legend keys={["frequency"]} colors={["#DA0000"]} />
     </article>
     )
 }
