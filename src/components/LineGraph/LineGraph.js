@@ -1,8 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import {  select, line, axisBottom, axisRight, scaleLinear } from 'd3';
 
-import Legend from '../Legend/Legend'
-
 import { useResizeObserver } from '../../hooks/useResizeObserver'
 
 const LineGraph = ({ lineGraphData, yAxisMax, reverseData, xAxisFontSize }) => {
@@ -69,6 +67,7 @@ const LineGraph = ({ lineGraphData, yAxisMax, reverseData, xAxisFontSize }) => {
         .data([values])
         .join("path")
         .attr("class", "line")
+        .on("mouseenter", value => console.log(value))
         .attr("d", myLine)
         .attr("fill", "none")
         .attr("stroke", "#DA0000")
@@ -84,7 +83,6 @@ const LineGraph = ({ lineGraphData, yAxisMax, reverseData, xAxisFontSize }) => {
                 <g className="y-axis" />
             </svg>
         </div>
-        <Legend keys={["frequency"]} colors={["#DA0000"]} />
         <div id="lineTooltip" className="tooltip">
             <p id="pointInfo"></p>
         </div>

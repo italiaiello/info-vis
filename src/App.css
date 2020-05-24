@@ -295,6 +295,11 @@ svg .country:hover {
   margin-bottom: 50px;
 }
 
+.stackedGraph .tooltipBox {
+  width: 20%;
+  margin-top: 50px;
+}
+
   /* Checkboxes */
 
 .fields {

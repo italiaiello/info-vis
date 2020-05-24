@@ -70,7 +70,17 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
             .data(layer => layer)
             .join("rect")
             .attr("class", "dataRect")
-            .on("mouseenter", layer => console.log(layer))
+            .on("mouseenter", layer => {
+                const value = parseFloat(layer[1] - layer[0], 2)
+                const text = document.getElementById("stackedTooltipText")
+                text.textContent = layer[0] === 0 
+                                    ? `${Number(value.toFixed(2))} Fatalities`
+                                    : `${Number(value.toFixed(2))} Injured`
+            })
+            .on("mouseleave", layer => {
+                const text = document.getElementById("stackedTooltipText")
+                text.textContent = 'Hover over a block'
+            })
             .attr("x", sequence => xScale(sequence.data.space))
             .attr("width", xScale.bandwidth())
             .attr("y", sequence => yScale(sequence[1]))
