@@ -56,9 +56,10 @@ button {
 }
 
 .dropdown {
+  height: auto;
   font-size: 15px;
   outline: none;
-  padding: 30px;
+  /* padding: 10px; */
 }
 
 select {
