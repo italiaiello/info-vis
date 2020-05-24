@@ -59,7 +59,7 @@ button {
   height: auto;
   font-size: 15px;
   outline: none;
-  /* padding: 10px; */
+  padding: 10px;
 }
 
 select {
