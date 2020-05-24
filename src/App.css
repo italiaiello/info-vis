@@ -170,7 +170,7 @@ svg .country:hover {
   bottom: 200;
   left: 10px;
   width: 50%;
-  font-family: "Open Sans";
+  font-family: 'Open Sans', sans-serif;
   font-weight: lighter;
   color: grey;
 }
