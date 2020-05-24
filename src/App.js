@@ -201,7 +201,6 @@ function App() {
 
         <article className="dropdownContainer">
           <span className={isTargetsOptionSelected ? "show" : "hide"}>had</span>
-          <label for="dropdown">Choose a category:</label>
           {
             isTargetsOptionSelected &&
             <select value={target} id="targetSelect" className="dropdown" onChange={onTargetChange}>
