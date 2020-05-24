@@ -167,7 +167,6 @@ svg .country:hover {
 #usaText {
   position: absolute;
   font-size: 120px;
-  top: 350px;
   bottom: 200;
   left: 10px;
   width: 50%;
