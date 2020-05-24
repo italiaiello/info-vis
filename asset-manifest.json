@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/info-vis/static/css/main.809de706.chunk.css",
+    "main.css": "/info-vis/static/css/main.cea8f868.chunk.css",
     "main.js": "/info-vis/static/js/main.31f7dcfb.chunk.js",
     "main.js.map": "/info-vis/static/js/main.31f7dcfb.chunk.js.map",
     "runtime-main.js": "/info-vis/static/js/runtime-main.e1e3a3f8.js",
@@ -8,9 +8,9 @@
     "static/js/2.4c4fb087.chunk.js": "/info-vis/static/js/2.4c4fb087.chunk.js",
     "static/js/2.4c4fb087.chunk.js.map": "/info-vis/static/js/2.4c4fb087.chunk.js.map",
     "index.html": "/info-vis/index.html",
-    "precache-manifest.90a6ba9157f72b7394ee280b228c8fb1.js": "/info-vis/precache-manifest.90a6ba9157f72b7394ee280b228c8fb1.js",
+    "precache-manifest.7d3a2a38b2837bfa8898495a3863f42d.js": "/info-vis/precache-manifest.7d3a2a38b2837bfa8898495a3863f42d.js",
     "service-worker.js": "/info-vis/service-worker.js",
-    "static/css/main.809de706.chunk.css.map": "/info-vis/static/css/main.809de706.chunk.css.map",
+    "static/css/main.cea8f868.chunk.css.map": "/info-vis/static/css/main.cea8f868.chunk.css.map",
     "static/js/2.4c4fb087.chunk.js.LICENSE.txt": "/info-vis/static/js/2.4c4fb087.chunk.js.LICENSE.txt",
     "static/media/closeOpenSpaces.csv": "/info-vis/static/media/closeOpenSpaces.1488bc2d.csv",
     "static/media/culpritDemographics.csv": "/info-vis/static/media/culpritDemographics.11227ee2.csv",
@@ -23,7 +23,7 @@
   "entrypoints": [
     "static/js/runtime-main.e1e3a3f8.js",
     "static/js/2.4c4fb087.chunk.js",
-    "static/css/main.809de706.chunk.css",
+    "static/css/main.cea8f868.chunk.css",
     "static/js/main.31f7dcfb.chunk.js"
   ]
 }
