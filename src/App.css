@@ -16,7 +16,7 @@ svg {
   align-items: stretch;
   text-align: center;
   position: relative;
-  font-family: "Work Sans"
+  font-family: 'Work Sans', sans-serif;
 }
 
 h1, h2, h3, h4 {
@@ -223,7 +223,7 @@ svg .country:hover {
 
 .show {
   display: block;
-} 
+}
 
 .hide {
   display: none;
@@ -325,7 +325,7 @@ svg .country:hover {
 
 .stackedGraph .x-axis text, .stackedGraph .y-axis text {
   fill: rgb(175, 175, 175);
-}  
+}
 
 .stackedGraph svg {
   height: 250px
