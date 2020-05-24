@@ -39,6 +39,7 @@ const Sidebar = () => {
                     </li>
                 </ol>
                 <li><a href="#part8">Conclusion</a></li>
+                <li><a href="#part8">Conclusion</a></li>
             </ol>
           </div>
       </aside>
