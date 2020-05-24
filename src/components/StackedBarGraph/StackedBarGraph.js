@@ -98,6 +98,17 @@ const StackedBarGraph = ({ stackedBarGraphData, keys, colors }) => {
                 <g className="y-axis" />
             </svg>
         </div>
+        <p className="dataSource">Kaggle, 2017, Mass Shootings in the U.S. (per state). 
+          Obtained from Wikipedia, Mother Jones, Stanford, USA Today, and other web sources, 
+          last accessed 24 May 2020: 
+           <a className="dataLink" 
+                href="https://www.kaggle.com/zusmani/us-mass-shootings-last-50-years" 
+                target="_blank" 
+                rel="noopener noreferrer"
+            >
+                https://www.kaggle.com/zusmani/us-mass-shootings-last-50-years
+            </a>
+        </p>
         <div className="tooltipBox">
             <p id="stackedTooltipText">Hover over a block</p>
         </div>

@@ -63,7 +63,7 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
         
         const setTooltipText = feature => {
             const targets = feature.properties.targets
-            const formattedProperty = property.replace(/([a-z0-9])([A-Z])/g, '$1 $2').toLowerCase()
+            // const formattedProperty = property.replace(/([a-z0-9])([A-Z])/g, '$1 $2').toLowerCase()
             let targetsText = ""
             let number = 0
             if (targets !== 0) {
@@ -74,8 +74,7 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
             }
             return !isTargetsOptionSelected 
                 ?
-                `${feature.properties.NAME}: ${feature.properties[property]} 
-                ${formattedProperty}`
+                `${feature.properties.NAME}: ${feature.properties[property]}`
                 :
                 (   
                     targetsText !== "Unknown" ?
@@ -115,7 +114,7 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
         document.addEventListener("mousemove", (e) => {
             const x = e.clientX
             const y = e.clientY
-            tooltip.style.left = (x - 300) + "px"
+            tooltip.style.left = (x - 350) + "px"
             tooltip.style.top = (y - 80) + "px"
         })
         const text = document.getElementById("stateInfo")
@@ -159,7 +158,7 @@ const GeoChart = ({ data, victimsPerState, targetsPerState, property, isTargetsO
         <div ref={wrapperRef} className="graph geoChart">
             <p id="usaText">U S A</p>
             <svg ref={geoChartRef}>
-                <DropShadow stdDeviation={10} slope={0.5} />
+                <DropShadow stdDeviation={2} slope={0.5} />
             </svg>
             
             <div className="geoChartInfoContainer">

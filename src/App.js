@@ -127,8 +127,8 @@ function App() {
   const [spaceData, setSpaceData] = useState([])
   const spaceKeys = ["fatalities", "injured"]
   const spaceColors = {
-    fatalities:"#803A29", 
-    injured:"#FFB19E"
+    fatalities:"#69201C", 
+    injured:"#E68C86"
   }
 
 
@@ -196,6 +196,7 @@ function App() {
                   isTargetsOptionSelected={isTargetsOptionSelected}
                   selectedTargetIndex={selectedTargetIndex}
         />
+       
         <article className="dropdownContainer">
           <span className={isTargetsOptionSelected ? "show" : "hide"}>had</span>
           {
@@ -229,12 +230,22 @@ function App() {
             <option value="policemenKilled">Policemen Killed</option>
             <option value="totalVictims">Total Victims</option>
           </select>
-          
         </article>
+        <p className="dataSource">Kaggle, 2017, Mass Shootings in the U.S. (per state). 
+          Obtained from Wikipedia, Mother Jones, Stanford, USA Today, and other web sources, 
+          last accessed 24 May 2020: 
+           <a className="dataLink" 
+                href="https://www.kaggle.com/zusmani/us-mass-shootings-last-50-years" 
+                target="_blank" 
+                rel="noopener noreferrer"
+            >
+                https://www.kaggle.com/zusmani/us-mass-shootings-last-50-years
+            </a>
+        </p>
         <br/>
         <br/>
         <h2>Mass Shootings in the U.S. <br /><span id="subheading">as shown per state</span></h2> 
-        <h3>Hover over or click a state for more info</h3>
+        {/* <h3>Hover over or click a state for more info</h3> */}
         <p className="hypothesis">Does the public accessibility of firearms and the complexity of mental health in the 
           United States of America increase the likelihood of gun violence and mass shootings?</p>
 
@@ -335,6 +346,20 @@ function App() {
                   reverseData={false}
                   xAxisFontSize={10}
       />
+      <p className="dataSource">Kaggle, 2017, Mass Shootings in the U.S. (per state). 
+          Obtained from Wikipedia, Mother Jones, Stanford, USA Today, and other web sources, 
+          last accessed 24 May 2020: 
+           <a className="dataLink" 
+                href="https://www.kaggle.com/zusmani/us-mass-shootings-last-50-years" 
+                target="_blank" 
+                rel="noopener noreferrer"
+            >
+                https://www.kaggle.com/zusmani/us-mass-shootings-last-50-years
+            </a>
+        </p>
+
+      <br />
+
       <p className="bodyText">Immediately upon observation, we may easily interpret the 2015-2016 period to be the 
         most deadly years of mass shootings in the US. We can also determine that this is a 
         prevalent spike in mass shootings during this period, as the number of these tragedies 
@@ -373,7 +398,7 @@ function App() {
       <br />
       <br />
 
-      <article className="stackedGraphSection">
+      <article className="stackedGraphSection animatedStackedGraph">
         <div className="stackedGraphHeading">
           <h2 id="part6">Number of U.S. Mass Shootings per year in relation to:</h2>
           <select className="dropdown" onChange={onDataChange}>

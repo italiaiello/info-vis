@@ -16,10 +16,11 @@ svg {
   align-items: stretch;
   text-align: center;
   position: relative;
+  font-family: "Work Sans"
 }
 
 h1, h2, h3, h4 {
-  color: #803A29;
+  color: #b53731;
 }
 
 .bodyHeading {
@@ -95,6 +96,24 @@ button {
   align-items: center;
 }
 
+.dataSource {
+  width: 40%;
+  font-size: 0.7rem;
+  text-align: left;
+  margin-top: 20px;
+  margin: 10px auto;
+}
+
+.dataLink {
+  text-decoration: none;
+  color: #b53731;
+  transition: all 0.3s ease-in-out
+}
+
+.dataLink:hover {
+  color: #121212
+}
+
 /* Geo Chart */
 
 svg .country {
@@ -111,17 +130,31 @@ svg .country:hover {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  margin-bottom: 50px;
 }
 
 .geoChartContainer h2, .geoChartContainer h3 {
   margin-top: 0;
 }
 
+.geoChartContainer h2 {
+  margin-bottom: 0;
+  font-size: 2em;
+}
+
+.geoChartContainer h3 {
+  margin-bottom: 0;
+}
+
+.geoChartContainer .dataSource {
+  margin-top: 40px;
+}
+
 .geoChart {
-  width: 80%;
-  height: 50vh;
+  width: 60%;
+  height: 55vh;
   overflow: hidden;
   position: relative;
   display: flex;
@@ -133,8 +166,8 @@ svg .country:hover {
 
 #usaText {
   position: absolute;
-  font-size: 100px;
-  bottom: -50;
+  font-size: 120px;
+  bottom: 200;
   left: 10px;
   width: 50%;
   font-family: "Open Sans";
@@ -148,8 +181,6 @@ svg .country:hover {
 
 .geoChartInfoContainer {
   position: absolute;
-  top: 15px;
-  left: 15px;
 }
 
 .geoChartInfo {
@@ -204,10 +235,15 @@ svg .country:hover {
 
 .hypothesis {
   width: 60%;
-  font-weight: bold
+  /* font-weight: bold */
 }
 
 /* Pie Chart */
+
+.pieChart .dataSource {
+  width: 70%;
+  margin-bottom: 30px;
+}
 
 .pieChartLayout {
   width: 60%;
@@ -239,15 +275,29 @@ svg .country:hover {
   height: 350px
 }
 
+/* Stacked Graph and Animated Stacked Graph */
 
-/* Animated Stacked Graph */
+.stackedGraph .dataSource {
+  margin-top: 50px;
+}
+
+.animatedStackedGraph .dataSource {
+  color: white;
+}
+
+.animatedStackedGraph .dataLink {
+  color: #EC8C86
+}
+
+.animatedStackedGraph .dataLink:hover {
+  color: #E8483F
+}
 
 .stackedGraphSection {
   width: 100%;
   padding: 50px 0;
   height: auto;
-  /* background-color: #693E3C */
-  background-color: #121212
+  background: linear-gradient(to bottom, #3d0300, black)
 }
 
 .stackedGraphHeading {
@@ -451,17 +501,17 @@ aside {
   position: fixed;
   top: 0;
   right: 0;
-	color: #207070;
+	color: #e8483f;
   padding: 10px 20px;
 }
 
 .aside-container {
   margin: 1em auto;
   width: auto;
-  border-top: 3px #207070 solid;
-  border-bottom: 3px #207070 solid;
+  border-top: 3px #e8483f solid;
+  border-bottom: 3px #e8483f solid;
 	width: 240px;
-	background-color: rgba(32, 112, 112, .1);
+	background-color: rgba(232, 72, 63, 0.1);
 
 }
 
@@ -472,7 +522,7 @@ aside {
 	text-transform: uppercase;
 	letter-spacing: 3px;
 	font-size: 1em;
-	color: #207070;
+	color: #e8483f;
 }
 
 aside ol {
@@ -492,7 +542,7 @@ aside li a:active {
 
 aside a,
 header a {
-	color: #207070;
+	color: #e8483f;
 	text-decoration: none;
 	font-size: 1em;
 	transition: all 0.3s ease-in-out;
@@ -504,7 +554,7 @@ aside a {
 }
 
 aside a:hover {
-	color: #BB8E35;
+	color: #ec8c86;
 }
 
 .subheadings {
