@@ -63,6 +63,12 @@ button {
   padding: 20px;
 }
 
+select {
+  -webkit-appearance: menulist;  /* for webkit (safari, chrome) compatibility */
+  -moz-appearance: menulist; /* for firefox compatibility */
+  appearance: menulist;
+}
+
 .navBar {
   position: absolute;
   right: 0;
@@ -167,7 +173,6 @@ svg .country:hover {
 #usaText {
   position: absolute;
   font-size: 120px;
-  top: 50%;
   bottom: 200;
   left: 10px;
   width: 50%;
